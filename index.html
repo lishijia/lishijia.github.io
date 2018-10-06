@@ -7,15 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta property="og:type" content="website">
 <meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://lishijia.github.io/index.html">
 <meta property="og:site_name" content="李世佳的博客">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="李世佳的博客">
     
 
-    
-        <link rel="alternate" href="/" title="李世佳的博客" type="application/atom+xml" />
     
 
     
@@ -148,11 +146,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                2
+                5
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                2
+                4
                 <span>标签</span>
             </div>
         </div>
@@ -168,30 +166,6 @@
                         </a>
                     </td>
                     
-                    <td>
-                        <a href="/" target="_blank" title="twitter" class=tooltip>
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </td>
-                    
-                    <td>
-                        <a href="/" target="_blank" title="facebook" class=tooltip>
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                    </td>
-                    
-                    <td>
-                        <a href="/" target="_blank" title="dribbble" class=tooltip>
-                            <i class="fab fa-dribbble"></i>
-                        </a>
-                    </td>
-                    
-                    <td>
-                        <a href="/" target="_blank" title="rss" class=tooltip>
-                            <i class="fab fa-rss"></i>
-                        </a>
-                    </td>
-                    
                 </tr>
             </table>
         </div>
@@ -201,7 +175,7 @@
 
             
             <section id="main">
-    <article id="post-bigdata/Hadoop集群安装" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-big-data/Centos虚拟机安装-NAT网络配置" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -209,7 +183,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/09/27/bigdata/Hadoop集群安装/">Hadoop集群安装</a>
+            <a class="article-title leancloud_visitors" title="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html">Centos虚拟机安装&amp;NAT网络配置</a>
         </h1>
     
 
@@ -218,7 +192,594 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/27/bigdata/Hadoop集群安装/">
+        <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html">
+            <time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/180927/FFjjCjl94J.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大数据，机器学习必备的工具之一，也是咱们学习的运行环境。搭建虚拟机以及机器集群环境。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.github.io/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" data-id="cjmwthr1h0001pgqgofy9hb5r" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.github.io/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-algorithm/B树(B-tree)" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/09/30/algorithm/B树(B-tree).html" href="/2018/09/30/algorithm/B树(B-tree).html">B-Tree(Balance Tree)B树非线性数据结构</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/09/30/algorithm/B树(B-tree).html">
+            <time datetime="2018-09-30T01:57:00.000Z" itemprop="datePublished">2018-09-30</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/算法/">算法</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/数据结构/">数据结构</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/09/30/algorithm/B树(B-tree).html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/09/30/algorithm/B树(B-tree).html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.github.io/2018/09/30/algorithm/B树(B-tree).html" data-id="cjmwthr1z000cpgqgftesre3v" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.github.io/2018/09/30/algorithm/B树(B-tree).html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-algorithm/时间复杂度&amp;空间复杂度" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">时间复杂度&amp;空间复杂度</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/算法/">算法</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。</p>
+<p>我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html" data-id="cjmwthr22000gpgqguvotv0qn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-algorithm/跳跃表(skip-list)" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/09/29/algorithm/跳跃表(skip-list).html" href="/2018/09/29/algorithm/跳跃表(skip-list).html">跳跃表(skip-list)</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/09/29/algorithm/跳跃表(skip-list).html">
+            <time datetime="2018-09-29T02:57:00.000Z" itemprop="datePublished">2018-09-29</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/算法/">算法</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/数据结构/">数据结构</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/09/29/algorithm/跳跃表(skip-list).html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/09/29/algorithm/跳跃表(skip-list).html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.github.io/2018/09/29/algorithm/跳跃表(skip-list).html" data-id="cjmwthr20000dpgqgr37mc99a" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.github.io/2018/09/29/algorithm/跳跃表(skip-list).html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-big-data/Hadoop集群安装" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/09/27/big-data/Hadoop集群安装.html" href="/2018/09/27/big-data/Hadoop集群安装.html">Hadoop集群安装</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/09/27/big-data/Hadoop集群安装.html">
             <time datetime="2018-09-27T14:57:16.000Z" itemprop="datePublished">2018-09-27</time>
         </a>
     </div>
@@ -236,6 +797,20 @@
         <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
     </div>
 
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/09/27/big-data/Hadoop集群安装.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/09/27/big-data/Hadoop集群安装.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
                     </div>
                 
             </header>
@@ -247,7 +822,7 @@
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>搭建博客开始博客之旅。希望能够坚持并且从中受益。大数据。</p>
 <p>上一遍我们搭建了虚拟机集群环境，那么这一边我们就从Hadoop集群环境开始，一步步循环渐进深入了解整个集群环境配置</p></p>
             <p class="article-more-link">
-                <a href="/2018/09/27/bigdata/Hadoop集群安装/#more">查看更多</a>
+                <a href="/2018/09/27/big-data/Hadoop集群安装.html#more">查看更多</a>
             </p>
         
         </div>
@@ -258,7 +833,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/09/27/bigdata/Hadoop集群安装/" data-id="cjmknu3t30001jwqg3hytwz3s" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.github.io/2018/09/27/big-data/Hadoop集群安装.html" data-id="cjmwthr1c0000pgqgmxpigtyi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -326,6 +901,8 @@
 
             
     
+        <a href="http://lishijia.github.io/2018/09/27/big-data/Hadoop集群安装.html#comments" class="article-comment-link">评论</a>
+    
 
         </footer>
     </div>
@@ -334,137 +911,204 @@
 
 
 
-    <article id="post-bigdata/Centos虚拟机安装-NAT网络配置" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/09/27/bigdata/Centos虚拟机安装-NAT网络配置/">Centos虚拟机安装&amp;NAT网络配置</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/27/bigdata/Centos虚拟机安装-NAT网络配置/">
-            <time datetime="2018-09-27T02:57:00.000Z" itemprop="datePublished">2018-09-27</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/180927/FFjjCjl94J.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>开始博客之旅。希望能够坚持下去从而提升自己。那么就从虚拟机安装以及NAT网络配置开始，为后续的大数据系列文章开路把。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/09/27/bigdata/Centos虚拟机安装-NAT网络配置/#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/09/27/bigdata/Centos虚拟机安装-NAT网络配置/" data-id="cjmknu3t00000jwqg9y5divkx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
         });
-    })(jQuery);
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
 </script>
-
-            
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var todo = new leanCloud()._initToIndex('Visitors');
+        var comment = new leanCloudComment()._initCommentToIndex('Comment');
+    });
+</script>
 </section>
             
                 
@@ -479,26 +1123,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/09/27/bigdata/Hadoop集群安装/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/09/27/bigdata/Hadoop集群安装/" class="title">Hadoop集群安装</a></p>
-                            <p class="item-date"><time datetime="2018-09-27T14:57:16.000Z" itemprop="datePublished">2018-09-27</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/27/bigdata/Centos虚拟机安装-NAT网络配置/" class="thumbnail">
+                            <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -509,8 +1134,84 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/虚拟机/">虚拟机</a></p>
-                            <p class="item-title"><a href="/2018/09/27/bigdata/Centos虚拟机安装-NAT网络配置/" class="title">Centos虚拟机安装&amp;NAT网络配置</a></p>
-                            <p class="item-date"><time datetime="2018-09-27T02:57:00.000Z" itemprop="datePublished">2018-09-27</time></p>
+                            <p class="item-title"><a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="title">Centos虚拟机安装&amp;NAT网络配置</a></p>
+                            <p class="item-date"><time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/30/algorithm/B树(B-tree).html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/09/30/algorithm/B树(B-tree).html" class="title">B-Tree(Balance Tree)B树非线性数据结构</a></p>
+                            <p class="item-date"><time datetime="2018-09-30T01:57:00.000Z" itemprop="datePublished">2018-09-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" class="title">时间复杂度&amp;空间复杂度</a></p>
+                            <p class="item-date"><time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="title">跳跃表(skip-list)</a></p>
+                            <p class="item-date"><time datetime="2018-09-29T02:57:00.000Z" itemprop="datePublished">2018-09-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/27/big-data/Hadoop集群安装.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
+                            <p class="item-title"><a href="/2018/09/27/big-data/Hadoop集群安装.html" class="title">Hadoop集群安装</a></p>
+                            <p class="item-date"><time datetime="2018-09-27T14:57:16.000Z" itemprop="datePublished">2018-09-27</time></p>
                         </div>
                     </li>
                 
@@ -523,7 +1224,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li></ul>
         </div>
     </div>
 
@@ -532,7 +1233,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -541,7 +1242,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/虚拟机/" style="font-size: 20px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 20px;">虚拟机</a>
         </div>
     </div>
 
@@ -569,6 +1270,7 @@
     </div>
 </footer>
         
+
 
 
     

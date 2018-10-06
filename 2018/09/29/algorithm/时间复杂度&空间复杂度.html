@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>时间复杂度&amp;空间复杂度 | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时间复杂度&amp;空间复杂度">
+<meta property="og:url" content="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim">
+<meta property="og:updated_time" content="2018-09-29T14:14:31.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="时间复杂度&amp;空间复杂度">
+<meta name="twitter:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title">程序员</h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                5
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                4
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-algorithm/时间复杂度&amp;空间复杂度" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" itemprop="name">
+            时间复杂度&amp;空间复杂度
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/算法/">算法</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。</p>
+<p>我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。</p>
+<a id="more"></a>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>​    时间复杂度，一个方法或者程序重复执行计算的时间工作量。一般情况下，<font color="red">算法中基本操作重复执行的次数是问题规模n的某个函数f(n)</font>，进而分析f(n)随n的变化情况并确定T(n)的数量级。这里用”O”来表示数量级，给出算法的时间复杂度。</p>
+<p>​                     T(n)=O(f(n)) 简称<font color="red">推导大O阶法</font></p>
+<p>​    它表示随着问题规模的n的增大，算法的执行时间的增长率和f(n)的增长率相同，这称作算法的渐进时间复杂度，简称时间复杂度。而我们一般讨论的是<font color="red">最坏时间复杂度</font>，这样做的原因是：最坏情况下的时间复杂度是算法在任何输入实例上运行时间的上界，分析最坏的情况以估算算法指向时间的一个上界。</p>
+<p><strong>按增量递增复杂度排列时间从小到大依次是</strong>：</p>
+<script type="math/tex; mode=display">
+O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
+<li><p><strong>常数阶 <code>O(1)</code></strong> </p>
+<p>不管当n是多少，只运行2次，那么时间复杂度就是<code>O(2)</code>,取为<code>O(1)</code>。这个算法的运行次数函数是<code>f(n) = 2</code>.根据我们推导的大O阶的方法，第一步就是把常数项2改为1,。在保留最高阶项时发现，它根本没有最高阶项，所以这个算法的时间复杂度为<code>O(1)</code>。 </p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">constantTime</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(1)</span></span><br><span class="line">  <span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  printf(<span class="string">"%d"</span>,sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>对数阶 <code>O(log2n)</code></strong> </p>
+<p>由于每次count乘以2之后，就距离n更近了一分。也就是说，有多少个2相乘后大于n，则会退出循环。由2的x次方=n，得到<code>x=log₂n</code>。所以这个循环的时间复杂度为<code>O(logn)</code>。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(log2n)</span></span><br><span class="line">  <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">    count *= <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>线性阶 <code>O(n)</code></strong> </p>
+<p>线性阶的循环结构会复杂很多。要确定某个算法的阶次，我们常常需要确定某个特定语句或某个语句集运行的次数。因此，我们要分析算法的复杂度，关键就是要分析循环结构的运行情况。<br>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，因为循环体中的代码必须要执行n次。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    printf(<span class="string">"%d "</span>,i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>线性对数阶 <code>O(n * log2n)</code></strong></p>
+<p>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，但是循环里面有又有一个对数阶<code>O(log2n)</code>，因为循环体中的代码必须要执行<code>n * log2n</code>次，即它的最终时间复杂度<code>O(n * log2n)</code></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nlog2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n * log2n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">      count *= <span class="number">2</span></span><br><span class="line">      printf(<span class="string">"%d "</span>,i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>平方阶 <code>O(n^2)</code></strong></p>
+<p>两次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^2)</code>,立方阶一样</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^2)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>立方阶 <code>O(n^3)</code></strong></p>
+<p>三次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^3)</code>,立方阶一样</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n3</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^3)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">      <span class="keyword">for</span>(k &lt;- <span class="number">0</span> to(n))</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>算法需要消耗的内存空间。即为<code>S(n)=O(f(n))</code>;包括程序代码所占用的空间，输入数据所占用的空间和辅助变量所占用的空间这三个方面。计算和表达方式与时间复杂度类似，一般用复杂度的渐近性来表示。我们在写代码的时候，完全可以用空间来换取时间，<font color="red">比如说，数据库的索引，都是在元数据的基础上构建庞大的索引存储，已达到提供查询的效率，又或者数据库表设计冗余字段等都是已空间来换取时间到达目的。</font></p>
+<blockquote>
+<p>关于<code>O(1)</code>的问题， <code>O(1)</code>是说数据规模和临时变量数目无关，并不是说仅仅定义一个临时变量。举例：无论数据规模多大，我都定义100个变量，这就叫做数据规模和临时变量数目无关。就是说空间复杂度是<code>O(1)</code>。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>代码示例地址</strong></p>
+<p><a href="https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm" target="_blank" rel="noopener">https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm</a></p>
+<p><strong>算法时间空间复杂度汇总</strong></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim" alt=""></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html" data-id="cjmwthr22000gpgqguvotv0qn" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/09/30/algorithm/B树(B-tree).html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    B-Tree(Balance Tree)B树非线性数据结构
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">跳跃表(skip-list)</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/虚拟机/">虚拟机</a></p>
+                            <p class="item-title"><a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="title">Centos虚拟机安装&amp;NAT网络配置</a></p>
+                            <p class="item-date"><time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/30/algorithm/B树(B-tree).html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/09/30/algorithm/B树(B-tree).html" class="title">B-Tree(Balance Tree)B树非线性数据结构</a></p>
+                            <p class="item-date"><time datetime="2018-09-30T01:57:00.000Z" itemprop="datePublished">2018-09-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" class="title">时间复杂度&amp;空间复杂度</a></p>
+                            <p class="item-date"><time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="title">跳跃表(skip-list)</a></p>
+                            <p class="item-date"><time datetime="2018-09-29T02:57:00.000Z" itemprop="datePublished">2018-09-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/09/27/big-data/Hadoop集群安装.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
+                            <p class="item-title"><a href="/2018/09/27/big-data/Hadoop集群安装.html" class="title">Hadoop集群安装</a></p>
+                            <p class="item-date"><time datetime="2018-09-27T14:57:16.000Z" itemprop="datePublished">2018-09-27</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 20px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
