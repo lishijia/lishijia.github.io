@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/2beAmcC38h.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/dgDBkfGK3D.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/f8hHg0JFAk.png?imageslim">
-<meta property="og:updated_time" content="2018-10-07T02:41:26.914Z">
+<meta property="og:updated_time" content="2018-10-07T02:48:09.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop集群安装">
 <meta name="twitter:description" content="前言上一遍我们搭建了虚拟机集群环境，现在我们就开始搭建Hadoop集群环境，为后续的数据处理提供HDFS存储，MapReduce计算环境。">
@@ -437,6 +437,30 @@
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一遍我们搭建了虚拟机集群环境，现在我们就开始搭建Hadoop集群环境，为后续的数据处理提供HDFS存储，MapReduce计算环境。</p>
 <a id="more"></a>
 <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>搭建一台Master，两台Slave的Hadoop集群环境。并且通过put一个文件存储到hdfs分布式存储系统，然后通过管理控制台查看相应的节点信息。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>集群节点</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master201</td>
+<td>NameNode，SecondaryNameNode</td>
+</tr>
+<tr>
+<td>slave202</td>
+<td>DataNode，NodeManager</td>
+</tr>
+<tr>
+<td>slave203</td>
+<td>DataNode，NodeManager</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h2 id="准备安装文件"><a href="#准备安装文件" class="headerlink" title="准备安装文件"></a>准备安装文件</h2><p>以下文件也可以自行到网上去下载</p>
 <div class="table-container">
 <table>
@@ -550,7 +574,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.github.io/2018/10/06/big-data/Hadoop集群安装.html" data-id="cjmy9h8ei00026kqgobxggy1v" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.github.io/2018/10/06/big-data/Hadoop集群安装.html" data-id="cjmy9sq7a00008cqgcx2dr0ph" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
