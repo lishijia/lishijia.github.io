@@ -3,23 +3,19 @@
 <head>
     <meta charset="utf-8">
     
-    <title>时间复杂度&amp;空间复杂度 | 李世佳的博客</title>
+    <title>李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
-<meta name="keywords" content="算法">
+    <meta name="description" content="1cd /lishijia">
 <meta property="og:type" content="article">
-<meta property="og:title" content="时间复杂度&amp;空间复杂度">
-<meta property="og:url" content="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+<meta property="og:title" content="李世佳的博客">
+<meta property="og:url" content="http://lishijia.github.io/2018/10/07/big-data/MapReduce入门.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
+<meta property="og:description" content="1cd /lishijia">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim">
-<meta property="og:updated_time" content="2018-09-29T14:14:31.196Z">
+<meta property="og:updated_time" content="2018-10-07T02:38:52.442Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="时间复杂度&amp;空间复杂度">
-<meta name="twitter:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
-<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
+<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:description" content="1cd /lishijia">
     
 
     
@@ -372,106 +368,15 @@
         return constructor;
     })()
 </script>
-<article id="post-algorithm/时间复杂度&amp;空间复杂度" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-big-data/MapReduce入门" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
-        
-            <header class="article-header">
-                
-    
-        <h1 class="article-title leancloud_visitors" title="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" itemprop="name">
-            时间复杂度&amp;空间复杂度
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
-            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/算法/">算法</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/算法/">算法</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
         
         
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。</p>
-<p>我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。</p>
-<a id="more"></a>
-<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>​    时间复杂度，一个方法或者程序重复执行计算的时间工作量。一般情况下，<font color="red">算法中基本操作重复执行的次数是问题规模n的某个函数f(n)</font>，进而分析f(n)随n的变化情况并确定T(n)的数量级。这里用”O”来表示数量级，给出算法的时间复杂度。</p>
-<p>​                     T(n)=O(f(n)) 简称<font color="red">推导大O阶法</font></p>
-<p>​    它表示随着问题规模的n的增大，算法的执行时间的增长率和f(n)的增长率相同，这称作算法的渐进时间复杂度，简称时间复杂度。而我们一般讨论的是<font color="red">最坏时间复杂度</font>，这样做的原因是：最坏情况下的时间复杂度是算法在任何输入实例上运行时间的上界，分析最坏的情况以估算算法指向时间的一个上界。</p>
-<p><strong>按增量递增复杂度排列时间从小到大依次是</strong>：</p>
-<script type="math/tex; mode=display">
-O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
-<li><p><strong>常数阶 <code>O(1)</code></strong> </p>
-<p>不管当n是多少，只运行2次，那么时间复杂度就是<code>O(2)</code>,取为<code>O(1)</code>。这个算法的运行次数函数是<code>f(n) = 2</code>.根据我们推导的大O阶的方法，第一步就是把常数项2改为1,。在保留最高阶项时发现，它根本没有最高阶项，所以这个算法的时间复杂度为<code>O(1)</code>。 </p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">constantTime</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(1)</span></span><br><span class="line">  <span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  printf(<span class="string">"%d"</span>,sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>对数阶 <code>O(log2n)</code></strong> </p>
-<p>由于每次count乘以2之后，就距离n更近了一分。也就是说，有多少个2相乘后大于n，则会退出循环。由2的x次方=n，得到<code>x=log₂n</code>。所以这个循环的时间复杂度为<code>O(logn)</code>。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(log2n)</span></span><br><span class="line">  <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">    count *= <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>线性阶 <code>O(n)</code></strong> </p>
-<p>线性阶的循环结构会复杂很多。要确定某个算法的阶次，我们常常需要确定某个特定语句或某个语句集运行的次数。因此，我们要分析算法的复杂度，关键就是要分析循环结构的运行情况。<br>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，因为循环体中的代码必须要执行n次。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    printf(<span class="string">"%d "</span>,i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>线性对数阶 <code>O(n * log2n)</code></strong></p>
-<p>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，但是循环里面有又有一个对数阶<code>O(log2n)</code>，因为循环体中的代码必须要执行<code>n * log2n</code>次，即它的最终时间复杂度<code>O(n * log2n)</code></p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nlog2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n * log2n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">      count *= <span class="number">2</span></span><br><span class="line">      printf(<span class="string">"%d "</span>,i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>平方阶 <code>O(n^2)</code></strong></p>
-<p>两次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^2)</code>,立方阶一样</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^2)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>立方阶 <code>O(n^3)</code></strong></p>
-<p>三次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^3)</code>,立方阶一样</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n3</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^3)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">      <span class="keyword">for</span>(k &lt;- <span class="number">0</span> to(n))</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>算法需要消耗的内存空间。即为<code>S(n)=O(f(n))</code>;包括程序代码所占用的空间，输入数据所占用的空间和辅助变量所占用的空间这三个方面。计算和表达方式与时间复杂度类似，一般用复杂度的渐近性来表示。我们在写代码的时候，完全可以用空间来换取时间，<font color="red">比如说，数据库的索引，都是在元数据的基础上构建庞大的索引存储，已达到提供查询的效率，又或者数据库表设计冗余字段等都是已空间来换取时间到达目的。</font></p>
-<blockquote>
-<p>关于<code>O(1)</code>的问题， <code>O(1)</code>是说数据规模和临时变量数目无关，并不是说仅仅定义一个临时变量。举例：无论数据规模多大，我都定义100个变量，这就叫做数据规模和临时变量数目无关。就是说空间复杂度是<code>O(1)</code>。</p>
-</blockquote>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>代码示例地址</strong></p>
-<p><a href="https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm" target="_blank" rel="noopener">https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm</a></p>
-<p><strong>算法时间空间复杂度汇总</strong></p>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim" alt=""></p>
+            <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /lishijia</span><br></pre></td></tr></table></figure>
 
         
         </div>
@@ -482,7 +387,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
 
 </div>
 
-    <a data-url="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html" data-id="cjmy9h8el00066kqglsmc9mz2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.github.io/2018/10/07/big-data/MapReduce入门.html" data-id="cjmy9h8ed00006kqgygiac3mq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -550,7 +455,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
 
             
     
-        <a href="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.github.io/2018/10/07/big-data/MapReduce入门.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -559,19 +464,10 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
         
 <nav id="article-nav">
     
-        <a href="/2018/09/30/algorithm/B树(B-tree).html" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    B-Tree(Balance Tree)B树非线性数据结构
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/06/big-data/Hadoop集群安装.html" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">跳跃表(skip-list)</div>
+            <div class="article-nav-title">Hadoop集群安装</div>
         </a>
     
 </nav>
