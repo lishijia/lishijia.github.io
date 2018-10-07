@@ -3,19 +3,23 @@
 <head>
     <meta charset="utf-8">
     
-    <title>李世佳的博客</title>
+    <title>MapReduce快速入门WordCount Python + Hadoop Streaming（一） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="1cd /lishijia">
+    <meta name="description" content="前言​    根据已经搭建好的Hadoop集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
+<meta name="keywords" content="MapReduce,Hadoop,Hadoop Streaming">
 <meta property="og:type" content="article">
-<meta property="og:title" content="李世佳的博客">
+<meta property="og:title" content="MapReduce快速入门WordCount Python + Hadoop Streaming（一）">
 <meta property="og:url" content="http://lishijia.github.io/2018/10/07/big-data/MapReduce入门.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="1cd /lishijia">
+<meta property="og:description" content="前言​    根据已经搭建好的Hadoop集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-07T02:38:52.442Z">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/86kmj22CaC.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/CkjElclgEE.jpg?imageslim">
+<meta property="og:updated_time" content="2018-10-07T14:21:50.233Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
-<meta name="twitter:description" content="1cd /lishijia">
+<meta name="twitter:title" content="MapReduce快速入门WordCount Python + Hadoop Streaming（一）">
+<meta name="twitter:description" content="前言​    根据已经搭建好的Hadoop集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/86kmj22CaC.png?imageslim">
     
 
     
@@ -154,7 +158,7 @@
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                4
+                6
                 <span>标签</span>
             </div>
         </div>
@@ -372,11 +376,81 @@
     <div class="article-inner">
         
         
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/07/big-data/MapReduce入门.html" itemprop="name">
+            MapReduce快速入门WordCount Python + Hadoop Streaming（一）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/07/big-data/MapReduce入门.html">
+            <time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/categories/MapReduce/Hadoop/">Hadoop</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/categories/MapReduce/Hadoop/Hadoop-Streaming/">Hadoop Streaming</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/07/big-data/MapReduce入门.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/07/big-data/MapReduce入门.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
         
         <div class="article-entry" itemprop="articleBody">
         
             
-            <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /lishijia</span><br></pre></td></tr></table></figure>
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181007/86kmj22CaC.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>​    根据已经搭建好的<a href="/2018/10/06/big-data/Hadoop集群安装.html">Hadoop集群</a>，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。</p>
+<a id="more"></a>
+<h2 id="MapReduce简介"><a href="#MapReduce简介" class="headerlink" title="MapReduce简介"></a>MapReduce简介</h2><p>​    MapReduce的Data flow如上图，原始数据经过mapper处理，再进行partition和sort，到达reducer，输出最后结果。</p>
+<h2 id="Hadoop-Streaming简介"><a href="#Hadoop-Streaming简介" class="headerlink" title="Hadoop Streaming简介"></a>Hadoop Streaming简介</h2><p>​    Hadoop本身是用Java开发的，程序也需要用Java编写，但是通过Hadoop Streaming，我们可以使用任意语言来编写程序，让Hadoop运行。</p>
+<p>​    Hadoop Streaming的相关源代码可以在<a href="https://github.com/apache/hadoop-common/tree/trunk/hadoop-tools/hadoop-streaming/src/main/java/org/apache/hadoop/streaming" target="_blank" rel="noopener">Hadoop的Github repo</a> 查看。简单来说，就是通过将用其他语言编写的mapper和reducer通过参数传给一个事先写好的Java程序（Hadoop自带的*-streaming.jar），这个Java程序会负责创建MR作业，另开一个进程来运行mapper，将得到的输入通过stdin传给它，再将mapper处理后输出到stdout的数据交给Hadoop，partition和sort之后，再另开进程运行reducer，同样地通过stdin/stdout得到最终结果。因此，我们只需要在其他语言编写的程序里，通过stdin接收数据，再将处理过的数据输出到stdout，Hadoop streaming就能通过这个Java的wrapper帮我们解决中间繁琐的步骤，运行分布式程序。</p>
+<p>​    <font color="red">当中的STDIN到STDOUT这一块就可以理解为是在Hadoop Streaming当中运行，由Hadoop Streaming提供标准输入与输出，从而达到支持Java以外的语言执行MapReduce</font></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181007/CkjElclgEE.jpg?imageslim" alt="mark"></p>
+<h2 id="Map代码"><a href="#Map代码" class="headerlink" title="Map代码"></a>Map代码</h2><p>​    首先通过标准输入的方式接收数据，然后循环每一行数据进行过滤拆分，最终输出<key,value>形式，即word，1每遇到一个单词输出。</key,value></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">    ss = line.strip().split(<span class="string">' '</span>)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> ss:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%s\t%d"</span> % (word,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Reduce代码"><a href="#Reduce代码" class="headerlink" title="Reduce代码"></a>Reduce代码</h2><p>​    Reduce一样通过标准输入接收数据，然后统计每一个单词出现的次数，最终再输出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">cur_word=<span class="keyword">None</span></span><br><span class="line">cur_sum=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">    ss=line.strip().split(<span class="string">'\t'</span>)</span><br><span class="line">    <span class="keyword">if</span> len(ss)!=<span class="number">2</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    word,value=ss</span><br><span class="line">    <span class="keyword">if</span> cur_word == <span class="keyword">None</span>:</span><br><span class="line">        cur_word=word</span><br><span class="line">    <span class="keyword">if</span> cur_word == word:</span><br><span class="line">        cur_sum+=(int(value))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%s\t%d"</span> % (cur_word,cur_sum)</span><br><span class="line">        cur_word=word</span><br><span class="line">        cur_sum=(int(value))</span><br><span class="line"><span class="keyword">print</span>  <span class="string">"%s\t%d"</span> % (cur_word,cur_sum)</span><br></pre></td></tr></table></figure>
+<h2 id="服务器调试"><a href="#服务器调试" class="headerlink" title="服务器调试"></a>服务器调试</h2><p>​    通过head 一个文件的方式（或者使用cat都可以）进行一个标准输出，把它作为map.py的标准输入，然后排序第一列（即word），然后把map.py的输出作为reduce.py的标准输入，进行统计</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head 1 the_man_of_property.txt | python map.py | sort -k1 | python reduce.py | sort -k2 -r | head -10</span><br></pre></td></tr></table></figure>
+<p>​    以上方式相当于就是在本地执行模拟map，reduce调试，确保程序正确后然后放置到集群当中去跑</p>
+<h2 id="Hadoop-Streaming方式运行MapReduce"><a href="#Hadoop-Streaming方式运行MapReduce" class="headerlink" title="Hadoop Streaming方式运行MapReduce"></a>Hadoop Streaming方式运行MapReduce</h2><p>​    以下文件当中的Input，Output都是HDFS当中的目录文件，执行前需要先把需要统计的文件put到hdfs系统。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_CMD="/home/lishijia/Soft/hadoop-2.7.2/bin/hadoop"</span><br><span class="line">STREAM_JAR_PATH="/home/lishijia/Soft/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>INPUT_FILE_PATH_1 = "/"</span><br><span class="line">INPUT_FILE_PATH_1="/lishijia/input/the_man_of_property.txt"</span><br><span class="line">OUTPUT_PATH="/lishijia/output/mapreduce/"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD fs -rmr -skipTrash $OUTPUT_PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Step 1.</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_1 \</span><br><span class="line">    -output $OUTPUT_PATH \</span><br><span class="line">    -mapper "python map.py" \</span><br><span class="line">    -reducer "python reduce.py" \</span><br><span class="line">    -file ./map.py \</span><br><span class="line">    -file ./reduce.py</span><br></pre></td></tr></table></figure>
+<p>​    执行日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 mapreduce]# ./run.sh </span><br><span class="line">rmr: DEPRECATED: Please use &apos;rm -r&apos; instead.</span><br><span class="line">Deleted /lishijia/output/mapreduce</span><br><span class="line">18/10/07 22:17:33 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.</span><br><span class="line">packageJobJar: [./map.py, ./reduce.py, /tmp/hadoop-unjar5713376120282440056/] [] /tmp/streamjob6497965494106718597.jar tmpDir=null</span><br><span class="line">18/10/07 22:17:33 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO mapred.FileInputFormat: Total input paths to process : 1</span><br><span class="line">18/10/07 22:17:34 INFO mapreduce.JobSubmitter: number of splits:2</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO impl.YarnClientImpl: Submitted application application_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: The url to track the job: http://master201:8088/proxy/application_1538880566647_0003/</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: Running job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job: Job job_1538880566647_0003 running in uber mode : false</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job:  map 0% reduce 0%</span><br><span class="line">18/10/07 22:17:49 INFO mapreduce.Job:  map 100% reduce 0%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job:  map 100% reduce 100%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job: Job job_1538880566647_0003 completed successfully</span><br><span class="line">18/10/07 22:17:55 INFO mapreduce.Job: Counters: 49</span><br><span class="line">        File System Counters</span><br><span class="line">                FILE: Number of bytes read=1076619</span><br><span class="line">                FILE: Number of bytes written=2515154</span><br><span class="line">                FILE: Number of read operations=0</span><br><span class="line">                FILE: Number of large read operations=0</span><br><span class="line">                FILE: Number of write operations=0</span><br><span class="line">                HDFS: Number of bytes read=709544</span><br><span class="line">                HDFS: Number of bytes written=181530</span><br><span class="line">                HDFS: Number of read operations=9</span><br><span class="line">                HDFS: Number of large read operations=0</span><br><span class="line">                HDFS: Number of write operations=2</span><br><span class="line">        Job Counters </span><br><span class="line">                Launched map tasks=2</span><br><span class="line">                Launched reduce tasks=1</span><br><span class="line">                Data-local map tasks=2</span><br><span class="line">                Total time spent by all maps in occupied slots (ms)=4383</span><br><span class="line">                Total time spent by all reduces in occupied slots (ms)=1729</span><br><span class="line">                Total time spent by all map tasks (ms)=4383</span><br><span class="line">                Total time spent by all reduce tasks (ms)=1729</span><br><span class="line">                Total vcore-milliseconds taken by all map tasks=4383</span><br><span class="line">                Total vcore-milliseconds taken by all reduce tasks=1729</span><br><span class="line">                Total megabyte-milliseconds taken by all map tasks=4488192</span><br><span class="line">                Total megabyte-milliseconds taken by all reduce tasks=1770496</span><br><span class="line">        Map-Reduce Framework</span><br><span class="line">                Map input records=2866</span><br><span class="line">                Map output records=111818</span><br><span class="line">                Map output bytes=852977</span><br><span class="line">                Map output materialized bytes=1076625</span><br><span class="line">                Input split bytes=224</span><br><span class="line">                Combine input records=0</span><br><span class="line">                Combine output records=0</span><br><span class="line">                Reduce input groups=16985</span><br><span class="line">                Reduce shuffle bytes=1076625</span><br><span class="line">                Reduce input records=111818</span><br><span class="line">                Reduce output records=16984</span><br><span class="line">                Spilled Records=223636</span><br><span class="line">                Shuffled Maps =2</span><br><span class="line">                Failed Shuffles=0</span><br><span class="line">                Merged Map outputs=2</span><br><span class="line">                GC time elapsed (ms)=134</span><br><span class="line">                CPU time spent (ms)=2790</span><br><span class="line">                Physical memory (bytes) snapshot=699613184</span><br><span class="line">                Virtual memory (bytes) snapshot=6329569280</span><br><span class="line">                Total committed heap usage (bytes)=483393536</span><br><span class="line">        Shuffle Errors</span><br><span class="line">                BAD_ID=0</span><br><span class="line">                CONNECTION=0</span><br><span class="line">                IO_ERROR=0</span><br><span class="line">                WRONG_LENGTH=0</span><br><span class="line">                WRONG_MAP=0</span><br><span class="line">                WRONG_REDUCE=0</span><br><span class="line">        File Input Format Counters </span><br><span class="line">                Bytes Read=709320</span><br><span class="line">        File Output Format Counters </span><br><span class="line">                Bytes Written=181530</span><br><span class="line">18/10/07 22:17:55 INFO streaming.StreamJob: Output directory: /lishijia/output/mapreduce/</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​    以上通过Python编写的map、reduce在Hadoop Streaming集群上执行统计一个文件中一个单词出现的次数，算是Hadoop 核心组件之一MapReduce的入门篇吧。</p>
+<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/mapreduce" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/mapreduce</a></p>
+<p><a href="/2018/10/06/big-data/Hadoop集群安装.html">Hadoop集群安装</a></p>
 
         
         </div>
@@ -387,7 +461,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.github.io/2018/10/07/big-data/MapReduce入门.html" data-id="cjmy9sq7j00048cqgdrpb2fbb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.github.io/2018/10/07/big-data/MapReduce入门.html" data-id="cjmyyi96r0006soqgt6k4nzbt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -533,9 +607,9 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/10/07/big-data/MapReduce入门.html" class="title"></a></p>
-                            <p class="item-date"><time datetime="2018-10-07T02:31:37.107Z" itemprop="datePublished">2018-10-07</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/categories/MapReduce/Hadoop/">Hadoop</a></p>
+                            <p class="item-title"><a href="/2018/10/07/big-data/MapReduce入门.html" class="title">MapReduce快速入门WordCount Python + Hadoop Streaming（一）</a></p>
+                            <p class="item-date"><time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
                 
@@ -633,7 +707,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/Hadoop/">Hadoop</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/Hadoop/Hadoop-Streaming/">Hadoop Streaming</a><span class="category-list-count">1</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -642,7 +716,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 20px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/MapReduce/" style="font-size: 10px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 20px;">虚拟机</a>
         </div>
     </div>
 
