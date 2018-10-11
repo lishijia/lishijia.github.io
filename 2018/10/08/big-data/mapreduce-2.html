@@ -3,15 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2018 | 李世佳的博客</title>
+    <title>MapReduce Join 表连接 Python （二） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://lishijia.top/archives/2018/index.html">
+    <meta name="description" content="前言上一遍文章简单编写了MapReduce WordCount，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。">
+<meta name="keywords" content="Hadoop,MapReduce">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MapReduce Join 表连接 Python （二）">
+<meta property="og:url" content="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言上一遍文章简单编写了MapReduce WordCount，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim">
+<meta property="og:updated_time" content="2018-10-11T14:18:32.608Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="MapReduce Join 表连接 Python （二）">
+<meta name="twitter:description" content="前言上一遍文章简单编写了MapReduce WordCount，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim">
     
 
     
@@ -174,416 +183,7 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
-        
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/11/big-data/hive-install.html" href="/2018/10/11/big-data/hive-install.html">Hive 安装配置</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/11/big-data/hive-install.html">
-            <time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hive/">Hive</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/11/big-data/hive-install.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/11/big-data/hive-install.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/11/big-data/mapreduce-3.html" href="/2018/10/11/big-data/mapreduce-3.html">MapReduce 执行过程原理（三）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/11/big-data/mapreduce-3.html">
-            <time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/11/big-data/mapreduce-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/11/big-data/mapreduce-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/08/big-data/mapreduce-2.html" href="/2018/10/08/big-data/mapreduce-2.html">MapReduce Join 表连接 Python （二）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/big-data/mapreduce-2.html">
-            <time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/hadoop-install.html" href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/hadoop-install.html">
-            <time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/centos-nat.html" href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/centos-nat.html">
-            <time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/09/30/algorithm/skip-list.html" href="/2018/09/30/algorithm/skip-list.html">跳跃表(skip-list)</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/30/algorithm/skip-list.html">
-            <time datetime="2018-09-30T14:57:00.000Z" itemprop="datePublished">2018-09-30</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/算法/">算法</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/数据结构/">数据结构</a>, <a class="tag-link" href="/tags/算法/">算法</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/09/30/algorithm/skip-list.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/09/30/algorithm/skip-list.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/09/29/algorithm/algorithm-time-space.html" href="/2018/09/29/algorithm/algorithm-time-space.html">时间复杂度&amp;空间复杂度</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/29/algorithm/algorithm-time-space.html">
-            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/算法/">算法</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/算法/">算法</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/09/29/algorithm/algorithm-time-space.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/09/29/algorithm/algorithm-time-space.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -773,12 +373,224 @@
         return constructor;
     })()
 </script>
+<article id="post-big-data/mapreduce-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/08/big-data/mapreduce-2.html" itemprop="name">
+            MapReduce Join 表连接 Python （二）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/08/big-data/mapreduce-2.html">
+            <time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/08/big-data/mapreduce-2.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/08/big-data/mapreduce-2.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一遍文章简单编写了<a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount</a>，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。</p>
+<a id="more"></a>
+<h2 id="MapReduce-Join实现思路"><a href="#MapReduce-Join实现思路" class="headerlink" title="MapReduce Join实现思路"></a>MapReduce Join实现思路</h2><p>假设有关系O(o,a,u)和I(o,g,p)，对二者进行自然连接操作<br>使用Map过程，<font color="red">把来自O的每个元组<o,a,u>转换成一个键值对<o, <o,a,u="">&gt;,</o,></o,a,u></font>，其中的键就是属性o的值。把关系O包含到值中，这样做使得我们可以在Reduce阶段，只把那些来自O的元组和来自I的元组进行匹配。类似地，使用Map过程，把来自I的每个元组<o,g,p>，转换成一个键值对<o,<i,g,p>&gt;<br>所有具有相同o值的元组被发送到同一个Reduce进程中<font color="red">（此处是由Hadoop MapReduce框架完成的，它会根据reduce所设定的数量进行分区，最终把相同分区的数据发送到同一reduce单重进行处理）</font>，Reduce进程的任务是，把来自关系O和I的、具有相同属性o值的元组进行合并<br>Reduce进程的输出则是连接后的元组<o,a,u,g,p>，输出被写到一个单独的输出文件中</o,a,u,g,p></o,<i,g,p></o,g,p></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim" alt=""></p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map接收标准输入，然后再此处做一定的处理，标记一下每一条出现的数据来源，后续在reduce阶段需要使用。此处也可以通过写多个Map处理。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/usr/bin/env python</span><br><span class="line"><span class="meta">#</span> coding=utf-8</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    order = line.strip().split(',')</span><br><span class="line">    if len(order) == 3:</span><br><span class="line">        print "%s,1,%s,%s" % (order[0], order[1], order[2])</span><br><span class="line">    elif len(order) == 4:</span><br><span class="line">        print "%s,2,%s,%s,%s" % (order[0], order[1], order[2], order[3])</span><br></pre></td></tr></table></figure>
+<h2 id="Reduce"><a href="#Reduce" class="headerlink" title="Reduce"></a>Reduce</h2><p>Reduce 实现简单的Join操作，<font color="red">此处依赖Map当中自带的排序操作，可以往下看，如果是本地调试模式，则需要加上sort命令。</font>试想一下，比如order_item表当中有数据，而order表又没有数据，那么实际上程序也是会存在问题的。所以还是有很多没有考虑周全的地方，此处仅仅是一个简单实现（前提清洗过后数据都能保证一致性）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 join]# vim reduce_join.py </span><br><span class="line"><span class="meta">#</span>!/usr/bin/env python</span><br><span class="line"><span class="meta">#</span> coding=utf-8</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">v_order = None</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    order = line.strip().split(',')</span><br><span class="line">    if v_order == None:</span><br><span class="line">        v_order = order</span><br><span class="line">    elif order[1] == "1":</span><br><span class="line">        v_order = order</span><br><span class="line">    elif order[1] == "2":</span><br><span class="line">        print "%s\t%s\t%s\t%s\t%s\t%s" % (v_order[0], v_order[2], v_order[3], order[2], order[3], order[4])</span><br></pre></td></tr></table></figure>
+<h2 id="本地调试（服务器）"><a href="#本地调试（服务器）" class="headerlink" title="本地调试（服务器）"></a>本地调试（服务器）</h2><p>通过以下方式在本地调试基础功能结果</p>
+<p>命令解释：通过Cat order 与 order_item文件进行输入到map，然后map通过计算过滤输出，reduce把map的输入作为输入计算并且进行join。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 join]# ls</span><br><span class="line">map_item.py  map_order.py  map.py  order  order_item  reduce_join.py  run.sh</span><br><span class="line">[root@master201 join]# cat order order_item | python map.py | sort | python reduce_join.py </span><br><span class="line">orderId01       20.00   lishijia        itemId1 Mac     10</span><br><span class="line">orderId01       20.00   lishijia        itemId2 Iphone  10</span><br><span class="line">orderId02       30.00   eva     itemId3 Aoc     30</span><br><span class="line">orderId03       50.00   john    itemId4 Xiaomi  10</span><br><span class="line">orderId03       50.00   john    itemId5 Huawei  30</span><br><span class="line">orderId03       50.00   john    itemId6 Vivo    10</span><br></pre></td></tr></table></figure>
+<h2 id="集群运行MapReduce-Join"><a href="#集群运行MapReduce-Join" class="headerlink" title="集群运行MapReduce Join"></a>集群运行MapReduce Join</h2><p>run.sh脚本内容，以下方式相当于在一个脚本里面执行三个任务，其实也可以跟<a href="/2018/10/07/big-data/mapreduce-1.html">WrodCount</a>例子一样，因为在Map的代码里面做了特殊处理。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_CMD="/home/lishijia/Soft/hadoop-2.7.2/bin/hadoop"</span><br><span class="line"></span><br><span class="line">STREAM_JAR_PATH="/home/lishijia/Soft/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar"</span><br><span class="line"></span><br><span class="line">INPUT_FILE_PATH_ORDER="/lishijia/input/mapreducejoin/order"</span><br><span class="line">INPUT_FILE_PATH_ITEM="/lishijia/input/mapreducejoin/order_item"</span><br><span class="line"></span><br><span class="line">OUTPUT_PATH_ORDER="/lishijia/output/maporder"</span><br><span class="line">OUTPUT_PATH_ITEM="/lishijia/output/maporderitem"</span><br><span class="line"></span><br><span class="line">OUTPUT_PATH_JOIN="/lishijia/output/mapreducejoin/"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD fs -rmr -skipTrash $OUTPUT_PATH_ORDER $OUTPUT_PATH_ITEM $OUTPUT_PATH_JOIN</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_ORDER \</span><br><span class="line">    -output $OUTPUT_PATH_ORDER \</span><br><span class="line">    -mapper "python map_order.py" \</span><br><span class="line">    -file ./map_order.py \</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_ITEM \</span><br><span class="line">    -output $OUTPUT_PATH_ITEM \</span><br><span class="line">    -mapper "python map_item.py" \</span><br><span class="line">    -file ./map_item.py \</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $OUTPUT_PATH_ORDER,$OUTPUT_PATH_ITEM \</span><br><span class="line">    -output $OUTPUT_PATH_JOIN \</span><br><span class="line">    -mapper "cat" \</span><br><span class="line">    -reducer "python reduce_join.py" \</span><br><span class="line">    -file ./reduce_join.py</span><br></pre></td></tr></table></figure>
+<p>执行结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">18/10/08 22:44:43 INFO streaming.StreamJob: Output directory: /lishijia/output/mapreducejoin/</span><br><span class="line">[root@master201 join]# hadoop fs -ls /lishijia/output/mapreducejoin</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   2 root supergroup          0 2018-10-08 22:44 /lishijia/output/mapreducejoin/_SUCCESS</span><br><span class="line">-rw-r--r--   2 root supergroup        233 2018-10-08 22:44 /lishijia/output/mapreducejoin/part-00000</span><br><span class="line">[root@master201 join]# hadoop fs -cat /lishijia/output/mapreducejoin/part-00000</span><br><span class="line">orderId01       20.00   lishijia        itemId1 Mac     10</span><br><span class="line">orderId01       20.00   lishijia        itemId2 Iphone  10</span><br><span class="line">orderId02       30.00   eva     itemId3 Aoc     30</span><br><span class="line">orderId03       50.00   john    itemId4 Xiaomi  10</span><br><span class="line">orderId03       50.00   john    itemId5 Huawei  30</span><br><span class="line">orderId03       50.00   john    itemId6 Vivo    10</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单实现MapReduce join 表连接操作，主要还是表达，灵活使用Mapreduce以及后续理解Hive。Hive当中的所有sql都是转换成一个一个MapReduce任务来实现的。</p>
+<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/mapreduce" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/mapreduce</a></p>
+<p><a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount</a></p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html" data-id="cjn4q6fns000b3cqg5svd7k8z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/10/11/big-data/mapreduce-3.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    MapReduce 执行过程原理（三）
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/10/07/big-data/mapreduce-1.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">MapReduce WordCount 入门 Python（一）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
 </script></section>
             

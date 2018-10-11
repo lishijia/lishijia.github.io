@@ -5,21 +5,21 @@
     
     <title>MapReduce WordCount 入门 Python（一） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言根据已经搭建好的Hadoop集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
+    <meta name="description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
 <meta name="keywords" content="Hadoop,MapReduce,Hadoop Streaming">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapReduce WordCount 入门 Python（一）">
-<meta property="og:url" content="http://lishijia.github.io/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html">
+<meta property="og:url" content="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言根据已经搭建好的Hadoop集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
+<meta property="og:description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/86kmj22CaC.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/CkjElclgEE.jpg?imageslim">
-<meta property="og:updated_time" content="2018-10-08T14:37:45.337Z">
+<meta property="og:updated_time" content="2018-10-11T14:18:19.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce WordCount 入门 Python（一）">
-<meta name="twitter:description" content="前言根据已经搭建好的Hadoop集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
-<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/86kmj22CaC.png?imageslim">
+<meta name="twitter:description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
     
 
     
@@ -148,17 +148,17 @@
         <div class="base-info profile-block">
             <img id="avatar" src="/css/images/avatar.png" />
             <h2 id="name">李世佳</h2>
-            <h3 id="title">程序员</h3>
+            <h3 id="title"></h3>
             <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
             <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                6
+                8
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                6
+                7
                 <span>标签</span>
             </div>
         </div>
@@ -372,14 +372,14 @@
         return constructor;
     })()
 </script>
-<article id="post-big-data/MapReduce WordCount 入门 Python（一）" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-big-data/mapreduce-1" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 class="article-title leancloud_visitors" title="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" itemprop="name">
+        <h1 class="article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" itemprop="name">
             MapReduce WordCount 入门 Python（一）
         </h1>
     
@@ -389,7 +389,7 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html">
+        <a href="/2018/10/07/big-data/mapreduce-1.html">
             <time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time>
         </a>
     </div>
@@ -409,14 +409,14 @@
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html">
+    <a href="/2018/10/07/big-data/mapreduce-1.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html#comments">
+    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -429,8 +429,8 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181007/86kmj22CaC.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>根据已经搭建好的<a href="/2018/10/06/big-data/Hadoop集群安装.html">Hadoop集群</a>，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。</p>
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>根据已经搭建好的<a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群</a>，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。</p>
 <a id="more"></a>
 <h2 id="MapReduce简介"><a href="#MapReduce简介" class="headerlink" title="MapReduce简介"></a>MapReduce简介</h2><p>MapReduce的Data flow如上图，原始数据经过mapper处理，再进行partition和sort，到达reducer，输出最后结果。</p>
 <h2 id="Hadoop-Streaming简介"><a href="#Hadoop-Streaming简介" class="headerlink" title="Hadoop Streaming简介"></a>Hadoop Streaming简介</h2><p>Hadoop本身是用Java开发的，程序也需要用Java编写，但是通过Hadoop Streaming，我们可以使用任意语言来编写程序，让Hadoop运行。</p>
@@ -451,7 +451,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 mapreduce]# ./run.sh </span><br><span class="line">rmr: DEPRECATED: Please use &apos;rm -r&apos; instead.</span><br><span class="line">Deleted /lishijia/output/mapreduce</span><br><span class="line">18/10/07 22:17:33 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.</span><br><span class="line">packageJobJar: [./map.py, ./reduce.py, /tmp/hadoop-unjar5713376120282440056/] [] /tmp/streamjob6497965494106718597.jar tmpDir=null</span><br><span class="line">18/10/07 22:17:33 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO mapred.FileInputFormat: Total input paths to process : 1</span><br><span class="line">18/10/07 22:17:34 INFO mapreduce.JobSubmitter: number of splits:2</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO impl.YarnClientImpl: Submitted application application_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: The url to track the job: http://master201:8088/proxy/application_1538880566647_0003/</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: Running job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job: Job job_1538880566647_0003 running in uber mode : false</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job:  map 0% reduce 0%</span><br><span class="line">18/10/07 22:17:49 INFO mapreduce.Job:  map 100% reduce 0%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job:  map 100% reduce 100%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job: Job job_1538880566647_0003 completed successfully</span><br><span class="line">18/10/07 22:17:55 INFO mapreduce.Job: Counters: 49</span><br><span class="line">        File System Counters</span><br><span class="line">                FILE: Number of bytes read=1076619</span><br><span class="line">                FILE: Number of bytes written=2515154</span><br><span class="line">                FILE: Number of read operations=0</span><br><span class="line">                FILE: Number of large read operations=0</span><br><span class="line">                FILE: Number of write operations=0</span><br><span class="line">                HDFS: Number of bytes read=709544</span><br><span class="line">                HDFS: Number of bytes written=181530</span><br><span class="line">                HDFS: Number of read operations=9</span><br><span class="line">                HDFS: Number of large read operations=0</span><br><span class="line">                HDFS: Number of write operations=2</span><br><span class="line">        Job Counters </span><br><span class="line">                Launched map tasks=2</span><br><span class="line">                Launched reduce tasks=1</span><br><span class="line">                Data-local map tasks=2</span><br><span class="line">                Total time spent by all maps in occupied slots (ms)=4383</span><br><span class="line">                Total time spent by all reduces in occupied slots (ms)=1729</span><br><span class="line">                Total time spent by all map tasks (ms)=4383</span><br><span class="line">                Total time spent by all reduce tasks (ms)=1729</span><br><span class="line">                Total vcore-milliseconds taken by all map tasks=4383</span><br><span class="line">                Total vcore-milliseconds taken by all reduce tasks=1729</span><br><span class="line">                Total megabyte-milliseconds taken by all map tasks=4488192</span><br><span class="line">                Total megabyte-milliseconds taken by all reduce tasks=1770496</span><br><span class="line">        Map-Reduce Framework</span><br><span class="line">                Map input records=2866</span><br><span class="line">                Map output records=111818</span><br><span class="line">                Map output bytes=852977</span><br><span class="line">                Map output materialized bytes=1076625</span><br><span class="line">                Input split bytes=224</span><br><span class="line">                Combine input records=0</span><br><span class="line">                Combine output records=0</span><br><span class="line">                Reduce input groups=16985</span><br><span class="line">                Reduce shuffle bytes=1076625</span><br><span class="line">                Reduce input records=111818</span><br><span class="line">                Reduce output records=16984</span><br><span class="line">                Spilled Records=223636</span><br><span class="line">                Shuffled Maps =2</span><br><span class="line">                Failed Shuffles=0</span><br><span class="line">                Merged Map outputs=2</span><br><span class="line">                GC time elapsed (ms)=134</span><br><span class="line">                CPU time spent (ms)=2790</span><br><span class="line">                Physical memory (bytes) snapshot=699613184</span><br><span class="line">                Virtual memory (bytes) snapshot=6329569280</span><br><span class="line">                Total committed heap usage (bytes)=483393536</span><br><span class="line">        Shuffle Errors</span><br><span class="line">                BAD_ID=0</span><br><span class="line">                CONNECTION=0</span><br><span class="line">                IO_ERROR=0</span><br><span class="line">                WRONG_LENGTH=0</span><br><span class="line">                WRONG_MAP=0</span><br><span class="line">                WRONG_REDUCE=0</span><br><span class="line">        File Input Format Counters </span><br><span class="line">                Bytes Read=709320</span><br><span class="line">        File Output Format Counters </span><br><span class="line">                Bytes Written=181530</span><br><span class="line">18/10/07 22:17:55 INFO streaming.StreamJob: Output directory: /lishijia/output/mapreduce/</span><br></pre></td></tr></table></figure>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上通过Python编写的map、reduce在Hadoop Streaming集群上执行统计一个文件中一个单词出现的次数，算是Hadoop 核心组件之一MapReduce的入门篇吧。</p>
 <p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/mapreduce" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/mapreduce</a></p>
-<p><a href="/2018/10/06/big-data/Hadoop集群安装.html">Hadoop集群安装</a></p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
 
         
         </div>
@@ -462,7 +462,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.github.io/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" data-id="cjn0fqw9j0005qkqgqbq81lct" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjn4q6fnt000c3cqgywcw504u" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -530,7 +530,7 @@
 
             
     
-        <a href="http://lishijia.github.io/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -539,7 +539,7 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/10/08/big-data/mapreduce-2.html" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
@@ -549,9 +549,9 @@
         </a>
     
     
-        <a href="/2018/10/06/big-data/Hadoop集群安装.html" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/06/big-data/hadoop-install.html" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Hadoop集群安装</div>
+            <div class="article-nav-title">Hadoop2.7.2集群安装</div>
         </a>
     
 </nav>
@@ -607,7 +607,26 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" class="thumbnail">
+                            <a href="/2018/10/11/big-data/hive-install.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
+                            <p class="item-title"><a href="/2018/10/11/big-data/hive-install.html" class="title">Hive 安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/11/big-data/mapreduce-3.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -618,7 +637,26 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
+                            <p class="item-title"><a href="/2018/10/11/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/08/big-data/mapreduce-2.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
+                            <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
                             <p class="item-date"><time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time></p>
                         </div>
                     </li>
@@ -626,7 +664,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" class="thumbnail">
+                            <a href="/2018/10/07/big-data/mapreduce-1.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -637,7 +675,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
+                            <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
                             <p class="item-date"><time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
@@ -645,7 +683,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/Hadoop集群安装.html" class="thumbnail">
+                            <a href="/2018/10/06/big-data/hadoop-install.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -656,46 +694,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/Hadoop集群安装.html" class="title">Hadoop集群安装</a></p>
+                            <p class="item-title"><a href="/2018/10/06/big-data/hadoop-install.html" class="title">Hadoop2.7.2集群安装</a></p>
                             <p class="item-date"><time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/虚拟机/">虚拟机</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="title">Centos虚拟机安装&amp;NAT网络配置</a></p>
-                            <p class="item-date"><time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
-                            <p class="item-title"><a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="title">跳跃表(skip-list)</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -708,7 +708,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -717,7 +717,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -726,7 +726,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/MapReduce/" style="font-size: 15px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 15px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 

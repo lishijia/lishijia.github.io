@@ -3,23 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>时间复杂度&amp;空间复杂度 | 李世佳的博客</title>
+    <title>MapReduce 执行过程原理（三） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
-<meta name="keywords" content="算法">
+    <meta name="description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
+<meta name="keywords" content="Hadoop,MapReduce">
 <meta property="og:type" content="article">
-<meta property="og:title" content="时间复杂度&amp;空间复杂度">
-<meta property="og:url" content="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+<meta property="og:title" content="MapReduce 执行过程原理（三）">
+<meta property="og:url" content="http://lishijia.top/2018/10/11/big-data/mapreduce-3.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
+<meta property="og:description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim">
-<meta property="og:updated_time" content="2018-09-29T14:14:31.196Z">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim">
+<meta property="og:updated_time" content="2018-10-11T14:18:42.966Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="时间复杂度&amp;空间复杂度">
-<meta name="twitter:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
-<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
+<meta name="twitter:title" content="MapReduce 执行过程原理（三）">
+<meta name="twitter:description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim">
     
 
     
@@ -148,17 +149,17 @@
         <div class="base-info profile-block">
             <img id="avatar" src="/css/images/avatar.png" />
             <h2 id="name">李世佳</h2>
-            <h3 id="title">程序员</h3>
+            <h3 id="title"></h3>
             <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
             <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                6
+                8
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                6
+                7
                 <span>标签</span>
             </div>
         </div>
@@ -372,15 +373,15 @@
         return constructor;
     })()
 </script>
-<article id="post-algorithm/时间复杂度&amp;空间复杂度" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-big-data/mapreduce-3" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 class="article-title leancloud_visitors" title="/2018/09/29/algorithm/时间复杂度&空间复杂度.html" itemprop="name">
-            时间复杂度&amp;空间复杂度
+        <h1 class="article-title leancloud_visitors" title="/2018/10/11/big-data/mapreduce-3.html" itemprop="name">
+            MapReduce 执行过程原理（三）
         </h1>
     
 
@@ -389,8 +390,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
-            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
+        <a href="/2018/10/11/big-data/mapreduce-3.html">
+            <time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time>
         </a>
     </div>
 
@@ -398,25 +399,25 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/算法/">算法</a>
+        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/算法/">算法</a>
+        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
     </div>
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html">
+    <a href="/2018/10/11/big-data/mapreduce-3.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments">
+    <a href="/2018/10/11/big-data/mapreduce-3.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -429,49 +430,45 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。</p>
-<p>我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。</p>
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。</p>
+<p>以下我们将了解MapReduce运行原理及过程。</p>
 <a id="more"></a>
-<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>​    时间复杂度，一个方法或者程序重复执行计算的时间工作量。一般情况下，<font color="red">算法中基本操作重复执行的次数是问题规模n的某个函数f(n)</font>，进而分析f(n)随n的变化情况并确定T(n)的数量级。这里用”O”来表示数量级，给出算法的时间复杂度。</p>
-<p>​                     T(n)=O(f(n)) 简称<font color="red">推导大O阶法</font></p>
-<p>​    它表示随着问题规模的n的增大，算法的执行时间的增长率和f(n)的增长率相同，这称作算法的渐进时间复杂度，简称时间复杂度。而我们一般讨论的是<font color="red">最坏时间复杂度</font>，这样做的原因是：最坏情况下的时间复杂度是算法在任何输入实例上运行时间的上界，分析最坏的情况以估算算法指向时间的一个上界。</p>
-<p><strong>按增量递增复杂度排列时间从小到大依次是</strong>：</p>
-<script type="math/tex; mode=display">
-O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
-<li><p><strong>常数阶 <code>O(1)</code></strong> </p>
-<p>不管当n是多少，只运行2次，那么时间复杂度就是<code>O(2)</code>,取为<code>O(1)</code>。这个算法的运行次数函数是<code>f(n) = 2</code>.根据我们推导的大O阶的方法，第一步就是把常数项2改为1,。在保留最高阶项时发现，它根本没有最高阶项，所以这个算法的时间复杂度为<code>O(1)</code>。 </p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">constantTime</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(1)</span></span><br><span class="line">  <span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  printf(<span class="string">"%d"</span>,sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="MapReduce基本执行过程"><a href="#MapReduce基本执行过程" class="headerlink" title="MapReduce基本执行过程"></a>MapReduce基本执行过程</h2><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
+<h2 id="MapReduce执行过程示例说明"><a href="#MapReduce执行过程示例说明" class="headerlink" title="MapReduce执行过程示例说明"></a>MapReduce执行过程示例说明</h2><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim" alt=""></p>
+<p>在上图中一共有6个map进程和2个reduce进程，一共有8个独立的进程空间，但这个MapReduce跑起来，那么它则需要8个进程空间。它们当中有可能在同一个节点，也有可能是独立不同的节点。根据上面的运行过程一起来解析下它的执行过程。</p>
+<ol>
+<li><p>通过节点1，节点2输入文件（HDFS文件系统中的文件）</p>
 </li>
-<li><p><strong>对数阶 <code>O(log2n)</code></strong> </p>
-<p>由于每次count乘以2之后，就距离n更近了一分。也就是说，有多少个2相乘后大于n，则会退出循环。由2的x次方=n，得到<code>x=log₂n</code>。所以这个循环的时间复杂度为<code>O(logn)</code>。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(log2n)</span></span><br><span class="line">  <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">    count *= <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>MapReduce通过InputFormat来进行对接数据（MapReduce自带的接口，我们只需要开发Map与Reduce行数即可），这个接口主要完成两个功能，第一个就是数据切割（Split），第二个就是记录读取器（Record Reader）</p>
 </li>
-<li><p><strong>线性阶 <code>O(n)</code></strong> </p>
-<p>线性阶的循环结构会复杂很多。要确定某个算法的阶次，我们常常需要确定某个特定语句或某个语句集运行的次数。因此，我们要分析算法的复杂度，关键就是要分析循环结构的运行情况。<br>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，因为循环体中的代码必须要执行n次。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    printf(<span class="string">"%d "</span>,i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>那么上图InputFormat接口相当于把原数据一共切割为6个Split，那么就会MapReduce框架就会生成6个Map来处理（结论：即一个Split对应一个Map，所以可以使用Split的个数来控制Map的个数），数据切割它会在合适的位置对原数据（即Block）进行切割，并且保证它的完整性。</p>
 </li>
-<li><p><strong>线性对数阶 <code>O(n * log2n)</code></strong></p>
-<p>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，但是循环里面有又有一个对数阶<code>O(log2n)</code>，因为循环体中的代码必须要执行<code>n * log2n</code>次，即它的最终时间复杂度<code>O(n * log2n)</code></p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nlog2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n * log2n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">      count *= <span class="number">2</span></span><br><span class="line">      printf(<span class="string">"%d "</span>,i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>然后RecordReader会从Split中正确读出一条一条的数据输出作为标准输入调用map方法，由map方法执行计算或者清洗。</p>
 </li>
-<li><p><strong>平方阶 <code>O(n^2)</code></strong></p>
-<p>两次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^2)</code>,立方阶一样</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^2)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>Map输出过程中有一个重要的阶段，即Shuffle，那么Shuffle阶段其实包含以下部分（其实Shuffle阶段也包含Reduce当中的一部分，比如归并）。</p>
 </li>
-<li><p><strong>立方阶 <code>O(n^3)</code></strong></p>
-<p>三次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^3)</code>,立方阶一样</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n3</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^3)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">      <span class="keyword">for</span>(k &lt;- <span class="number">0</span> to(n))</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</ol>
+<ol>
+<li><p>分区：根据Reduce的数量对key进行hash取模，这个partition处理是在Map当中的Buffer当中实现的，内存缓冲区默认是100m，如果100m内超过了80m，就会把这80m的数据给锁住，然后将这些数据进行排序然后能够清空内存并且写入本地磁盘（也称之为溢写）</p>
 </li>
-</ul>
-<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>算法需要消耗的内存空间。即为<code>S(n)=O(f(n))</code>;包括程序代码所占用的空间，输入数据所占用的空间和辅助变量所占用的空间这三个方面。计算和表达方式与时间复杂度类似，一般用复杂度的渐近性来表示。我们在写代码的时候，完全可以用空间来换取时间，<font color="red">比如说，数据库的索引，都是在元数据的基础上构建庞大的索引存储，已达到提供查询的效率，又或者数据库表设计冗余字段等都是已空间来换取时间到达目的。</font></p>
-<blockquote>
-<p>关于<code>O(1)</code>的问题， <code>O(1)</code>是说数据规模和临时变量数目无关，并不是说仅仅定义一个临时变量。举例：无论数据规模多大，我都定义100个变量，这就叫做数据规模和临时变量数目无关。就是说空间复杂度是<code>O(1)</code>。</p>
-</blockquote>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>代码示例地址</strong></p>
-<p><a href="https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm" target="_blank" rel="noopener">https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm</a></p>
-<p><strong>算法时间空间复杂度汇总</strong></p>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim" alt=""></p>
+<li><p>排序：根据key进行排序（此处是发生在溢写的过程中就会排序好）</p>
+</li>
+<li><p>Combiner（则会运行来化简压缩输出的数据，比如当中的一条数据可能在map输出的时候会输出两条数据，那么经过combiner之后最终存储就只会存汇总的结果，<font color="red">前提不能防止扰乱最终的结果</font>）</p>
+</li>
+<li><p>归并：每次溢写都会生成一个新的文件，那么最终处理完之后，map最终还是会把所有溢写的文件合并成一个文件（合并后的文件内容仍然会保持分区与排序的状态）</p>
+</li>
+</ol>
+<ol>
+<li><p>Reduce阶段，每个reduce任务开始从多个map上拷贝属于自己partition（map阶段已经做好partition，而且每个reduce任务知道应该拷贝哪个partition；拷贝过程是在不同节点之间，Reducer上拷贝线程基于HTTP来通过网络传输数据）</p>
+</li>
+<li><p>最后，执行reduce阶段，运行我们实现的Reducer中化简逻辑，最终将结果直接输出到HDFS中（因为Reducer运行在DataNode上，输出结果的第一个replica直接在存储在本地节点上）。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面的描述我们看到，在MR执行过程中，存在Shuffle过程的MapReduce需要在网络中的节点之间（Mapper节点和Reducer节点）拷贝数据，如果传输的数据量很大会造成一定的网络开销。而且，Map端和Reduce端都会通过一个特定的buffer来在内存中临时缓存数据，如果无法根据实际应用场景中数据的规模来使用MapReduce，尤其是做大数据两并且计算复杂，有可能很浪费资源，降低了系统处理任务的效率，还可能因为内存不足造成oom问题，导致计算任务失败。</p>
+<p><a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a></p>
+<p><a href="/2018/10/08/big-data/mapreduce-2.html">MapReduce Join 表连接 Python （二）</a></p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
 
         
         </div>
@@ -482,7 +479,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
 
 </div>
 
-    <a data-url="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html" data-id="cjn0fqw9n000aqkqgt2r2g97y" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/11/big-data/mapreduce-3.html" data-id="cjn4q6fnv000g3cqgn633u7e7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -550,7 +547,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
 
             
     
-        <a href="http://lishijia.github.io/2018/09/29/algorithm/时间复杂度&空间复杂度.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/11/big-data/mapreduce-3.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -559,15 +556,20 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
         
 <nav id="article-nav">
     
-        <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/10/11/big-data/hive-install.html" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    跳跃表(skip-list)
+                    Hive 安装配置
                 
             </div>
         </a>
     
+    
+        <a href="/2018/10/08/big-data/mapreduce-2.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">MapReduce Join 表连接 Python （二）</div>
+        </a>
     
 </nav>
 
@@ -622,7 +624,26 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" class="thumbnail">
+                            <a href="/2018/10/11/big-data/hive-install.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
+                            <p class="item-title"><a href="/2018/10/11/big-data/hive-install.html" class="title">Hive 安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/11/big-data/mapreduce-3.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -633,7 +654,26 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
+                            <p class="item-title"><a href="/2018/10/11/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/08/big-data/mapreduce-2.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
+                            <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
                             <p class="item-date"><time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time></p>
                         </div>
                     </li>
@@ -641,7 +681,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" class="thumbnail">
+                            <a href="/2018/10/07/big-data/mapreduce-1.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -652,7 +692,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
+                            <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
                             <p class="item-date"><time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
@@ -660,7 +700,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/Hadoop集群安装.html" class="thumbnail">
+                            <a href="/2018/10/06/big-data/hadoop-install.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -671,46 +711,8 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/Hadoop集群安装.html" class="title">Hadoop集群安装</a></p>
+                            <p class="item-title"><a href="/2018/10/06/big-data/hadoop-install.html" class="title">Hadoop2.7.2集群安装</a></p>
                             <p class="item-date"><time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/虚拟机/">虚拟机</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="title">Centos虚拟机安装&amp;NAT网络配置</a></p>
-                            <p class="item-date"><time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
-                            <p class="item-title"><a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="title">跳跃表(skip-list)</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -723,7 +725,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -732,7 +734,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -741,7 +743,7 @@ O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/MapReduce/" style="font-size: 15px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 15px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 

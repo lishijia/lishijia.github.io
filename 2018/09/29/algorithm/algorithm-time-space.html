@@ -3,20 +3,23 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MapReduce Join 表连接 Python （二） | 李世佳的博客</title>
+    <title>时间复杂度&amp;空间复杂度 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言">
-<meta name="keywords" content="Hadoop,MapReduce">
+    <meta name="description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
+<meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MapReduce Join 表连接 Python （二）">
-<meta property="og:url" content="http://lishijia.github.io/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html">
+<meta property="og:title" content="时间复杂度&amp;空间复杂度">
+<meta property="og:url" content="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言">
+<meta property="og:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-08T15:12:21.418Z">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim">
+<meta property="og:updated_time" content="2018-10-11T13:11:30.263Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MapReduce Join 表连接 Python （二）">
-<meta name="twitter:description" content="前言">
+<meta name="twitter:title" content="时间复杂度&amp;空间复杂度">
+<meta name="twitter:description" content="前言一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。 我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim">
     
 
     
@@ -145,17 +148,17 @@
         <div class="base-info profile-block">
             <img id="avatar" src="/css/images/avatar.png" />
             <h2 id="name">李世佳</h2>
-            <h3 id="title">程序员</h3>
+            <h3 id="title"></h3>
             <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
             <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                6
+                8
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                6
+                7
                 <span>标签</span>
             </div>
         </div>
@@ -369,15 +372,15 @@
         return constructor;
     })()
 </script>
-<article id="post-big-data/MapReduce Join 连接 Python （二）" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-algorithm/algorithm-time-space" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 class="article-title leancloud_visitors" title="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" itemprop="name">
-            MapReduce Join 表连接 Python （二）
+        <h1 class="article-title leancloud_visitors" title="/2018/09/29/algorithm/algorithm-time-space.html" itemprop="name">
+            时间复杂度&amp;空间复杂度
         </h1>
     
 
@@ -386,8 +389,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html">
-            <time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time>
+        <a href="/2018/09/29/algorithm/algorithm-time-space.html">
+            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
         </a>
     </div>
 
@@ -395,25 +398,25 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
+        <a class="article-category-link" href="/categories/算法/">算法</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
+        <a class="tag-link" href="/tags/算法/">算法</a>
     </div>
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html">
+    <a href="/2018/09/29/algorithm/algorithm-time-space.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html#comments">
+    <a href="/2018/09/29/algorithm/algorithm-time-space.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -426,23 +429,49 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><a id="more"></a>
-<p>上一遍文章简单编写了<a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html">MapReduce WordCount</a>，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。</p>
-<h2 id="MapReduce-Join实现思路"><a href="#MapReduce-Join实现思路" class="headerlink" title="MapReduce Join实现思路"></a>MapReduce Join实现思路</h2><h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map接收标准输入，然后再此处做一定的处理，标记一下每一条出现的数据来源，后续在reduce阶段需要使用。此处也可以通过写多个Map处理。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/usr/bin/env python</span><br><span class="line"><span class="meta">#</span> coding=utf-8</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    order = line.strip().split(',')</span><br><span class="line">    if len(order) == 3:</span><br><span class="line">        print "%s,1,%s,%s" % (order[0], order[1], order[2])</span><br><span class="line">    elif len(order) == 4:</span><br><span class="line">        print "%s,2,%s,%s,%s" % (order[0], order[1], order[2], order[3])</span><br></pre></td></tr></table></figure>
-<h2 id="Reduce"><a href="#Reduce" class="headerlink" title="Reduce"></a>Reduce</h2><p>Reduce 实现简单的Join操作，<font color="red">此处依赖Map当中自带的排序操作，可以往下看，如果是本地调试模式，则需要加上sort命令。</font>试想一下，比如order_item表当中有数据，而order表又没有数据，那么实际上程序也是会存在问题的。所以还是有很多没有考虑周全的地方，此处仅仅是一个简单实现（前提清洗过后数据都能保证一致性）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 join]# vim reduce_join.py </span><br><span class="line"><span class="meta">#</span>!/usr/bin/env python</span><br><span class="line"><span class="meta">#</span> coding=utf-8</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">v_order = None</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    order = line.strip().split(',')</span><br><span class="line">    if v_order == None:</span><br><span class="line">        v_order = order</span><br><span class="line">    elif order[1] == "1":</span><br><span class="line">        v_order = order</span><br><span class="line">    elif order[1] == "2":</span><br><span class="line">        print "%s\t%s\t%s\t%s\t%s\t%s" % (v_order[0], v_order[2], v_order[3], order[2], order[3], order[4])</span><br></pre></td></tr></table></figure>
-<h2 id="本地调试（服务器）"><a href="#本地调试（服务器）" class="headerlink" title="本地调试（服务器）"></a>本地调试（服务器）</h2><p>通过以下方式在本地调试基础功能结果</p>
-<p>命令解释：通过Cat order 与 order_item文件进行输入到map，然后map通过计算过滤输出，reduce把map的输入作为输入计算并且进行join。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 join]# ls</span><br><span class="line">map_item.py  map_order.py  map.py  order  order_item  reduce_join.py  run.sh</span><br><span class="line">[root@master201 join]# cat order order_item | python map.py | sort | python reduce_join.py </span><br><span class="line">orderId01       20.00   lishijia        itemId1 Mac     10</span><br><span class="line">orderId01       20.00   lishijia        itemId2 Iphone  10</span><br><span class="line">orderId02       30.00   eva     itemId3 Aoc     30</span><br><span class="line">orderId03       50.00   john    itemId4 Xiaomi  10</span><br><span class="line">orderId03       50.00   john    itemId5 Huawei  30</span><br><span class="line">orderId03       50.00   john    itemId6 Vivo    10</span><br></pre></td></tr></table></figure>
-<h2 id="集群运行MapReduce-Join"><a href="#集群运行MapReduce-Join" class="headerlink" title="集群运行MapReduce Join"></a>集群运行MapReduce Join</h2><p>run.sh脚本内容，以下方式相当于在一个脚本里面执行三个任务，其实也可以跟<a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html">WrodCount</a>例子一样，因为在Map的代码里面做了特殊处理。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_CMD="/home/lishijia/Soft/hadoop-2.7.2/bin/hadoop"</span><br><span class="line"></span><br><span class="line">STREAM_JAR_PATH="/home/lishijia/Soft/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar"</span><br><span class="line"></span><br><span class="line">INPUT_FILE_PATH_ORDER="/lishijia/input/mapreducejoin/order"</span><br><span class="line">INPUT_FILE_PATH_ITEM="/lishijia/input/mapreducejoin/order_item"</span><br><span class="line"></span><br><span class="line">OUTPUT_PATH_ORDER="/lishijia/output/maporder"</span><br><span class="line">OUTPUT_PATH_ITEM="/lishijia/output/maporderitem"</span><br><span class="line"></span><br><span class="line">OUTPUT_PATH_JOIN="/lishijia/output/mapreducejoin/"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD fs -rmr -skipTrash $OUTPUT_PATH_ORDER $OUTPUT_PATH_ITEM $OUTPUT_PATH_JOIN</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_ORDER \</span><br><span class="line">    -output $OUTPUT_PATH_ORDER \</span><br><span class="line">    -mapper "python map_order.py" \</span><br><span class="line">    -file ./map_order.py \</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_ITEM \</span><br><span class="line">    -output $OUTPUT_PATH_ITEM \</span><br><span class="line">    -mapper "python map_item.py" \</span><br><span class="line">    -file ./map_item.py \</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $OUTPUT_PATH_ORDER,$OUTPUT_PATH_ITEM \</span><br><span class="line">    -output $OUTPUT_PATH_JOIN \</span><br><span class="line">    -mapper "cat" \</span><br><span class="line">    -reducer "python reduce_join.py" \</span><br><span class="line">    -file ./reduce_join.py</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">18/10/08 22:44:43 INFO streaming.StreamJob: Output directory: /lishijia/output/mapreducejoin/</span><br><span class="line">[root@master201 join]# hadoop fs -ls /lishijia/output/mapreducejoin</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   2 root supergroup          0 2018-10-08 22:44 /lishijia/output/mapreducejoin/_SUCCESS</span><br><span class="line">-rw-r--r--   2 root supergroup        233 2018-10-08 22:44 /lishijia/output/mapreducejoin/part-00000</span><br><span class="line">[root@master201 join]# hadoop fs -cat /lishijia/output/mapreducejoin/part-00000</span><br><span class="line">orderId01       20.00   lishijia        itemId1 Mac     10</span><br><span class="line">orderId01       20.00   lishijia        itemId2 Iphone  10</span><br><span class="line">orderId02       30.00   eva     itemId3 Aoc     30</span><br><span class="line">orderId03       50.00   john    itemId4 Xiaomi  10</span><br><span class="line">orderId03       50.00   john    itemId5 Huawei  30</span><br><span class="line">orderId03       50.00   john    itemId6 Vivo    10</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单实现MapReduce join 表连接操作，主要还是表达，灵活使用Mapreduce以及后续理解Hive。Hive当中的所有sql都是转换成一个一个MapReduce任务来实现的。</p>
-<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/mapreduce" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/mapreduce</a></p>
-<p><a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html">MapReduce WordCount</a></p>
-<p><a href="/2018/10/06/big-data/Hadoop集群安装.html">Hadoop集群安装</a></p>
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。</p>
+<p>我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。</p>
+<a id="more"></a>
+<h2 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h2><p>​    时间复杂度，一个方法或者程序重复执行计算的时间工作量。一般情况下，<font color="red">算法中基本操作重复执行的次数是问题规模n的某个函数f(n)</font>，进而分析f(n)随n的变化情况并确定T(n)的数量级。这里用”O”来表示数量级，给出算法的时间复杂度。</p>
+<p>​                     T(n)=O(f(n)) 简称<font color="red">推导大O阶法</font></p>
+<p>​    它表示随着问题规模的n的增大，算法的执行时间的增长率和f(n)的增长率相同，这称作算法的渐进时间复杂度，简称时间复杂度。而我们一般讨论的是<font color="red">最坏时间复杂度</font>，这样做的原因是：最坏情况下的时间复杂度是算法在任何输入实例上运行时间的上界，分析最坏的情况以估算算法指向时间的一个上界。</p>
+<p><strong>按增量递增复杂度排列时间从小到大依次是</strong>：</p>
+<script type="math/tex; mode=display">
+O(1) < O(log_2n) < O(n) < O(n*lon_2n) < O(n^2) < O(n^3)</script><ul>
+<li><p><strong>常数阶 <code>O(1)</code></strong> </p>
+<p>不管当n是多少，只运行2次，那么时间复杂度就是<code>O(2)</code>,取为<code>O(1)</code>。这个算法的运行次数函数是<code>f(n) = 2</code>.根据我们推导的大O阶的方法，第一步就是把常数项2改为1,。在保留最高阶项时发现，它根本没有最高阶项，所以这个算法的时间复杂度为<code>O(1)</code>。 </p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">constantTime</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(1)</span></span><br><span class="line">  <span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  <span class="comment">/*执行一次*/</span></span><br><span class="line">  sum = (<span class="number">1</span> + n) * n / <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  printf(<span class="string">"%d"</span>,sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>对数阶 <code>O(log2n)</code></strong> </p>
+<p>由于每次count乘以2之后，就距离n更近了一分。也就是说，有多少个2相乘后大于n，则会退出循环。由2的x次方=n，得到<code>x=log₂n</code>。所以这个循环的时间复杂度为<code>O(logn)</code>。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(log2n)</span></span><br><span class="line">  <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">    count *= <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>线性阶 <code>O(n)</code></strong> </p>
+<p>线性阶的循环结构会复杂很多。要确定某个算法的阶次，我们常常需要确定某个特定语句或某个语句集运行的次数。因此，我们要分析算法的复杂度，关键就是要分析循环结构的运行情况。<br>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，因为循环体中的代码必须要执行n次。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    printf(<span class="string">"%d "</span>,i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>线性对数阶 <code>O(n * log2n)</code></strong></p>
+<p>下面这段代码，它的循环的时间复杂度为<code>O(n)</code>，但是循环里面有又有一个对数阶<code>O(log2n)</code>，因为循环体中的代码必须要执行<code>n * log2n</code>次，即它的最终时间复杂度<code>O(n * log2n)</code></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nlog2n</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n * log2n)</span></span><br><span class="line">  <span class="keyword">val</span> n = <span class="number">1000</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">1</span> until n)&#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(count &lt; n)&#123;</span><br><span class="line">      count *= <span class="number">2</span></span><br><span class="line">      printf(<span class="string">"%d "</span>,i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>平方阶 <code>O(n^2)</code></strong></p>
+<p>两次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^2)</code>,立方阶一样</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n2</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^2)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> until n)&#123;</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>立方阶 <code>O(n^3)</code></strong></p>
+<p>三次循环，里面循环执行了n次，外层循环也执行了n次，所以时间复杂度为<code>O(n^3)</code>,立方阶一样</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">n3</span></span>(): <span class="type">Unit</span> =&#123;</span><br><span class="line">  <span class="comment">//时间复杂度O(n^3)</span></span><br><span class="line">  <span class="keyword">val</span> n=<span class="number">10</span></span><br><span class="line">  <span class="keyword">for</span> (i &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">    <span class="keyword">for</span>(j &lt;- <span class="number">0</span> to n)&#123;</span><br><span class="line">      <span class="keyword">for</span>(k &lt;- <span class="number">0</span> to(n))</span><br><span class="line">      printf(<span class="string">"%d"</span>, i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h2><p>算法需要消耗的内存空间。即为<code>S(n)=O(f(n))</code>;包括程序代码所占用的空间，输入数据所占用的空间和辅助变量所占用的空间这三个方面。计算和表达方式与时间复杂度类似，一般用复杂度的渐近性来表示。我们在写代码的时候，完全可以用空间来换取时间，<font color="red">比如说，数据库的索引，都是在元数据的基础上构建庞大的索引存储，已达到提供查询的效率，又或者数据库表设计冗余字段等都是已空间来换取时间到达目的。</font></p>
+<blockquote>
+<p>关于<code>O(1)</code>的问题， <code>O(1)</code>是说数据规模和临时变量数目无关，并不是说仅仅定义一个临时变量。举例：无论数据规模多大，我都定义100个变量，这就叫做数据规模和临时变量数目无关。就是说空间复杂度是<code>O(1)</code>。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>代码示例地址</strong></p>
+<p><a href="https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm" target="_blank" rel="noopener">https://github.com/lishijia/algorithm/tree/master/src/main/scala/lishijia/algorithm</a></p>
+<p><strong>算法时间空间复杂度汇总</strong></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/0HkIk3b9Fj.png?imageslim" alt=""></p>
 
         
         </div>
@@ -453,7 +482,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.github.io/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" data-id="cjn0fqw9i0004qkqgzwohh7u8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html" data-id="cjn4q6fng00013cqgxna8yla4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -521,7 +550,7 @@
 
             
     
-        <a href="http://lishijia.github.io/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -530,11 +559,15 @@
         
 <nav id="article-nav">
     
-    
-        <a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">MapReduce WordCount 入门 Python（一）</div>
+        <a href="/2018/09/30/algorithm/skip-list.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    跳跃表(skip-list)
+                
+            </div>
         </a>
+    
     
 </nav>
 
@@ -589,7 +622,26 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" class="thumbnail">
+                            <a href="/2018/10/11/big-data/hive-install.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
+                            <p class="item-title"><a href="/2018/10/11/big-data/hive-install.html" class="title">Hive 安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/11/big-data/mapreduce-3.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -600,7 +652,26 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/08/big-data/MapReduce Join 连接 Python （二）.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
+                            <p class="item-title"><a href="/2018/10/11/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
+                            <p class="item-date"><time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/08/big-data/mapreduce-2.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
+                            <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
                             <p class="item-date"><time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time></p>
                         </div>
                     </li>
@@ -608,7 +679,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" class="thumbnail">
+                            <a href="/2018/10/07/big-data/mapreduce-1.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -619,7 +690,7 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/07/big-data/MapReduce WordCount 入门 Python（一）.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
+                            <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
                             <p class="item-date"><time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
@@ -627,7 +698,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/Hadoop集群安装.html" class="thumbnail">
+                            <a href="/2018/10/06/big-data/hadoop-install.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -638,46 +709,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/Hadoop集群安装.html" class="title">Hadoop集群安装</a></p>
+                            <p class="item-title"><a href="/2018/10/06/big-data/hadoop-install.html" class="title">Hadoop2.7.2集群安装</a></p>
                             <p class="item-date"><time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/虚拟机/">虚拟机</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/Centos虚拟机安装-NAT网络配置.html" class="title">Centos虚拟机安装&amp;NAT网络配置</a></p>
-                            <p class="item-date"><time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
-                            <p class="item-title"><a href="/2018/09/29/algorithm/跳跃表(skip-list).html" class="title">跳跃表(skip-list)</a></p>
-                            <p class="item-date"><time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time></p>
                         </div>
                     </li>
                 
@@ -690,7 +723,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -699,7 +732,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -708,7 +741,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/MapReduce/" style="font-size: 15px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 15px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 
