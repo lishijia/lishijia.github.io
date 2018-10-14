@@ -2,30 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://lishijia.top/2018/10/11/big-data/hive-install.html</loc>
+    <loc>http://lishijia.top/2018/10/12/big-data/hive-1.html</loc>
     
-    <lastmod>2018-10-11T15:16:26.313Z</lastmod>
+    <lastmod>2018-10-14T03:09:56.793Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://lishijia.top/2018/10/11/big-data/mapreduce-3.html</loc>
+    <loc>http://lishijia.top/2018/10/13/big-data/hive-2.html</loc>
     
-    <lastmod>2018-10-11T14:18:42.966Z</lastmod>
+    <lastmod>2018-10-14T03:04:32.995Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lishijia.top/2018/10/10/big-data/mapreduce-3.html</loc>
+    
+    <lastmod>2018-10-14T01:30:17.710Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://lishijia.top/2018/10/08/big-data/mapreduce-2.html</loc>
     
-    <lastmod>2018-10-11T14:18:32.608Z</lastmod>
+    <lastmod>2018-10-14T01:30:17.708Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://lishijia.top/2018/10/07/big-data/mapreduce-1.html</loc>
     
-    <lastmod>2018-10-11T14:18:19.286Z</lastmod>
+    <lastmod>2018-10-14T01:30:17.705Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lishijia.top/2018/10/06/big-data/centos-nat.html</loc>
+    
+    <lastmod>2018-10-14T01:30:17.700Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://lishijia.top/2018/09/30/algorithm/skip-list.html</loc>
+    
+    <lastmod>2018-10-14T01:30:17.697Z</lastmod>
     
   </url>
   
@@ -40,20 +61,6 @@
     <loc>http://lishijia.top/about/index.html</loc>
     
     <lastmod>2018-10-11T13:11:30.281Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lishijia.top/2018/10/06/big-data/centos-nat.html</loc>
-    
-    <lastmod>2018-10-11T13:11:30.265Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://lishijia.top/2018/09/30/algorithm/skip-list.html</loc>
-    
-    <lastmod>2018-10-11T13:11:30.264Z</lastmod>
     
   </url>
   

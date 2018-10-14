@@ -146,7 +146,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                8
+                9
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -175,7 +175,7 @@
 
             
             <section id="main">
-    <article id="post-big-data/hive-install" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-big-data/hive-2" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -183,7 +183,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/10/11/big-data/hive-install.html" href="/2018/10/11/big-data/hive-install.html">Hive 安装配置 &amp; 简单使用</a>
+            <a class="article-title leancloud_visitors" title="/2018/10/13/big-data/hive-2.html" href="/2018/10/13/big-data/hive-2.html">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</a>
         </h1>
     
 
@@ -192,8 +192,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/11/big-data/hive-install.html">
-            <time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time>
+        <a href="/2018/10/13/big-data/hive-2.html">
+            <time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time>
         </a>
     </div>
 
@@ -212,14 +212,14 @@
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/11/big-data/hive-install.html">
+    <a href="/2018/10/13/big-data/hive-2.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/11/big-data/hive-install.html#comments">
+    <a href="/2018/10/13/big-data/hive-2.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -231,10 +231,10 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181011/64la060adj.jpg?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hive一个执行在Hadoop集群之上的Sql引擎工具，它提供类似Sql的编写方式进行对Hadoop HDFS上的文件进行查询统计。接下来我们将安装配置Hive及简单使用</p></p>
+            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181013/65D0Ib6ja1.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hive提供类似Sql的查询语句，那么join在实际工作中可能是使用最多的地方，大多数业务都是关联查询的。下面将介绍john的优化，以及udf自定义函数配置使用。</p></p>
             <p class="article-more-link">
-                <a href="/2018/10/11/big-data/hive-install.html#more">查看更多</a>
+                <a href="/2018/10/13/big-data/hive-2.html#more">查看更多</a>
             </p>
         
         </div>
@@ -245,7 +245,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/11/big-data/hive-install.html" data-id="cjn4qaoni0007acqgrdvclex3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/13/big-data/hive-2.html" data-id="cjn8akwe5000c80qg8kvxm30h" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -313,7 +313,155 @@
 
             
     
-        <a href="http://lishijia.top/2018/10/11/big-data/hive-install.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/13/big-data/hive-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-big-data/hive-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/12/big-data/hive-1.html" href="/2018/10/12/big-data/hive-1.html">Hive 安装配置 &amp; 简单使用</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/12/big-data/hive-1.html">
+            <time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Hive/">Hive</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/12/big-data/hive-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/12/big-data/hive-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181011/64la060adj.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hive一个执行在Hadoop集群之上的Sql引擎工具，它提供类似Sql的编写方式进行对Hadoop HDFS上的文件进行查询统计。接下来我们将安装配置Hive及简单使用</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/12/big-data/hive-1.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/12/big-data/hive-1.html" data-id="cjn8akwe4000b80qgdmo75yw4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/12/big-data/hive-1.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -331,7 +479,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/10/11/big-data/mapreduce-3.html" href="/2018/10/11/big-data/mapreduce-3.html">MapReduce 执行过程原理（三）</a>
+            <a class="article-title leancloud_visitors" title="/2018/10/10/big-data/mapreduce-3.html" href="/2018/10/10/big-data/mapreduce-3.html">MapReduce 执行过程原理（三）</a>
         </h1>
     
 
@@ -340,8 +488,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/11/big-data/mapreduce-3.html">
-            <time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time>
+        <a href="/2018/10/10/big-data/mapreduce-3.html">
+            <time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time>
         </a>
     </div>
 
@@ -360,14 +508,14 @@
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/11/big-data/mapreduce-3.html">
+    <a href="/2018/10/10/big-data/mapreduce-3.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/11/big-data/mapreduce-3.html#comments">
+    <a href="/2018/10/10/big-data/mapreduce-3.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -383,7 +531,7 @@
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。</p>
 <p>以下我们将了解MapReduce运行原理及过程。</p></p>
             <p class="article-more-link">
-                <a href="/2018/10/11/big-data/mapreduce-3.html#more">查看更多</a>
+                <a href="/2018/10/10/big-data/mapreduce-3.html#more">查看更多</a>
             </p>
         
         </div>
@@ -394,7 +542,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/11/big-data/mapreduce-3.html" data-id="cjn4qaonn000gacqgdp3g46u5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjn8akwe7000g80qg7k2q69w8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -462,7 +610,7 @@
 
             
     
-        <a href="http://lishijia.top/2018/10/11/big-data/mapreduce-3.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -490,7 +638,7 @@
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
         <a href="/2018/10/08/big-data/mapreduce-2.html">
-            <time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time>
+            <time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time>
         </a>
     </div>
 
@@ -542,7 +690,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html" data-id="cjn4qaonl000cacqgiti22quq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html" data-id="cjn8akwe9000j80qgnxr57t02" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -638,7 +786,7 @@
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
         <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time>
+            <time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time>
         </a>
     </div>
 
@@ -690,7 +838,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjn4qaonj000bacqgo7mm5wbl" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjn8akwe2000780qg8wsqd7ld" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -838,7 +986,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjn4qaon60002acqgp08nyyjm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjn8akwe0000580qgz234y0wz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -934,7 +1082,7 @@
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
         <a href="/2018/10/06/big-data/centos-nat.html">
-            <time datetime="2018-10-06T02:26:00.000Z" itemprop="datePublished">2018-10-06</time>
+            <time datetime="2018-10-06T02:26:12.000Z" itemprop="datePublished">2018-10-06</time>
         </a>
     </div>
 
@@ -986,7 +1134,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/06/big-data/centos-nat.html" data-id="cjn4qaong0006acqgo6sh53h3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/06/big-data/centos-nat.html" data-id="cjn8akwdx000280qgjvqsq5dv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1082,7 +1230,7 @@
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
         <a href="/2018/09/30/algorithm/skip-list.html">
-            <time datetime="2018-09-30T14:57:00.000Z" itemprop="datePublished">2018-09-30</time>
+            <time datetime="2018-09-30T15:12:32.000Z" itemprop="datePublished">2018-09-30</time>
         </a>
     </div>
 
@@ -1134,7 +1282,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/09/30/algorithm/skip-list.html" data-id="cjn4qaonf0005acqges9lbo0o" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/09/30/algorithm/skip-list.html" data-id="cjn8akwe1000680qgu81t2l9e" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1283,7 +1431,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html" data-id="cjn4qaon30001acqgfrdhc4r6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html" data-id="cjn8akwdp000180qgzhwbv23y" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1559,6 +1707,20 @@
         var comment = new leanCloudComment()._initCommentToIndex('Comment');
     });
 </script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 </section>
             
                 
@@ -1573,7 +1735,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/11/big-data/hive-install.html" class="thumbnail">
+                            <a href="/2018/10/13/big-data/hive-2.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1584,15 +1746,34 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
-                            <p class="item-title"><a href="/2018/10/11/big-data/hive-install.html" class="title">Hive 安装配置 &amp; 简单使用</a></p>
-                            <p class="item-date"><time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                            <p class="item-title"><a href="/2018/10/13/big-data/hive-2.html" class="title">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</a></p>
+                            <p class="item-date"><time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/11/big-data/mapreduce-3.html" class="thumbnail">
+                            <a href="/2018/10/12/big-data/hive-1.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
+                            <p class="item-title"><a href="/2018/10/12/big-data/hive-1.html" class="title">Hive 安装配置 &amp; 简单使用</a></p>
+                            <p class="item-date"><time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/10/big-data/mapreduce-3.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1603,8 +1784,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/11/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
-                            <p class="item-date"><time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                            <p class="item-title"><a href="/2018/10/10/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
+                            <p class="item-date"><time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time></p>
                         </div>
                     </li>
                 
@@ -1623,7 +1804,7 @@
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
                             <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
-                            <p class="item-date"><time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time></p>
+                            <p class="item-date"><time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time></p>
                         </div>
                     </li>
                 
@@ -1642,26 +1823,7 @@
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
                             <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
-                            <p class="item-date"><time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/hadoop-install.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/hadoop-install.html" class="title">Hadoop2.7.2集群安装</a></p>
-                            <p class="item-date"><time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time></p>
+                            <p class="item-date"><time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
                 
@@ -1674,7 +1836,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1683,7 +1845,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1692,7 +1854,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 

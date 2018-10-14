@@ -9,12 +9,12 @@
 <meta name="keywords" content="Hive">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hive 安装配置 &amp; 简单使用">
-<meta property="og:url" content="http://lishijia.top/2018/10/11/big-data/hive-install.html">
+<meta property="og:url" content="http://lishijia.top/2018/10/12/big-data/hive-1.html">
 <meta property="og:site_name" content="李世佳的博客">
 <meta property="og:description" content="前言Hive一个执行在Hadoop集群之上的Sql引擎工具，它提供类似Sql的编写方式进行对Hadoop HDFS上的文件进行查询统计。接下来我们将安装配置Hive及简单使用">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181011/64la060adj.jpg?imageslim">
-<meta property="og:updated_time" content="2018-10-11T15:16:26.313Z">
+<meta property="og:updated_time" content="2018-10-14T03:09:56.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hive 安装配置 &amp; 简单使用">
 <meta name="twitter:description" content="前言Hive一个执行在Hadoop集群之上的Sql引擎工具，它提供类似Sql的编写方式进行对Hadoop HDFS上的文件进行查询统计。接下来我们将安装配置Hive及简单使用">
@@ -153,7 +153,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                8
+                9
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -371,14 +371,14 @@
         return constructor;
     })()
 </script>
-<article id="post-big-data/hive-install" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-big-data/hive-1" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 class="article-title leancloud_visitors" title="/2018/10/11/big-data/hive-install.html" itemprop="name">
+        <h1 class="article-title leancloud_visitors" title="/2018/10/12/big-data/hive-1.html" itemprop="name">
             Hive 安装配置 &amp; 简单使用
         </h1>
     
@@ -388,8 +388,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/11/big-data/hive-install.html">
-            <time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time>
+        <a href="/2018/10/12/big-data/hive-1.html">
+            <time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time>
         </a>
     </div>
 
@@ -408,14 +408,14 @@
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/11/big-data/hive-install.html">
+    <a href="/2018/10/12/big-data/hive-1.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/11/big-data/hive-install.html#comments">
+    <a href="/2018/10/12/big-data/hive-1.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -484,10 +484,13 @@
 </ul>
 <h2 id="Hive简单使用"><a href="#Hive简单使用" class="headerlink" title="Hive简单使用"></a>Hive简单使用</h2><p>在master201输入hive命令进入sql命令控制台</p>
 <ul>
+<li><p>Hive命令行输出不显示列名，或者显示的列名带表名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">hive&gt;</span> set hive.cli.print.header=true;</span><br><span class="line"></span><br><span class="line">控制不显示表名</span><br><span class="line"><span class="meta">hive&gt;</span> set hive.resultset.use.unique.column.names=false;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>创建数据库</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; create database lishijia;</span><br><span class="line">hive&gt; show databases;</span><br><span class="line">OK</span><br><span class="line">default</span><br><span class="line">lishijia</span><br><span class="line">Time taken: 0.049 seconds, Fetched: 2 row(s)</span><br><span class="line">hive&gt; use lishijia;</span><br><span class="line">OK</span><br><span class="line">Time taken: 0.05 seconds</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>创建表（默认内部表）</p>
+<li><p>创建表（默认内部表，删除表hdfs数据同步删除）</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; create table st_article(sentence string) ROW FORMAT DELIMITED lines terminated by '\n';</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>导入数据（本地数据）</p>
@@ -499,6 +502,12 @@
 <li><p>查看数据文件存放目录</p>
 <p>以下的/user/hive/warehouse目录是默认的，也可以在hive-site.xml当中指定</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 hive]# hadoop fs -ls /</span><br><span class="line">Found 3 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-07 21:16 /lishijia</span><br><span class="line">drwx------   - root supergroup          0 2018-10-11 22:57 /tmp</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-11 23:00 /user</span><br><span class="line">[root@master201 hive]# hadoop fs -ls /user/hive/</span><br><span class="line">Found 1 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-11 23:12 /user/hive/warehouse</span><br><span class="line">[root@master201 hive]# hadoop fs -ls /user/hive/warehouse</span><br><span class="line">Found 1 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-11 23:11 /user/hive/warehouse/lishijia.db</span><br><span class="line">[root@master201 hive]# hadoop fs -ls /user/hive/warehouse/lishijia.db</span><br><span class="line">Found 1 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-11 23:11 /user/hive/warehouse/lishijia.db/st_article</span><br><span class="line">[root@master201 hive]# hadoop fs -ls /user/hive/warehouse/lishijia.db/st_article</span><br><span class="line">Found 1 items</span><br><span class="line">-rwxr-xr-x   2 root supergroup     632209 2018-10-11 23:11 /user/hive/warehouse/lishijia.db/st_article/the_man_of_property.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外部表创建（外部表，删除表hdfs数据照样保留）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">external</span> <span class="keyword">table</span> st_article_ext(sentence <span class="keyword">string</span>)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\n'</span></span><br><span class="line"><span class="keyword">stored</span> <span class="keyword">as</span> textfile location <span class="string">'/lishijia/input/the_man_of_property.txt'</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Hive创建分区表（hdfs存储会根据dt字段创建不同的目录）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> st_article_partion(sentence <span class="keyword">string</span>)</span><br><span class="line">partitioned <span class="keyword">by</span>(dt <span class="keyword">string</span>)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\n'</span>;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上完成了mysql hive的安装，以及hive的基本使用方法。</p>
@@ -513,7 +522,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/11/big-data/hive-install.html" data-id="cjn4qaoni0007acqgrdvclex3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/12/big-data/hive-1.html" data-id="cjn8akwe4000b80qgdmo75yw4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -581,7 +590,7 @@
 
             
     
-        <a href="http://lishijia.top/2018/10/11/big-data/hive-install.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/12/big-data/hive-1.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -590,8 +599,17 @@
         
 <nav id="article-nav">
     
+        <a href="/2018/10/13/big-data/hive-2.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)
+                
+            </div>
+        </a>
     
-        <a href="/2018/10/11/big-data/mapreduce-3.html" id="article-nav-older" class="article-nav-link-wrap">
+    
+        <a href="/2018/10/10/big-data/mapreduce-3.html" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
             <div class="article-nav-title">MapReduce 执行过程原理（三）</div>
         </a>
@@ -635,6 +653,20 @@
 
         var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 
@@ -649,7 +681,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/11/big-data/hive-install.html" class="thumbnail">
+                            <a href="/2018/10/13/big-data/hive-2.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -660,15 +692,34 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
-                            <p class="item-title"><a href="/2018/10/11/big-data/hive-install.html" class="title">Hive 安装配置 &amp; 简单使用</a></p>
-                            <p class="item-date"><time datetime="2018-10-11T14:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                            <p class="item-title"><a href="/2018/10/13/big-data/hive-2.html" class="title">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</a></p>
+                            <p class="item-date"><time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/10/11/big-data/mapreduce-3.html" class="thumbnail">
+                            <a href="/2018/10/12/big-data/hive-1.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
+                            <p class="item-title"><a href="/2018/10/12/big-data/hive-1.html" class="title">Hive 安装配置 &amp; 简单使用</a></p>
+                            <p class="item-date"><time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/10/big-data/mapreduce-3.html" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -679,8 +730,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/11/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
-                            <p class="item-date"><time datetime="2018-10-11T10:30:00.000Z" itemprop="datePublished">2018-10-11</time></p>
+                            <p class="item-title"><a href="/2018/10/10/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
+                            <p class="item-date"><time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time></p>
                         </div>
                     </li>
                 
@@ -699,7 +750,7 @@
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
                             <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
-                            <p class="item-date"><time datetime="2018-10-08T15:30:00.000Z" itemprop="datePublished">2018-10-08</time></p>
+                            <p class="item-date"><time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time></p>
                         </div>
                     </li>
                 
@@ -718,26 +769,7 @@
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
                             <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
-                            <p class="item-date"><time datetime="2018-10-07T14:30:00.000Z" itemprop="datePublished">2018-10-07</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/06/big-data/hadoop-install.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/10/06/big-data/hadoop-install.html" class="title">Hadoop2.7.2集群安装</a></p>
-                            <p class="item-date"><time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time></p>
+                            <p class="item-date"><time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
                 
@@ -750,7 +782,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -759,7 +791,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -768,7 +800,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 10px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 

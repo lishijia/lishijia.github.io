@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务) | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言Hive提供类似Sql的查询语句，那么join在实际工作中可能是使用最多的地方，大多数业务都是关联查询的。下面将介绍john的优化，以及udf自定义函数配置使用。">
+<meta name="keywords" content="Hive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)">
+<meta property="og:url" content="http://lishijia.top/2018/10/13/big-data/hive-2.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言Hive提供类似Sql的查询语句，那么join在实际工作中可能是使用最多的地方，大多数业务都是关联查询的。下面将介绍john的优化，以及udf自定义函数配置使用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181013/65D0Ib6ja1.jpg?imageslim">
+<meta property="og:updated_time" content="2018-10-14T03:04:32.995Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)">
+<meta name="twitter:description" content="前言Hive提供类似Sql的查询语句，那么join在实际工作中可能是使用最多的地方，大多数业务都是关联查询的。下面将介绍john的优化，以及udf自定义函数配置使用。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181013/65D0Ib6ja1.jpg?imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                9
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                7
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-big-data/hive-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/13/big-data/hive-2.html" itemprop="name">
+            Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/13/big-data/hive-2.html">
+            <time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Hive/">Hive</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/13/big-data/hive-2.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/13/big-data/hive-2.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181013/65D0Ib6ja1.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hive提供类似Sql的查询语句，那么join在实际工作中可能是使用最多的地方，大多数业务都是关联查询的。下面将介绍john的优化，以及udf自定义函数配置使用。</p>
+<a id="more"></a>
+<h2 id="Hive-数据准备"><a href="#Hive-数据准备" class="headerlink" title="Hive 数据准备"></a>Hive 数据准备</h2><p>代码(Java): <a href="https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo" target="_blank" rel="noopener">https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lsj_order(</span><br><span class="line">    order_id <span class="keyword">string</span>,</span><br><span class="line">    amount <span class="keyword">string</span>,</span><br><span class="line">    user_name <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\n'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lsj_item(</span><br><span class="line">    order_id <span class="keyword">string</span>,</span><br><span class="line">    price <span class="keyword">string</span>,</span><br><span class="line">    product <span class="keyword">string</span>,</span><br><span class="line">    item_id <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\n'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lsj_item_delivery(</span><br><span class="line">    order_id <span class="keyword">string</span>,</span><br><span class="line">    item_id <span class="keyword">string</span>,</span><br><span class="line">    <span class="keyword">status</span> <span class="keyword">string</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">row</span> <span class="keyword">format</span> <span class="keyword">delimited</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\n'</span>;</span><br><span class="line"></span><br><span class="line">hive&gt; load data local inpath '/home/lishijia/Documents/hive/order' overwrite into table lsj_order;</span><br><span class="line">hive&gt; load data local inpath '/home/lishijia/Documents/hive/item' overwrite into table lsj_item;</span><br><span class="line">hive&gt; load data local inpath '/home/lishijia/Documents/hive/delivery' overwrite into table lsj_item_delivery;</span><br></pre></td></tr></table></figure>
+<h2 id="Hive-Join-优化"><a href="#Hive-Join-优化" class="headerlink" title="Hive Join 优化"></a>Hive Join 优化</h2><ul>
+<li><p><strong>生成一个Mapreduce Job</strong></p>
+<p>多表连接如果每个表中连接列出现在join on当中都相同，那么则只会生成一个MR Job。即三个表lsj_order、lsj_item、lsj_item_delivery都分别使用order_id字段进行连接，从而就只会生成一个MR Job。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> o.user_name, i.product, d.status <span class="keyword">from</span> lsj_order o <span class="keyword">join</span> lsj_item i <span class="keyword">on</span> o.order_id = i.order_id <span class="keyword">join</span> lsj_item_delivery d <span class="keyword">on</span> d.order_id = i.order_id;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>生成两个Mapredcue Job</strong></p>
+<p>多表连接，如果多表中，其中存在一个表使用了至少2个字段进行连接（同一个表的至少2个列出现在JOIN子句中），则会至少生成2个MR Job，三个表基于2个字段进行连接，这两个字段o.order_id和i.order_id同时出现在lsj_item表中。连接的过程是这样的：首先lsj_order和lsj_item表基于o.order_id和i.order_id进行连接，对应着第一个MR Job；表lsj_order和lsj_item连接的结果，再和lsj_item_delivery进行连接，对应着第二个MR Job。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> o.user_name, i.product, d.status <span class="keyword">from</span> lsj_order o <span class="keyword">join</span> lsj_item i <span class="keyword">on</span> o.order_id = i.order_id <span class="keyword">join</span> lsj_item_delivery d <span class="keyword">on</span> d.item_id = i.item_id;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>并行执行</strong></p>
+<p>同步执行hive的多个阶段，hive只执行过程中，将一个查询转化为一个或者多个阶段，某个特定的Job可能包含多个阶段，但是这些阶段并非相互完全依赖，也就是说可以并行的执行对应的阶段，这样可能使得整个Job执行时间缩短从而提醒执行效率。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; set hive.exec.parallel=true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>基于条件的LEFT OUTER JOIN优化</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> o.user_name, i.product <span class="keyword">from</span> lsj_order o </span><br><span class="line"><span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> lsj_item i <span class="keyword">on</span> o.order_id = i.order_id <span class="keyword">join</span></span><br><span class="line"><span class="keyword">where</span> i.product = <span class="string">'mac'</span></span><br></pre></td></tr></table></figure>
+<p>执行顺序是，首先完成2表JOIN，然后再通过WHERE条件进行过滤，这样在JOIN过程中可能会输出大量结果，再对这些结果进行过滤，比较耗时。可以进行优化，将WHERE条件放在ON后，在JOIN的过程中，就对不满足条件的记录进行了预先过滤，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select o.user_name, i.product from lsj_order o </span><br><span class="line">left outer join lsj_item i on (o.order_id = i.order_id join and i.product = &apos;mac&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>表连接顺序</strong></p>
+<p>Hive在进行表连接的过程中，是会转换成多个Mapreduce Job，每一个Job在Hive中称之为Stage（阶段），执行每个Stage，按照Join顺序最后一个表应该是连接表当中最大的一个表。为什么呢？因为Join前一个Stage生成的数据会缓存在Reduce的Buffer当中，然后与下个Stage做Join的时候，那么就直接从上一个Stage Reduce的Buffer中读取缓存的中间结果数据（lsj_order join  lsj_item结果数据，相对来说数据过滤一遍后会比较小）这样与后面的大表lsj_comment(评分表)进行连接，速度会更快也可能会必变缓冲区内存溢写（磁盘io）。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> o.user_name, i.product, d.status <span class="keyword">from</span> lsj_order o <span class="keyword">join</span> lsj_item i <span class="keyword">on</span> o.order_id = i.order_id <span class="keyword">join</span> lsj_comment c <span class="keyword">on</span> c.order_id = i.order_id;</span><br></pre></td></tr></table></figure>
+<p>这个Join语句，会生成一个MR Job，在选择Join顺序的时候，数据量相比应该是lsj_item &lt; lsj_comment，表lsj_order和lsj_item基于o.order_id= i.order_id进行连接，得到的结果（基于lsj_order和lsj_item 进行连接的order_id）会在Reducer上缓存在buffer中，在与lsj_comment进行连接时，从buffer中读取Key（o.order_id=i.order_id）来与表lsj_comment的c.order_id进行连接。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="comment">/*+ STREAMTABLE(lsj_order) */</span> o.user_name, i.product, d.status <span class="keyword">from</span> lsj_order o <span class="keyword">join</span> lsj_item i <span class="keyword">on</span> o.order_id = i.order_id <span class="keyword">join</span> lsj_comment c <span class="keyword">on</span> c.order_id = i.order_id;</span><br></pre></td></tr></table></figure>
+<p>上述Join语句中，lsj_order表被视为大表，则首先会对表lsj_item和lsj_comment进行Join，然后再将得到的结果与表lsj_order进行Join。</p>
+</li>
+<li><p><strong>大大表关联（根据业务优化）</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> t_log t <span class="keyword">join</span> t_user t1 <span class="keyword">on</span> t.user_id=t1.user_id</span><br></pre></td></tr></table></figure>
+<p>举例：两个表都上千万</p>
+<p>分析：t_log千万的数据，但是可能实际用户只有10万。</p>
+<p>优化如下：先通过t_log得到一个小表，然后在根据这个表与t_user表在得到一个最终的user小表，最终在join（理念就是拆分，让小表与大表join，而不是直接让两个大表直接join）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select /*MAPJOIN(t12)*/ * from t_log t11 join (</span><br><span class="line">	select /*MAPJOIN(t)*/ t1.* from (</span><br><span class="line">		select distinct user_id from t_log</span><br><span class="line">	) t </span><br><span class="line">	join t_user t1 on t.user_id = t1.user_id</span><br><span class="line">) t12 on t11.user_id=t12.user_id</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Hive-udf配置使用"><a href="#Hive-udf配置使用" class="headerlink" title="Hive udf配置使用"></a>Hive udf配置使用</h2><ul>
+<li><p>Java版Hive Udf代码&amp;使用</p>
+<p>代码(Java): <a href="https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo" target="_blank" rel="noopener">https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo</a></p>
+<p>Pom库依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hive<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hive-exec<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Java代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.data.hive;</span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.hive.ql.exec.UDF;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: lishijia</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2018/10/13 11:06</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UpperCassUDF</span> <span class="keyword">extends</span> <span class="title">UDF</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">evaluate</span><span class="params">(String input)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (input == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(input.toUpperCase());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Maven编译jar包，并且上传至服务器，然后put至hdfs一个临时目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 bin]# hadoop fs -mkdir /lishijia/hive/udf/</span><br><span class="line">[root@hadoop100 hive]# hadoop fs -put hive-data-demo-1.0-SNAPSHOT.jar /lishijia/hive/udf/</span><br></pre></td></tr></table></figure>
+<p>切换到hive命令控制台使用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; add jar hdfs:////lishijia/hive/udf/hive-data-demo-1.0-SNAPSHOT.jar;</span><br><span class="line">hive&gt; create temporary function toupper as 'lishijia.data.hive.UpperCassUDF';</span><br><span class="line">hive&gt; show functions;</span><br><span class="line">可以查看到添加名称为toupper的function方法，然后通过下面的方式直接使用即可</span><br><span class="line">hive&gt; select toupper(product) from lsj_item;</span><br><span class="line">MAC</span><br><span class="line">IPHONE</span><br><span class="line">XIAOMI</span><br><span class="line">HUAWEI</span><br><span class="line">HUAWEI</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python版Hive Udf代码&amp;使用</p>
+<p>代码(Python): <a href="https://github.com/lishijia/py-data-demo/tree/master/hive" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/hive</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># python udf function for hive</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">    tmp_line = line.upper()</span><br><span class="line">    <span class="comment"># 增加一个,号使之不换行，要不然在hive 命令控制台的时候，会看到多余的一个空行</span></span><br><span class="line">    <span class="keyword">print</span> tmp_line ,</span><br></pre></td></tr></table></figure>
+<p>上传至服务器，然后put至hdfs一个临时目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 hive]# hadoop fs -put udf-hive.py /lishijia/hive/udf/</span><br></pre></td></tr></table></figure>
+<p>切换到hive命令控制台使用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hive&gt; add file hdfs:////lishijia/hive/udf/udf-hive.py;</span><br><span class="line">hive&gt; select transform(product) using 'python udf-hive.py' as product from lsj_item;</span><br><span class="line">Total MapReduce CPU Time Spent: 1 seconds 50 msec</span><br><span class="line">OK</span><br><span class="line">MAC</span><br><span class="line">IPHONE</span><br><span class="line">XIAOMI</span><br><span class="line">HUAWEI</span><br><span class="line">HUAWEI</span><br><span class="line">Time taken: 14.218 seconds, Fetched: 5 row(s)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Java连接操作Hive-Thrift接口"><a href="#Java连接操作Hive-Thrift接口" class="headerlink" title="Java连接操作Hive(Thrift接口)"></a>Java连接操作Hive(Thrift接口)</h2><ul>
+<li><p>启动hiveserver2(Thrift接口)服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop100 bin]# cd /home/lishijia/Soft/apache-hive-1.2.2/bin</span><br><span class="line">[root@hadoop100 bin]# ./hiveserver2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证测试hiveserver2 beeline 连接测试，如果报以下错误，赋值下权限（通过Beeline命令连接hive）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 bin]# beeline -u jdbc:hive2://master201:10000          </span><br><span class="line">Connecting to jdbc:hive2://master201:10000</span><br><span class="line">Error: Failed to open new session: java.lang.RuntimeException: java.lang.RuntimeException: org.apache.hadoop.security.AccessControlException: Permission denied: user=anonymous, access=EXECUTE, inode="/tmp/hive":root:supergroup:drwx------(state=,code=0)</span><br><span class="line">Beeline version 1.2.2 by Apache Hive</span><br><span class="line">0: jdbc:hive2://master201:10000 (closed)&gt; [root@master201 bin]# </span><br><span class="line">[root@master201 bin]# </span><br><span class="line">[root@master201 bin]# </span><br><span class="line">[root@master201 bin]# hadoop fs -chmod -R 777 /tmp/</span><br><span class="line">[root@master201 bin]# beeline -u jdbc:hive2://master201:10000 </span><br><span class="line">Connecting to jdbc:hive2://master201:10000</span><br><span class="line">Connected to: Apache Hive (version 1.2.2)</span><br><span class="line">Driver: Hive JDBC (version 1.2.2)</span><br><span class="line">Transaction isolation: TRANSACTION_REPEATABLE_READ</span><br><span class="line">Beeline version 1.2.2 by Apache Hive</span><br><span class="line">0: jdbc:hive2://master201:10000&gt; use lishijia;</span><br><span class="line">No rows affected (1.329 seconds)</span><br><span class="line">0: jdbc:hive2://master201:10000&gt; show tables;</span><br><span class="line">+--------------------+--+</span><br><span class="line">|      tab_name      |</span><br><span class="line">+--------------------+--+</span><br><span class="line">| lsj_item           |</span><br><span class="line">| lsj_item_delivery  |</span><br><span class="line">| lsj_order          |</span><br><span class="line">| st_article         |</span><br><span class="line">+--------------------+--+</span><br><span class="line">4 rows selected (0.696 seconds)</span><br><span class="line">0: jdbc:hive2://master201:10000&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Java代码示例</p>
+<p>代码(Java): <a href="https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo" target="_blank" rel="noopener">https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.data.hive;</span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 通过jdbc连接hive对外提供的接口服务（thrift）</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: lishijia</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2018/9/25 16:37</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThirftHiveDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    String driverClass = <span class="string">"org.apache.hive.jdbc.HiveDriver"</span>;</span><br><span class="line">    String url = <span class="string">"jdbc:hive2://master201:10000/lishijia"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> l = System.currentTimeMillis();</span><br><span class="line">        ThirftHiveDemo thirftHiveDemo = <span class="keyword">new</span> ThirftHiveDemo();</span><br><span class="line">        thirftHiveDemo.search();</span><br><span class="line">        System.out.println(System.currentTimeMillis()-l);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">search</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Connection conn = <span class="keyword">null</span>;</span><br><span class="line">        Statement stmt = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            conn = getConn();</span><br><span class="line">            System.out.println(conn);</span><br><span class="line">            stmt = conn.createStatement();</span><br><span class="line">            <span class="comment">// hive表名</span></span><br><span class="line">            String tableName = <span class="string">"lsj_order"</span>;</span><br><span class="line">            String sql = <span class="string">"select * from "</span> + tableName + <span class="string">" limit 10"</span>;</span><br><span class="line">            System.out.println(<span class="string">"Running:"</span> + sql);</span><br><span class="line">            ResultSet res = stmt.executeQuery(sql);</span><br><span class="line">            System.out.println(<span class="string">"执行 select * query 运行结果:"</span>);</span><br><span class="line">            <span class="keyword">while</span> (res.next()) &#123;</span><br><span class="line">                System.out.println(res.getString(<span class="number">1</span>) + <span class="string">"\t"</span> + res.getString(<span class="number">2</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            System.exit(<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            System.exit(<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (stmt != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    stmt.close();</span><br><span class="line">                    stmt = <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    conn.close();</span><br><span class="line">                    conn = <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Connection <span class="title">getConn</span><span class="params">()</span> <span class="keyword">throws</span> ClassNotFoundException,</span></span><br><span class="line"><span class="function">            SQLException </span>&#123;</span><br><span class="line">        Class.forName(driverClass);</span><br><span class="line">        Connection conn = DriverManager.getConnection(url);</span><br><span class="line">        <span class="keyword">return</span> conn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查询结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator\.m2\repository\stax\stax-api\1.0.1\stax-api-1.0.1.jar;C:\Users\Administrator\.m2\repository\jline\jline\2.12\jline-2.12.jar&quot; lishijia.data.hive.ThirftHiveDemo</span><br><span class="line">log4j:WARN No appenders could be found for logger (org.apache.hive.jdbc.Utils).</span><br><span class="line">log4j:WARN Please initialize the log4j system properly.</span><br><span class="line">log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.</span><br><span class="line">org.apache.hive.jdbc.HiveConnection@215be6bb</span><br><span class="line">Running:select * from st_order limit 10</span><br><span class="line">执行 select * query 运行结果:</span><br><span class="line">order_id	user_id</span><br><span class="line">2539329	1</span><br><span class="line">2398795	1</span><br><span class="line">473747	1</span><br><span class="line">2254736	1</span><br><span class="line">431534	1</span><br><span class="line">3367565	1</span><br><span class="line">550135	1</span><br><span class="line">3108588	1</span><br><span class="line">2295261	1</span><br><span class="line">5933</span><br><span class="line"></span><br><span class="line">Process finished with exit code 0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Hive Join连接一些注意事项及优化方法，另外如何自定义函数通过hive的方式使用。最后通过Java代码的方式连接Hive（thrift接口）查询表中的数据。</p>
+<p>代码(Java): <a href="https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo" target="_blank" rel="noopener">https://github.com/lishijia/java-data-demo/tree/master/hive-data-demo</a></p>
+<p>代码(Python): <a href="https://github.com/lishijia/py-data-demo/tree/master/hive" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/hive</a></p>
+<p><a href="2018/10/11/big-data/hive-1.html">Hive 安装配置 &amp; 简单使用</a></p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/13/big-data/hive-2.html" data-id="cjn8akwe5000c80qg8kvxm30h" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/13/big-data/hive-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/12/big-data/hive-1.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Hive 安装配置 &amp; 简单使用</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/13/big-data/hive-2.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
+                            <p class="item-title"><a href="/2018/10/13/big-data/hive-2.html" class="title">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</a></p>
+                            <p class="item-date"><time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/12/big-data/hive-1.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
+                            <p class="item-title"><a href="/2018/10/12/big-data/hive-1.html" class="title">Hive 安装配置 &amp; 简单使用</a></p>
+                            <p class="item-date"><time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/10/big-data/mapreduce-3.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
+                            <p class="item-title"><a href="/2018/10/10/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
+                            <p class="item-date"><time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/08/big-data/mapreduce-2.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
+                            <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
+                            <p class="item-date"><time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/10/07/big-data/mapreduce-1.html" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
+                            <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
+                            <p class="item-date"><time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
