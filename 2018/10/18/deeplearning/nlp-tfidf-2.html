@@ -5,19 +5,19 @@
     
     <title>NLP自然语言 之 TF-IDF（二） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF TF（词频）一个词在文档（文章）中出现的次数  假设一个词很重要应该会在文档（文章）中多次出现 过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助 假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能">
-<meta name="keywords" content="TF-IDF,NLP">
+    <meta name="description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF">
+<meta name="keywords" content="NLP,TF-IDF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NLP自然语言 之 TF-IDF（二）">
 <meta property="og:url" content="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF TF（词频）一个词在文档（文章）中出现的次数  假设一个词很重要应该会在文档（文章）中多次出现 过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助 假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能">
+<meta property="og:description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181018/132IHmb2GL.png?imageslim">
-<meta property="og:updated_time" content="2018-10-18T14:13:03.225Z">
+<meta property="og:updated_time" content="2018-10-18T14:15:37.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP自然语言 之 TF-IDF（二）">
-<meta name="twitter:description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF TF（词频）一个词在文档（文章）中出现的次数  假设一个词很重要应该会在文档（文章）中多次出现 过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助 假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能">
+<meta name="twitter:description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF">
 <meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181018/132IHmb2GL.png?imageslim">
     
 
@@ -430,6 +430,7 @@
             
             <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181018/132IHmb2GL.png?imageslim" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF</p>
+<a id="more"></a>
 <h2 id="TF（词频）"><a href="#TF（词频）" class="headerlink" title="TF（词频）"></a>TF（词频）</h2><p>一个词在文档（文章）中出现的次数</p>
 <ul>
 <li>假设一个词很重要应该会在文档（文章）中多次出现</li>
@@ -477,7 +478,7 @@ TF-IDF=词频（TF）*反文档频率（IDF）</script><h2 id="TF-IDF整体代�
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html" data-id="cjneo21ej0007jwqg8bl7i1tq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html" data-id="cjneo5v4w0006l8qgf9957vi6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
