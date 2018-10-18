@@ -3,23 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MapReduce WordCount 入门 Python（一） | 李世佳的博客</title>
+    <title>NLP自然语言 之 TF-IDF（二） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
-<meta name="keywords" content="MapReduce,Hadoop,Hadoop Streaming">
+    <meta name="description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF TF（词频）一个词在文档（文章）中出现的次数  假设一个词很重要应该会在文档（文章）中多次出现 过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助 假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能">
+<meta name="keywords" content="TF-IDF,NLP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MapReduce WordCount 入门 Python（一）">
-<meta property="og:url" content="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html">
+<meta property="og:title" content="NLP自然语言 之 TF-IDF（二）">
+<meta property="og:url" content="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
+<meta property="og:description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF TF（词频）一个词在文档（文章）中出现的次数  假设一个词很重要应该会在文档（文章）中多次出现 过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助 假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/CkjElclgEE.jpg?imageslim">
-<meta property="og:updated_time" content="2018-10-14T01:30:17.705Z">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181018/132IHmb2GL.png?imageslim">
+<meta property="og:updated_time" content="2018-10-18T14:13:03.225Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MapReduce WordCount 入门 Python（一）">
-<meta name="twitter:description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
-<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
+<meta name="twitter:title" content="NLP自然语言 之 TF-IDF（二）">
+<meta name="twitter:description" content="前言前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF TF（词频）一个词在文档（文章）中出现的次数  假设一个词很重要应该会在文档（文章）中多次出现 过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助 假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181018/132IHmb2GL.png?imageslim">
     
 
     
@@ -372,15 +371,15 @@
         return constructor;
     })()
 </script>
-<article id="post-big-data/mapreduce-1" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-deeplearning/nlp-tfidf-2" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 class="article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" itemprop="name">
-            MapReduce WordCount 入门 Python（一）
+        <h1 class="article-title leancloud_visitors" title="/2018/10/18/deeplearning/nlp-tfidf-2.html" itemprop="name">
+            NLP自然语言 之 TF-IDF（二）
         </h1>
     
 
@@ -389,8 +388,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time>
+        <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
+            <time datetime="2018-10-18T14:09:13.000Z" itemprop="datePublished">2018-10-18</time>
         </a>
     </div>
 
@@ -398,25 +397,25 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
+        <a class="article-category-link" href="/categories/NLP/">NLP</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/TF-IDF/">TF-IDF</a>
     </div>
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html">
+    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
+    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -429,29 +428,45 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>根据已经搭建好的<a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群</a>，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。</p>
-<a id="more"></a>
-<h2 id="MapReduce简介"><a href="#MapReduce简介" class="headerlink" title="MapReduce简介"></a>MapReduce简介</h2><p>MapReduce的Data flow如上图，原始数据经过mapper处理，再进行partition和sort，到达reducer，输出最后结果。</p>
-<h2 id="Hadoop-Streaming简介"><a href="#Hadoop-Streaming简介" class="headerlink" title="Hadoop Streaming简介"></a>Hadoop Streaming简介</h2><p>Hadoop本身是用Java开发的，程序也需要用Java编写，但是通过Hadoop Streaming，我们可以使用任意语言来编写程序，让Hadoop运行。</p>
-<p>Hadoop Streaming的相关源代码可以在<a href="https://github.com/apache/hadoop-common/tree/trunk/hadoop-tools/hadoop-streaming/src/main/java/org/apache/hadoop/streaming" target="_blank" rel="noopener">Hadoop的Github repo</a> 查看。简单来说，就是通过将用其他语言编写的mapper和reducer通过参数传给一个事先写好的Java程序（Hadoop自带的*-streaming.jar），这个Java程序会负责创建MR作业，另开一个进程来运行mapper，将得到的输入通过stdin传给它，再将mapper处理后输出到stdout的数据交给Hadoop，partition和sort之后，再另开进程运行reducer，同样地通过stdin/stdout得到最终结果。因此，我们只需要在其他语言编写的程序里，通过stdin接收数据，再将处理过的数据输出到stdout，Hadoop streaming就能通过这个Java的wrapper帮我们解决中间繁琐的步骤，运行分布式程序。</p>
-<font color="red">当中的STDIN到STDOUT这一块就可以理解为是在Hadoop Streaming当中运行，由Hadoop Streaming提供标准输入与输出，从而达到支持Java以外的语言执行MapReduce</font>
-
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181007/CkjElclgEE.jpg?imageslim" alt="mark"></p>
-<h2 id="Map代码"><a href="#Map代码" class="headerlink" title="Map代码"></a>Map代码</h2><p>首先通过标准输入的方式接收数据，然后循环每一行数据进行过滤拆分，最终输出<key,value>形式，即word，1每遇到一个单词输出。</key,value></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">    ss = line.strip().split(<span class="string">' '</span>)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> ss:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%s\t%d"</span> % (word,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="Reduce代码"><a href="#Reduce代码" class="headerlink" title="Reduce代码"></a>Reduce代码</h2><p>Reduce一样通过标准输入接收数据，然后统计每一个单词出现的次数，最终再输出。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">cur_word=<span class="keyword">None</span></span><br><span class="line">cur_sum=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">    ss=line.strip().split(<span class="string">'\t'</span>)</span><br><span class="line">    <span class="keyword">if</span> len(ss)!=<span class="number">2</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    word,value=ss</span><br><span class="line">    <span class="keyword">if</span> cur_word == <span class="keyword">None</span>:</span><br><span class="line">        cur_word=word</span><br><span class="line">    <span class="keyword">if</span> cur_word == word:</span><br><span class="line">        cur_sum+=(int(value))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%s\t%d"</span> % (cur_word,cur_sum)</span><br><span class="line">        cur_word=word</span><br><span class="line">        cur_sum=(int(value))</span><br><span class="line"><span class="keyword">print</span>  <span class="string">"%s\t%d"</span> % (cur_word,cur_sum)</span><br></pre></td></tr></table></figure>
-<h2 id="本地调试（服务器）"><a href="#本地调试（服务器）" class="headerlink" title="本地调试（服务器）"></a>本地调试（服务器）</h2><p>通过head 一个文件的方式（或者使用cat都可以）进行一个标准输出，把它作为map.py的标准输入，然后排序第一列（即word），然后把map.py的输出作为reduce.py的标准输入，进行统计</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head 1 the_man_of_property.txt | python map.py | sort -k1 | python reduce.py | sort -k2 -r | head -10</span><br></pre></td></tr></table></figure>
-<p>​    以上方式相当于就是在本地执行模拟map，reduce调试，确保程序正确后然后放置到集群当中去跑</p>
-<h2 id="集群运行MapReduce-Join"><a href="#集群运行MapReduce-Join" class="headerlink" title="集群运行MapReduce Join"></a>集群运行MapReduce Join</h2><p>以下文件当中的Input，Output都是HDFS当中的目录文件，执行前需要先把需要统计的文件put到hdfs系统。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_CMD="/home/lishijia/Soft/hadoop-2.7.2/bin/hadoop"</span><br><span class="line">STREAM_JAR_PATH="/home/lishijia/Soft/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>INPUT_FILE_PATH_1 = "/"</span><br><span class="line">INPUT_FILE_PATH_1="/lishijia/input/the_man_of_property.txt"</span><br><span class="line">OUTPUT_PATH="/lishijia/output/mapreduce/"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD fs -rmr -skipTrash $OUTPUT_PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Step 1.</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_1 \</span><br><span class="line">    -output $OUTPUT_PATH \</span><br><span class="line">    -mapper "python map.py" \</span><br><span class="line">    -reducer "python reduce.py" \</span><br><span class="line">    -file ./map.py \</span><br><span class="line">    -file ./reduce.py</span><br></pre></td></tr></table></figure>
-<p>执行日志</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 mapreduce]# ./run.sh </span><br><span class="line">rmr: DEPRECATED: Please use &apos;rm -r&apos; instead.</span><br><span class="line">Deleted /lishijia/output/mapreduce</span><br><span class="line">18/10/07 22:17:33 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.</span><br><span class="line">packageJobJar: [./map.py, ./reduce.py, /tmp/hadoop-unjar5713376120282440056/] [] /tmp/streamjob6497965494106718597.jar tmpDir=null</span><br><span class="line">18/10/07 22:17:33 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO mapred.FileInputFormat: Total input paths to process : 1</span><br><span class="line">18/10/07 22:17:34 INFO mapreduce.JobSubmitter: number of splits:2</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO impl.YarnClientImpl: Submitted application application_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: The url to track the job: http://master201:8088/proxy/application_1538880566647_0003/</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: Running job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job: Job job_1538880566647_0003 running in uber mode : false</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job:  map 0% reduce 0%</span><br><span class="line">18/10/07 22:17:49 INFO mapreduce.Job:  map 100% reduce 0%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job:  map 100% reduce 100%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job: Job job_1538880566647_0003 completed successfully</span><br><span class="line">18/10/07 22:17:55 INFO mapreduce.Job: Counters: 49</span><br><span class="line">        File System Counters</span><br><span class="line">                FILE: Number of bytes read=1076619</span><br><span class="line">                FILE: Number of bytes written=2515154</span><br><span class="line">                FILE: Number of read operations=0</span><br><span class="line">                FILE: Number of large read operations=0</span><br><span class="line">                FILE: Number of write operations=0</span><br><span class="line">                HDFS: Number of bytes read=709544</span><br><span class="line">                HDFS: Number of bytes written=181530</span><br><span class="line">                HDFS: Number of read operations=9</span><br><span class="line">                HDFS: Number of large read operations=0</span><br><span class="line">                HDFS: Number of write operations=2</span><br><span class="line">        Job Counters </span><br><span class="line">                Launched map tasks=2</span><br><span class="line">                Launched reduce tasks=1</span><br><span class="line">                Data-local map tasks=2</span><br><span class="line">                Total time spent by all maps in occupied slots (ms)=4383</span><br><span class="line">                Total time spent by all reduces in occupied slots (ms)=1729</span><br><span class="line">                Total time spent by all map tasks (ms)=4383</span><br><span class="line">                Total time spent by all reduce tasks (ms)=1729</span><br><span class="line">                Total vcore-milliseconds taken by all map tasks=4383</span><br><span class="line">                Total vcore-milliseconds taken by all reduce tasks=1729</span><br><span class="line">                Total megabyte-milliseconds taken by all map tasks=4488192</span><br><span class="line">                Total megabyte-milliseconds taken by all reduce tasks=1770496</span><br><span class="line">        Map-Reduce Framework</span><br><span class="line">                Map input records=2866</span><br><span class="line">                Map output records=111818</span><br><span class="line">                Map output bytes=852977</span><br><span class="line">                Map output materialized bytes=1076625</span><br><span class="line">                Input split bytes=224</span><br><span class="line">                Combine input records=0</span><br><span class="line">                Combine output records=0</span><br><span class="line">                Reduce input groups=16985</span><br><span class="line">                Reduce shuffle bytes=1076625</span><br><span class="line">                Reduce input records=111818</span><br><span class="line">                Reduce output records=16984</span><br><span class="line">                Spilled Records=223636</span><br><span class="line">                Shuffled Maps =2</span><br><span class="line">                Failed Shuffles=0</span><br><span class="line">                Merged Map outputs=2</span><br><span class="line">                GC time elapsed (ms)=134</span><br><span class="line">                CPU time spent (ms)=2790</span><br><span class="line">                Physical memory (bytes) snapshot=699613184</span><br><span class="line">                Virtual memory (bytes) snapshot=6329569280</span><br><span class="line">                Total committed heap usage (bytes)=483393536</span><br><span class="line">        Shuffle Errors</span><br><span class="line">                BAD_ID=0</span><br><span class="line">                CONNECTION=0</span><br><span class="line">                IO_ERROR=0</span><br><span class="line">                WRONG_LENGTH=0</span><br><span class="line">                WRONG_MAP=0</span><br><span class="line">                WRONG_REDUCE=0</span><br><span class="line">        File Input Format Counters </span><br><span class="line">                Bytes Read=709320</span><br><span class="line">        File Output Format Counters </span><br><span class="line">                Bytes Written=181530</span><br><span class="line">18/10/07 22:17:55 INFO streaming.StreamJob: Output directory: /lishijia/output/mapreduce/</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上通过Python编写的map、reduce在Hadoop Streaming集群上执行统计一个文件中一个单词出现的次数，算是Hadoop 核心组件之一MapReduce的入门篇吧。</p>
-<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/mapreduce" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/mapreduce</a></p>
-<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181018/132IHmb2GL.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF</p>
+<h2 id="TF（词频）"><a href="#TF（词频）" class="headerlink" title="TF（词频）"></a>TF（词频）</h2><p>一个词在文档（文章）中出现的次数</p>
+<ul>
+<li>假设一个词很重要应该会在文档（文章）中多次出现</li>
+<li>过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助</li>
+<li>假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能就反应出这篇文章的特性，也就是我们需要的关键字</li>
+</ul>
+<script type="math/tex; mode=display">
+词频(TF)=\frac{某个词在文章中出现的次数}{文章的总词数}</script><p>或者</p>
+<script type="math/tex; mode=display">
+词频(TF)=\frac{某个词在文章中出现的次数}{该文出现词数最多次的出现次数}</script><h2 id="IDF（反文档频率）"><a href="#IDF（反文档频率）" class="headerlink" title="IDF（反文档频率）"></a>IDF（反文档频率）</h2><p>在词频的基础上赋予每一个词的权重，进一步体现该词的重要性（计算权重）</p>
+<ul>
+<li>最常见的词（“的”，“是”，“在”等）给与最小权重，或者过滤</li>
+<li>较常见的词（“国内”，“中国“等）给与较小权重</li>
+<li>较少见的词（“养殖”，“维基”等）给与较大权重</li>
+</ul>
+<script type="math/tex; mode=display">
+反文档频率(IDF)=\frac{语料库的文档总数}{包含该词的文档数+1}</script><h2 id="TF-IDF公式"><a href="#TF-IDF公式" class="headerlink" title="TF-IDF公式"></a>TF-IDF公式</h2><p>某个词对文中重要性越高，该值就越大，于是排在前面的几个词就是这篇文章的关键词</p>
+<script type="math/tex; mode=display">
+TF-IDF=词频（TF）*反文档频率（IDF）</script><h2 id="TF-IDF整体代码实现（获取一篇文章中的关键字）"><a href="#TF-IDF整体代码实现（获取一篇文章中的关键字）" class="headerlink" title="TF-IDF整体代码实现（获取一篇文章中的关键字）"></a>TF-IDF整体代码实现（获取一篇文章中的关键字）</h2><p>代码思路：</p>
+<ul>
+<li>根据文件获取停用词</li>
+<li>循环目录读取对应的文件</li>
+<li>计算每个文件当中所有词的词频</li>
+<li>计算所有文件所有词的idf（反文档频率）</li>
+<li>计算一篇文章中的tf-idf</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">dir_path = <span class="string">"data"</span></span><br><span class="line">doc_dict = dict()</span><br><span class="line">index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取停用词</span></span><br><span class="line">stopWords = set()</span><br><span class="line">lines = open(<span class="string">"stop-word"</span>, <span class="string">'r'</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    <span class="keyword">if</span> len(line.strip()) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">stopWords.add(line.strip())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环读取目录下所有文件，组装数据。计算每篇文章中词的词频</span></span><br><span class="line"><span class="comment"># doc_dict['doc_name',doc_dict['word','tf']]</span></span><br><span class="line"><span class="keyword">for</span> file_name <span class="keyword">in</span> os.listdir(dir_path):</span><br><span class="line">    file_path = dir_path + <span class="string">"/"</span> + file_name</span><br><span class="line">    index += <span class="number">1</span></span><br><span class="line">    word_dict = dict()</span><br><span class="line">    <span class="comment"># 每篇文章的总词数</span></span><br><span class="line">    sum_cnt = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 循环每行读取文章</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> open(file_path, <span class="string">'r'</span>):</span><br><span class="line">        <span class="keyword">if</span> len(line.strip()) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> line.strip().split(<span class="string">" "</span>):</span><br><span class="line">            <span class="keyword">if</span> len(word.strip()) == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> stopWords:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> word_dict.get(word, <span class="number">-1</span>) == <span class="number">-1</span>:</span><br><span class="line">                word_dict[word] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                word_dict[word] += <span class="number">1</span></span><br><span class="line">            sum_cnt += <span class="number">1</span></span><br><span class="line">    <span class="comment"># 计算每篇文章中每个词的词频</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> word_dict.keys():</span><br><span class="line">        tmp = word_dict[word] / float(sum_cnt)</span><br><span class="line">        word_dict[word] = tmp</span><br><span class="line">        <span class="comment"># print "%s %f %d" % (word, word_dict[word], sum_cnt)</span></span><br><span class="line">    doc_dict[file_name] = word_dict</span><br><span class="line"></span><br><span class="line">doc_num = float(index)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每篇文章中的词在几篇文章中出现，用于计算idf</span></span><br><span class="line"><span class="comment"># doc_dict['word','in_doc_num']</span></span><br><span class="line">doc_freq = dict()</span><br><span class="line"><span class="keyword">for</span> doc <span class="keyword">in</span> doc_dict:</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> doc_dict[doc].keys():</span><br><span class="line">        <span class="keyword">if</span> doc_freq.get(word, <span class="number">-1</span>) == <span class="number">-1</span>:</span><br><span class="line">            doc_freq[word] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            doc_freq[word] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 套idf公式计算每个词的idf</span></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> doc_freq.keys():</span><br><span class="line">    doc_freq[word] = math.log(doc_num/float(doc_freq[word]+<span class="number">1</span>))</span><br><span class="line">    <span class="comment"># print "%s %f" % (word, doc_freq[word])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 找出一篇文章中的关键字,倒序</span></span><br><span class="line"><span class="keyword">for</span> doc <span class="keyword">in</span> doc_dict:</span><br><span class="line">    doc_word_list = []</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> doc_dict[doc].keys():</span><br><span class="line">        <span class="comment"># tf * idf</span></span><br><span class="line">        doc_word_list.append((word, doc_dict[doc][word] * doc_freq[word]))</span><br><span class="line">    doc_word_list.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>], reverse = <span class="keyword">True</span>)</span><br><span class="line">    <span class="keyword">if</span> doc == <span class="string">'1597auto.seg.cln.txt'</span>:</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span>  doc_word_list:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"%s,%f"</span> % (x[<span class="number">0</span>], x[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1597auto.seg.cln.txt 这篇文章中的关键词如下 top 8</span><br><span class="line">宁波,0.060776</span><br><span class="line">英尺,0.030984</span><br><span class="line">磅,0.025818</span><br><span class="line">群,0.025640</span><br><span class="line">保养,0.024436</span><br><span class="line">奥迪,0.021913</span><br><span class="line">车友,0.018964</span><br><span class="line">冲击感,0.016728</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>优点：简单快速，结果比较符合实际情况</li>
+<li>缺点：单纯以“词频”做衡量标准，不够全面，有时候重要的词可能出现的次数并不多。这种算法无法体现词的位置信息，出现位置靠前的词与靠后的词都被视为相同的重要性，这是不正确的。（一种解决办法是，将文章中的第一段和每一段的第一句话给与较大的权重）</li>
+</ul>
+<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/nlp" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/nlp</a></p>
+<p><a href="/2018/10/15/deeplearning/nlp-consine-1.html">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/03/tf-idf.html</a></li>
+</ul>
 
         
         </div>
@@ -462,7 +477,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjneo21ey000gjwqgg8i7j0ds" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html" data-id="cjneo21ej0007jwqg8bl7i1tq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -530,7 +545,7 @@
 
             
     
-        <a href="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -539,19 +554,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/08/big-data/mapreduce-2.html" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    MapReduce Join 表连接 Python （二）
-                
-            </div>
-        </a>
     
-    
-        <a href="/2018/10/06/big-data/hadoop-install.html" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/15/deeplearning/nlp-consine-1.html" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Hadoop2.7.2集群安装</div>
+            <div class="article-nav-title">NLP自然语言 之 余弦相似度 （一 Python代码实现）</div>
         </a>
     
 </nav>

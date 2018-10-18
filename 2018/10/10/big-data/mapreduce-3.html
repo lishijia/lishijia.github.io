@@ -6,7 +6,7 @@
     <title>MapReduce 执行过程原理（三） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
-<meta name="keywords" content="Hadoop,MapReduce">
+<meta name="keywords" content="MapReduce,Hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MapReduce 执行过程原理（三）">
 <meta property="og:url" content="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html">
@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim">
-<meta property="og:updated_time" content="2018-10-14T01:30:17.710Z">
+<meta property="og:updated_time" content="2018-10-18T13:05:17.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce 执行过程原理（三）">
 <meta name="twitter:description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
@@ -155,11 +155,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                9
+                11
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                7
+                10
                 <span>标签</span>
             </div>
         </div>
@@ -438,32 +438,19 @@
 <h2 id="MapReduce执行过程示例说明"><a href="#MapReduce执行过程示例说明" class="headerlink" title="MapReduce执行过程示例说明"></a>MapReduce执行过程示例说明</h2><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim" alt=""></p>
 <p>在上图中一共有6个map进程和2个reduce进程，一共有8个独立的进程空间，但这个MapReduce跑起来，那么它则需要8个进程空间。它们当中有可能在同一个节点，也有可能是独立不同的节点。根据上面的运行过程一起来解析下它的执行过程。</p>
 <ol>
-<li><p>通过节点1，节点2输入文件（HDFS文件系统中的文件）</p>
+<li>通过节点1，节点2输入文件（HDFS文件系统中的文件）</li>
+<li>MapReduce通过InputFormat来进行对接数据（MapReduce自带的接口，我们只需要开发Map与Reduce行数即可），这个接口主要完成两个功能，第一个就是数据切割（Split），第二个就是记录读取器（Record Reader）</li>
+<li>那么上图InputFormat接口相当于把原数据一共切割为6个Split，那么就会MapReduce框架就会生成6个Map来处理（结论：即一个Split对应一个Map，所以可以使用Split的个数来控制Map的个数），数据切割它会在合适的位置对原数据（即Block）进行切割，并且保证它的完整性。</li>
+<li>然后RecordReader会从Split中正确读出一条一条的数据输出作为标准输入调用map方法，由map方法执行计算或者清洗。</li>
+<li>Map输出过程中有一个重要的阶段，即Shuffle，那么Shuffle阶段其实包含以下部分（其实Shuffle阶段也包含Reduce当中的一部分，比如归并）。<ul>
+<li>分区：根据Reduce的数量对key进行hash取模，这个partition处理是在Map当中的Buffer当中实现的，内存缓冲区默认是100m，如果100m内超过了80m，就会把这80m的数据给锁住，然后将这些数据进行排序然后能够清空内存并且写入本地磁盘（也称之为溢写）</li>
+<li>排序：根据key进行排序（此处是发生在溢写的过程中就会排序好）</li>
+<li>Combiner（则会运行来化简压缩输出的数据，比如当中的一条数据可能在map输出的时候会输出两条数据，那么经过combiner之后最终存储就只会存汇总的结果，<font color="red">前提不能防止扰乱最终的结果</font>）</li>
+<li>归并：每次溢写都会生成一个新的文件，那么最终处理完之后，map最终还是会把所有溢写的文件合并成一个文件（合并后的文件内容仍然会保持分区与排序的状态）</li>
+</ul>
 </li>
-<li><p>MapReduce通过InputFormat来进行对接数据（MapReduce自带的接口，我们只需要开发Map与Reduce行数即可），这个接口主要完成两个功能，第一个就是数据切割（Split），第二个就是记录读取器（Record Reader）</p>
-</li>
-<li><p>那么上图InputFormat接口相当于把原数据一共切割为6个Split，那么就会MapReduce框架就会生成6个Map来处理（结论：即一个Split对应一个Map，所以可以使用Split的个数来控制Map的个数），数据切割它会在合适的位置对原数据（即Block）进行切割，并且保证它的完整性。</p>
-</li>
-<li><p>然后RecordReader会从Split中正确读出一条一条的数据输出作为标准输入调用map方法，由map方法执行计算或者清洗。</p>
-</li>
-<li><p>Map输出过程中有一个重要的阶段，即Shuffle，那么Shuffle阶段其实包含以下部分（其实Shuffle阶段也包含Reduce当中的一部分，比如归并）。</p>
-</li>
-</ol>
-<ol>
-<li><p>分区：根据Reduce的数量对key进行hash取模，这个partition处理是在Map当中的Buffer当中实现的，内存缓冲区默认是100m，如果100m内超过了80m，就会把这80m的数据给锁住，然后将这些数据进行排序然后能够清空内存并且写入本地磁盘（也称之为溢写）</p>
-</li>
-<li><p>排序：根据key进行排序（此处是发生在溢写的过程中就会排序好）</p>
-</li>
-<li><p>Combiner（则会运行来化简压缩输出的数据，比如当中的一条数据可能在map输出的时候会输出两条数据，那么经过combiner之后最终存储就只会存汇总的结果，<font color="red">前提不能防止扰乱最终的结果</font>）</p>
-</li>
-<li><p>归并：每次溢写都会生成一个新的文件，那么最终处理完之后，map最终还是会把所有溢写的文件合并成一个文件（合并后的文件内容仍然会保持分区与排序的状态）</p>
-</li>
-</ol>
-<ol>
-<li><p>Reduce阶段，每个reduce任务开始从多个map上拷贝属于自己partition（map阶段已经做好partition，而且每个reduce任务知道应该拷贝哪个partition；拷贝过程是在不同节点之间，Reducer上拷贝线程基于HTTP来通过网络传输数据）</p>
-</li>
-<li><p>最后，执行reduce阶段，运行我们实现的Reducer中化简逻辑，最终将结果直接输出到HDFS中（因为Reducer运行在DataNode上，输出结果的第一个replica直接在存储在本地节点上）。</p>
-</li>
+<li>Reduce阶段，每个reduce任务开始从多个map上拷贝属于自己partition（map阶段已经做好partition，而且每个reduce任务知道应该拷贝哪个partition；拷贝过程是在不同节点之间，Reducer上拷贝线程基于HTTP来通过网络传输数据）</li>
+<li>最后，执行reduce阶段，运行我们实现的Reducer中化简逻辑，最终将结果直接输出到HDFS中（因为Reducer运行在DataNode上，输出结果的第一个replica直接在存储在本地节点上）。</li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面的描述我们看到，在MR执行过程中，存在Shuffle过程的MapReduce需要在网络中的节点之间（Mapper节点和Reducer节点）拷贝数据，如果传输的数据量很大会造成一定的网络开销。而且，Map端和Reduce端都会通过一个特定的buffer来在内存中临时缓存数据，如果无法根据实际应用场景中数据的规模来使用MapReduce，尤其是做大数据两并且计算复杂，有可能很浪费资源，降低了系统处理任务的效率，还可能因为内存不足造成oom问题，导致计算任务失败。</p>
 <p><a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a></p>
@@ -479,7 +466,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjn8akwe7000g80qg7k2q69w8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjneo21ej0002jwqgpte6fgxu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -633,19 +620,27 @@
     <div class="widget-wrap">
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
-            <ul id="recent-post" class="">
+            <ul id="recent-post" class="no-thumbnail">
                 
                     <li>
                         
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/13/big-data/hive-2.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/18/deeplearning/nlp-tfidf-2.html" class="title">NLP自然语言 之 TF-IDF（二）</a></p>
+                            <p class="item-date"><time datetime="2018-10-18T14:09:13.000Z" itemprop="datePublished">2018-10-18</time></p>
                         </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/15/deeplearning/nlp-consine-1.html" class="title">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a></p>
+                            <p class="item-date"><time datetime="2018-10-15T12:45:13.000Z" itemprop="datePublished">2018-10-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
@@ -656,16 +651,6 @@
                 
                     <li>
                         
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/12/big-data/hive-1.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
                             <p class="item-title"><a href="/2018/10/12/big-data/hive-1.html" class="title">Hive 安装配置 &amp; 简单使用</a></p>
@@ -675,58 +660,10 @@
                 
                     <li>
                         
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/10/big-data/mapreduce-3.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
                             <p class="item-title"><a href="/2018/10/10/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
                             <p class="item-date"><time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/08/big-data/mapreduce-2.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
-                            <p class="item-date"><time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/07/big-data/mapreduce-1.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
-                            <p class="item-date"><time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
                 
@@ -739,7 +676,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -748,7 +685,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -757,7 +694,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/NLP/" style="font-size: 13.33px;">NLP</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 

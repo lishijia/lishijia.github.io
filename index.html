@@ -146,11 +146,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                9
+                11
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                7
+                10
                 <span>标签</span>
             </div>
         </div>
@@ -175,6 +175,338 @@
 
             
             <section id="main">
+    <article id="post-deeplearning/nlp-tfidf-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/18/deeplearning/nlp-tfidf-2.html" href="/2018/10/18/deeplearning/nlp-tfidf-2.html">NLP自然语言 之 TF-IDF（二）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
+            <time datetime="2018-10-18T14:09:13.000Z" itemprop="datePublished">2018-10-18</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/NLP/">NLP</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/TF-IDF/">TF-IDF</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181018/132IHmb2GL.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF</p>
+<h2 id="TF（词频）"><a href="#TF（词频）" class="headerlink" title="TF（词频）"></a>TF（词频）</h2><p>一个词在文档（文章）中出现的次数</p>
+<ul>
+<li>假设一个词很重要应该会在文档（文章）中多次出现</li>
+<li>过滤掉停用词（的、是、在等），停用词必须过滤，对结果毫无帮助</li>
+<li>假设一个词比较少见，但是它在这篇文章中多次出现，那么它很可能就反应出这篇文章的特性，也就是我们需要的关键字</li>
+</ul>
+<script type="math/tex; mode=display">
+词频(TF)=\frac{某个词在文章中出现的次数}{文章的总词数}</script><p>或者</p>
+<script type="math/tex; mode=display">
+词频(TF)=\frac{某个词在文章中出现的次数}{该文出现词数最多次的出现次数}</script><h2 id="IDF（反文档频率）"><a href="#IDF（反文档频率）" class="headerlink" title="IDF（反文档频率）"></a>IDF（反文档频率）</h2><p>在词频的基础上赋予每一个词的权重，进一步体现该词的重要性（计算权重）</p>
+<ul>
+<li>最常见的词（“的”，“是”，“在”等）给与最小权重，或者过滤</li>
+<li>较常见的词（“国内”，“中国“等）给与较小权重</li>
+<li>较少见的词（“养殖”，“维基”等）给与较大权重</li>
+</ul>
+<script type="math/tex; mode=display">
+反文档频率(IDF)=\frac{语料库的文档总数}{包含该词的文档数+1}</script><h2 id="TF-IDF公式"><a href="#TF-IDF公式" class="headerlink" title="TF-IDF公式"></a>TF-IDF公式</h2><p>某个词对文中重要性越高，该值就越大，于是排在前面的几个词就是这篇文章的关键词</p>
+<script type="math/tex; mode=display">
+TF-IDF=词频（TF）*反文档频率（IDF）</script><h2 id="TF-IDF整体代码实现（获取一篇文章中的关键字）"><a href="#TF-IDF整体代码实现（获取一篇文章中的关键字）" class="headerlink" title="TF-IDF整体代码实现（获取一篇文章中的关键字）"></a>TF-IDF整体代码实现（获取一篇文章中的关键字）</h2><p>代码思路：</p>
+<ul>
+<li>根据文件获取停用词</li>
+<li>循环目录读取对应的文件</li>
+<li>计算每个文件当中所有词的词频</li>
+<li>计算所有文件所有词的idf（反文档频率）</li>
+<li>计算一篇文章中的tf-idf</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">dir_path = <span class="string">"data"</span></span><br><span class="line">doc_dict = dict()</span><br><span class="line">index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取停用词</span></span><br><span class="line">stopWords = set()</span><br><span class="line">lines = open(<span class="string">"stop-word"</span>, <span class="string">'r'</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    <span class="keyword">if</span> len(line.strip()) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">stopWords.add(line.strip())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环读取目录下所有文件，组装数据。计算每篇文章中词的词频</span></span><br><span class="line"><span class="comment"># doc_dict['doc_name',doc_dict['word','tf']]</span></span><br><span class="line"><span class="keyword">for</span> file_name <span class="keyword">in</span> os.listdir(dir_path):</span><br><span class="line">    file_path = dir_path + <span class="string">"/"</span> + file_name</span><br><span class="line">    index += <span class="number">1</span></span><br><span class="line">    word_dict = dict()</span><br><span class="line">    <span class="comment"># 每篇文章的总词数</span></span><br><span class="line">    sum_cnt = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 循环每行读取文章</span></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> open(file_path, <span class="string">'r'</span>):</span><br><span class="line">        <span class="keyword">if</span> len(line.strip()) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> line.strip().split(<span class="string">" "</span>):</span><br><span class="line">            <span class="keyword">if</span> len(word.strip()) == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> stopWords:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> word_dict.get(word, <span class="number">-1</span>) == <span class="number">-1</span>:</span><br><span class="line">                word_dict[word] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                word_dict[word] += <span class="number">1</span></span><br><span class="line">            sum_cnt += <span class="number">1</span></span><br><span class="line">    <span class="comment"># 计算每篇文章中每个词的词频</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> word_dict.keys():</span><br><span class="line">        tmp = word_dict[word] / float(sum_cnt)</span><br><span class="line">        word_dict[word] = tmp</span><br><span class="line">        <span class="comment"># print "%s %f %d" % (word, word_dict[word], sum_cnt)</span></span><br><span class="line">    doc_dict[file_name] = word_dict</span><br><span class="line"></span><br><span class="line">doc_num = float(index)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每篇文章中的词在几篇文章中出现，用于计算idf</span></span><br><span class="line"><span class="comment"># doc_dict['word','in_doc_num']</span></span><br><span class="line">doc_freq = dict()</span><br><span class="line"><span class="keyword">for</span> doc <span class="keyword">in</span> doc_dict:</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> doc_dict[doc].keys():</span><br><span class="line">        <span class="keyword">if</span> doc_freq.get(word, <span class="number">-1</span>) == <span class="number">-1</span>:</span><br><span class="line">            doc_freq[word] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            doc_freq[word] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 套idf公式计算每个词的idf</span></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> doc_freq.keys():</span><br><span class="line">    doc_freq[word] = math.log(doc_num/float(doc_freq[word]+<span class="number">1</span>))</span><br><span class="line">    <span class="comment"># print "%s %f" % (word, doc_freq[word])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 找出一篇文章中的关键字,倒序</span></span><br><span class="line"><span class="keyword">for</span> doc <span class="keyword">in</span> doc_dict:</span><br><span class="line">    doc_word_list = []</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> doc_dict[doc].keys():</span><br><span class="line">        <span class="comment"># tf * idf</span></span><br><span class="line">        doc_word_list.append((word, doc_dict[doc][word] * doc_freq[word]))</span><br><span class="line">    doc_word_list.sort(key=<span class="keyword">lambda</span> x:x[<span class="number">1</span>], reverse = <span class="keyword">True</span>)</span><br><span class="line">    <span class="keyword">if</span> doc == <span class="string">'1597auto.seg.cln.txt'</span>:</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span>  doc_word_list:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"%s,%f"</span> % (x[<span class="number">0</span>], x[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1597auto.seg.cln.txt 这篇文章中的关键词如下 top 8</span><br><span class="line">宁波,0.060776</span><br><span class="line">英尺,0.030984</span><br><span class="line">磅,0.025818</span><br><span class="line">群,0.025640</span><br><span class="line">保养,0.024436</span><br><span class="line">奥迪,0.021913</span><br><span class="line">车友,0.018964</span><br><span class="line">冲击感,0.016728</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>优点：简单快速，结果比较符合实际情况</li>
+<li>缺点：单纯以“词频”做衡量标准，不够全面，有时候重要的词可能出现的次数并不多。这种算法无法体现词的位置信息，出现位置靠前的词与靠后的词都被视为相同的重要性，这是不正确的。（一种解决办法是，将文章中的第一段和每一段的第一句话给与较大的权重）</li>
+</ul>
+<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/nlp" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/nlp</a></p>
+<p><a href="/2018/10/15/deeplearning/nlp-consine-1.html">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/03/tf-idf.html</a></li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html" data-id="cjneo21ej0007jwqg8bl7i1tq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-deeplearning/nlp-consine-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/15/deeplearning/nlp-consine-1.html" href="/2018/10/15/deeplearning/nlp-consine-1.html">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/15/deeplearning/nlp-consine-1.html">
+            <time datetime="2018-10-15T12:45:13.000Z" itemprop="datePublished">2018-10-15</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/NLP/">NLP</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/余弦相似度/">余弦相似度</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/15/deeplearning/nlp-consine-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/15/deeplearning/nlp-consine-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/7kCahd0l75.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如何计算两个句子的相似度度？一般来说，我们可以根据两个句子的用词越相似，它们的内容所表达的意思就应该越相似。即可以使用余弦相似度的方式来计算。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/15/deeplearning/nlp-consine-1.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html" data-id="cjneo21ey000bjwqgl2jcjzn3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-big-data/hive-2" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -245,7 +577,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/13/big-data/hive-2.html" data-id="cjn8akwe5000c80qg8kvxm30h" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/13/big-data/hive-2.html" data-id="cjneo21ey000hjwqg1s7lo4bf" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -393,7 +725,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/12/big-data/hive-1.html" data-id="cjn8akwe4000b80qgdmo75yw4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/12/big-data/hive-1.html" data-id="cjneo21ej0006jwqgdhq5v7vx" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -542,7 +874,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjn8akwe7000g80qg7k2q69w8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjneo21ej0002jwqgpte6fgxu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -690,7 +1022,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html" data-id="cjn8akwe9000j80qgnxr57t02" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html" data-id="cjneo21ey000cjwqg1uapj6iv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -838,7 +1170,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjn8akwe2000780qg8wsqd7ld" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjneo21ey000gjwqgg8i7j0ds" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -986,7 +1318,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjn8akwe0000580qgz234y0wz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjneo21ey000ojwqgqydmjunq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1134,7 +1466,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/06/big-data/centos-nat.html" data-id="cjn8akwdx000280qgjvqsq5dv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/06/big-data/centos-nat.html" data-id="cjneo21e30001jwqgnt1odcue" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1282,7 +1614,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/09/30/algorithm/skip-list.html" data-id="cjn8akwe1000680qgu81t2l9e" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/09/30/algorithm/skip-list.html" data-id="cjneo21ej0005jwqgcs7lgely" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1360,154 +1692,9 @@
 
 
 
-    <article id="post-algorithm/algorithm-time-space" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/09/29/algorithm/algorithm-time-space.html" href="/2018/09/29/algorithm/algorithm-time-space.html">时间复杂度&amp;空间复杂度</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/29/algorithm/algorithm-time-space.html">
-            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/算法/">算法</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/算法/">算法</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/09/29/algorithm/algorithm-time-space.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/09/29/algorithm/algorithm-time-space.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。</p>
-<p>我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/09/29/algorithm/algorithm-time-space.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html" data-id="cjn8akwdp000180qgzhwbv23y" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
+    <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    </nav>
 
 <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
@@ -1730,19 +1917,27 @@
     <div class="widget-wrap">
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
-            <ul id="recent-post" class="">
+            <ul id="recent-post" class="no-thumbnail">
                 
                     <li>
                         
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/13/big-data/hive-2.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/18/deeplearning/nlp-tfidf-2.html" class="title">NLP自然语言 之 TF-IDF（二）</a></p>
+                            <p class="item-date"><time datetime="2018-10-18T14:09:13.000Z" itemprop="datePublished">2018-10-18</time></p>
                         </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
+                            <p class="item-title"><a href="/2018/10/15/deeplearning/nlp-consine-1.html" class="title">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a></p>
+                            <p class="item-date"><time datetime="2018-10-15T12:45:13.000Z" itemprop="datePublished">2018-10-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
@@ -1753,16 +1948,6 @@
                 
                     <li>
                         
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/12/big-data/hive-1.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Hive/">Hive</a></p>
                             <p class="item-title"><a href="/2018/10/12/big-data/hive-1.html" class="title">Hive 安装配置 &amp; 简单使用</a></p>
@@ -1772,58 +1957,10 @@
                 
                     <li>
                         
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/10/big-data/mapreduce-3.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
                             <p class="item-title"><a href="/2018/10/10/big-data/mapreduce-3.html" class="title">MapReduce 执行过程原理（三）</a></p>
                             <p class="item-date"><time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/08/big-data/mapreduce-2.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/08/big-data/mapreduce-2.html" class="title">MapReduce Join 表连接 Python （二）</a></p>
-                            <p class="item-date"><time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/10/07/big-data/mapreduce-1.html" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/MapReduce/">MapReduce</a></p>
-                            <p class="item-title"><a href="/2018/10/07/big-data/mapreduce-1.html" class="title">MapReduce WordCount 入门 Python（一）</a></p>
-                            <p class="item-date"><time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time></p>
                         </div>
                     </li>
                 
@@ -1836,7 +1973,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1845,7 +1982,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1854,7 +1991,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/NLP/" style="font-size: 13.33px;">NLP</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 

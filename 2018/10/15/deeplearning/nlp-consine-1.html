@@ -3,23 +3,29 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MapReduce WordCount 入门 Python（一） | 李世佳的博客</title>
+    <title>NLP自然语言 之 余弦相似度 （一 Python代码实现） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
-<meta name="keywords" content="MapReduce,Hadoop,Hadoop Streaming">
+    <meta name="description" content="前言如何计算两个句子的相似度度？一般来说，我们可以根据两个句子的用词越相似，它们的内容所表达的意思就应该越相似。即可以使用余弦相似度的方式来计算。">
+<meta name="keywords" content="NLP,余弦相似度">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MapReduce WordCount 入门 Python（一）">
-<meta property="og:url" content="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html">
+<meta property="og:title" content="NLP自然语言 之 余弦相似度 （一 Python代码实现）">
+<meta property="og:url" content="http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
+<meta property="og:description" content="前言如何计算两个句子的相似度度？一般来说，我们可以根据两个句子的用词越相似，它们的内容所表达的意思就应该越相似。即可以使用余弦相似度的方式来计算。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181007/CkjElclgEE.jpg?imageslim">
-<meta property="og:updated_time" content="2018-10-14T01:30:17.705Z">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/7kCahd0l75.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/lBecF04LBm.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/Jk2FF7m5H3.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/jFa5eBiKhH.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/lckiF37aF8.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/mBH40c92Ad.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/kjk7lFH9ji.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/1ddkaK3FF2.png?imageslim">
+<meta property="og:updated_time" content="2018-10-18T13:43:14.364Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MapReduce WordCount 入门 Python（一）">
-<meta name="twitter:description" content="前言根据已经搭建好的Hadoop2.7.2集群，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。">
-<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
+<meta name="twitter:title" content="NLP自然语言 之 余弦相似度 （一 Python代码实现）">
+<meta name="twitter:description" content="前言如何计算两个句子的相似度度？一般来说，我们可以根据两个句子的用词越相似，它们的内容所表达的意思就应该越相似。即可以使用余弦相似度的方式来计算。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181015/7kCahd0l75.jpg?imageslim">
     
 
     
@@ -372,15 +378,15 @@
         return constructor;
     })()
 </script>
-<article id="post-big-data/mapreduce-1" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-deeplearning/nlp-consine-1" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 class="article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" itemprop="name">
-            MapReduce WordCount 入门 Python（一）
+        <h1 class="article-title leancloud_visitors" title="/2018/10/15/deeplearning/nlp-consine-1.html" itemprop="name">
+            NLP自然语言 之 余弦相似度 （一 Python代码实现）
         </h1>
     
 
@@ -389,8 +395,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time>
+        <a href="/2018/10/15/deeplearning/nlp-consine-1.html">
+            <time datetime="2018-10-15T12:45:13.000Z" itemprop="datePublished">2018-10-15</time>
         </a>
     </div>
 
@@ -398,25 +404,25 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
+        <a class="article-category-link" href="/categories/NLP/">NLP</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/余弦相似度/">余弦相似度</a>
     </div>
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html">
+    <a href="/2018/10/15/deeplearning/nlp-consine-1.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
+    <a href="/2018/10/15/deeplearning/nlp-consine-1.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -429,29 +435,73 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>根据已经搭建好的<a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群</a>，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。</p>
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/7kCahd0l75.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如何计算两个句子的相似度度？一般来说，我们可以根据两个句子的用词越相似，它们的内容所表达的意思就应该越相似。即可以使用余弦相似度的方式来计算。</p>
 <a id="more"></a>
-<h2 id="MapReduce简介"><a href="#MapReduce简介" class="headerlink" title="MapReduce简介"></a>MapReduce简介</h2><p>MapReduce的Data flow如上图，原始数据经过mapper处理，再进行partition和sort，到达reducer，输出最后结果。</p>
-<h2 id="Hadoop-Streaming简介"><a href="#Hadoop-Streaming简介" class="headerlink" title="Hadoop Streaming简介"></a>Hadoop Streaming简介</h2><p>Hadoop本身是用Java开发的，程序也需要用Java编写，但是通过Hadoop Streaming，我们可以使用任意语言来编写程序，让Hadoop运行。</p>
-<p>Hadoop Streaming的相关源代码可以在<a href="https://github.com/apache/hadoop-common/tree/trunk/hadoop-tools/hadoop-streaming/src/main/java/org/apache/hadoop/streaming" target="_blank" rel="noopener">Hadoop的Github repo</a> 查看。简单来说，就是通过将用其他语言编写的mapper和reducer通过参数传给一个事先写好的Java程序（Hadoop自带的*-streaming.jar），这个Java程序会负责创建MR作业，另开一个进程来运行mapper，将得到的输入通过stdin传给它，再将mapper处理后输出到stdout的数据交给Hadoop，partition和sort之后，再另开进程运行reducer，同样地通过stdin/stdout得到最终结果。因此，我们只需要在其他语言编写的程序里，通过stdin接收数据，再将处理过的数据输出到stdout，Hadoop streaming就能通过这个Java的wrapper帮我们解决中间繁琐的步骤，运行分布式程序。</p>
-<font color="red">当中的STDIN到STDOUT这一块就可以理解为是在Hadoop Streaming当中运行，由Hadoop Streaming提供标准输入与输出，从而达到支持Java以外的语言执行MapReduce</font>
-
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181007/CkjElclgEE.jpg?imageslim" alt="mark"></p>
-<h2 id="Map代码"><a href="#Map代码" class="headerlink" title="Map代码"></a>Map代码</h2><p>首先通过标准输入的方式接收数据，然后循环每一行数据进行过滤拆分，最终输出<key,value>形式，即word，1每遇到一个单词输出。</key,value></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">    ss = line.strip().split(<span class="string">' '</span>)</span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> ss:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%s\t%d"</span> % (word,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="Reduce代码"><a href="#Reduce代码" class="headerlink" title="Reduce代码"></a>Reduce代码</h2><p>Reduce一样通过标准输入接收数据，然后统计每一个单词出现的次数，最终再输出。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">cur_word=<span class="keyword">None</span></span><br><span class="line">cur_sum=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">    ss=line.strip().split(<span class="string">'\t'</span>)</span><br><span class="line">    <span class="keyword">if</span> len(ss)!=<span class="number">2</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    word,value=ss</span><br><span class="line">    <span class="keyword">if</span> cur_word == <span class="keyword">None</span>:</span><br><span class="line">        cur_word=word</span><br><span class="line">    <span class="keyword">if</span> cur_word == word:</span><br><span class="line">        cur_sum+=(int(value))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%s\t%d"</span> % (cur_word,cur_sum)</span><br><span class="line">        cur_word=word</span><br><span class="line">        cur_sum=(int(value))</span><br><span class="line"><span class="keyword">print</span>  <span class="string">"%s\t%d"</span> % (cur_word,cur_sum)</span><br></pre></td></tr></table></figure>
-<h2 id="本地调试（服务器）"><a href="#本地调试（服务器）" class="headerlink" title="本地调试（服务器）"></a>本地调试（服务器）</h2><p>通过head 一个文件的方式（或者使用cat都可以）进行一个标准输出，把它作为map.py的标准输入，然后排序第一列（即word），然后把map.py的输出作为reduce.py的标准输入，进行统计</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head 1 the_man_of_property.txt | python map.py | sort -k1 | python reduce.py | sort -k2 -r | head -10</span><br></pre></td></tr></table></figure>
-<p>​    以上方式相当于就是在本地执行模拟map，reduce调试，确保程序正确后然后放置到集群当中去跑</p>
-<h2 id="集群运行MapReduce-Join"><a href="#集群运行MapReduce-Join" class="headerlink" title="集群运行MapReduce Join"></a>集群运行MapReduce Join</h2><p>以下文件当中的Input，Output都是HDFS当中的目录文件，执行前需要先把需要统计的文件put到hdfs系统。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_CMD="/home/lishijia/Soft/hadoop-2.7.2/bin/hadoop"</span><br><span class="line">STREAM_JAR_PATH="/home/lishijia/Soft/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span>INPUT_FILE_PATH_1 = "/"</span><br><span class="line">INPUT_FILE_PATH_1="/lishijia/input/the_man_of_property.txt"</span><br><span class="line">OUTPUT_PATH="/lishijia/output/mapreduce/"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD fs -rmr -skipTrash $OUTPUT_PATH</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Step 1.</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_1 \</span><br><span class="line">    -output $OUTPUT_PATH \</span><br><span class="line">    -mapper "python map.py" \</span><br><span class="line">    -reducer "python reduce.py" \</span><br><span class="line">    -file ./map.py \</span><br><span class="line">    -file ./reduce.py</span><br></pre></td></tr></table></figure>
-<p>执行日志</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 mapreduce]# ./run.sh </span><br><span class="line">rmr: DEPRECATED: Please use &apos;rm -r&apos; instead.</span><br><span class="line">Deleted /lishijia/output/mapreduce</span><br><span class="line">18/10/07 22:17:33 WARN streaming.StreamJob: -file option is deprecated, please use generic option -files instead.</span><br><span class="line">packageJobJar: [./map.py, ./reduce.py, /tmp/hadoop-unjar5713376120282440056/] [] /tmp/streamjob6497965494106718597.jar tmpDir=null</span><br><span class="line">18/10/07 22:17:33 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">18/10/07 22:17:34 INFO mapred.FileInputFormat: Total input paths to process : 1</span><br><span class="line">18/10/07 22:17:34 INFO mapreduce.JobSubmitter: number of splits:2</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO impl.YarnClientImpl: Submitted application application_1538880566647_0003</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: The url to track the job: http://master201:8088/proxy/application_1538880566647_0003/</span><br><span class="line">18/10/07 22:17:35 INFO mapreduce.Job: Running job: job_1538880566647_0003</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job: Job job_1538880566647_0003 running in uber mode : false</span><br><span class="line">18/10/07 22:17:45 INFO mapreduce.Job:  map 0% reduce 0%</span><br><span class="line">18/10/07 22:17:49 INFO mapreduce.Job:  map 100% reduce 0%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job:  map 100% reduce 100%</span><br><span class="line">18/10/07 22:17:54 INFO mapreduce.Job: Job job_1538880566647_0003 completed successfully</span><br><span class="line">18/10/07 22:17:55 INFO mapreduce.Job: Counters: 49</span><br><span class="line">        File System Counters</span><br><span class="line">                FILE: Number of bytes read=1076619</span><br><span class="line">                FILE: Number of bytes written=2515154</span><br><span class="line">                FILE: Number of read operations=0</span><br><span class="line">                FILE: Number of large read operations=0</span><br><span class="line">                FILE: Number of write operations=0</span><br><span class="line">                HDFS: Number of bytes read=709544</span><br><span class="line">                HDFS: Number of bytes written=181530</span><br><span class="line">                HDFS: Number of read operations=9</span><br><span class="line">                HDFS: Number of large read operations=0</span><br><span class="line">                HDFS: Number of write operations=2</span><br><span class="line">        Job Counters </span><br><span class="line">                Launched map tasks=2</span><br><span class="line">                Launched reduce tasks=1</span><br><span class="line">                Data-local map tasks=2</span><br><span class="line">                Total time spent by all maps in occupied slots (ms)=4383</span><br><span class="line">                Total time spent by all reduces in occupied slots (ms)=1729</span><br><span class="line">                Total time spent by all map tasks (ms)=4383</span><br><span class="line">                Total time spent by all reduce tasks (ms)=1729</span><br><span class="line">                Total vcore-milliseconds taken by all map tasks=4383</span><br><span class="line">                Total vcore-milliseconds taken by all reduce tasks=1729</span><br><span class="line">                Total megabyte-milliseconds taken by all map tasks=4488192</span><br><span class="line">                Total megabyte-milliseconds taken by all reduce tasks=1770496</span><br><span class="line">        Map-Reduce Framework</span><br><span class="line">                Map input records=2866</span><br><span class="line">                Map output records=111818</span><br><span class="line">                Map output bytes=852977</span><br><span class="line">                Map output materialized bytes=1076625</span><br><span class="line">                Input split bytes=224</span><br><span class="line">                Combine input records=0</span><br><span class="line">                Combine output records=0</span><br><span class="line">                Reduce input groups=16985</span><br><span class="line">                Reduce shuffle bytes=1076625</span><br><span class="line">                Reduce input records=111818</span><br><span class="line">                Reduce output records=16984</span><br><span class="line">                Spilled Records=223636</span><br><span class="line">                Shuffled Maps =2</span><br><span class="line">                Failed Shuffles=0</span><br><span class="line">                Merged Map outputs=2</span><br><span class="line">                GC time elapsed (ms)=134</span><br><span class="line">                CPU time spent (ms)=2790</span><br><span class="line">                Physical memory (bytes) snapshot=699613184</span><br><span class="line">                Virtual memory (bytes) snapshot=6329569280</span><br><span class="line">                Total committed heap usage (bytes)=483393536</span><br><span class="line">        Shuffle Errors</span><br><span class="line">                BAD_ID=0</span><br><span class="line">                CONNECTION=0</span><br><span class="line">                IO_ERROR=0</span><br><span class="line">                WRONG_LENGTH=0</span><br><span class="line">                WRONG_MAP=0</span><br><span class="line">                WRONG_REDUCE=0</span><br><span class="line">        File Input Format Counters </span><br><span class="line">                Bytes Read=709320</span><br><span class="line">        File Output Format Counters </span><br><span class="line">                Bytes Written=181530</span><br><span class="line">18/10/07 22:17:55 INFO streaming.StreamJob: Output directory: /lishijia/output/mapreduce/</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上通过Python编写的map、reduce在Hadoop Streaming集群上执行统计一个文件中一个单词出现的次数，算是Hadoop 核心组件之一MapReduce的入门篇吧。</p>
-<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/mapreduce" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/mapreduce</a></p>
-<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+<h2 id="余弦相似度公式"><a href="#余弦相似度公式" class="headerlink" title="余弦相似度公式"></a>余弦相似度公式</h2><p>余弦相似度，又称为余弦相似性，是通过计算两个<a href="https://baike.baidu.com/item/%E5%90%91%E9%87%8F/1396519" target="_blank" rel="noopener">向量</a>的夹角<a href="https://baike.baidu.com/item/%E4%BD%99%E5%BC%A6/73670" target="_blank" rel="noopener">余弦</a>值来评估他们的<a href="https://baike.baidu.com/item/%E7%9B%B8%E4%BC%BC%E5%BA%A6/17931411" target="_blank" rel="noopener">相似度</a>。余弦相似度将向量根据坐标值，绘制到<a href="https://baike.baidu.com/item/%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4/5936597" target="_blank" rel="noopener">向量空间</a>中，如最常见的<a href="https://baike.baidu.com/item/%E4%BA%8C%E7%BB%B4%E7%A9%BA%E9%97%B4/10718937" target="_blank" rel="noopener">二维空间</a>。</p>
+<ul>
+<li><p><strong>余弦相似度用向量空间中两个向量夹角的余弦值作为衡量两个个体间差异的大小。余弦值越接近1，就表明夹角越接近0度，也就是两个向量越相似，这就叫”余弦相似性”</strong></p>
+</li>
+<li><p><strong>两个向量a,b的夹角很小可以说a向量和b向量有很高的的相似性，极端情况下，a和b向量完全重合。可以认为a和b向量是相等的，也即a，b向量代表的文本是完全相似的，或者说是相等的如下图</strong></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/lBecF04LBm.jpg?imageslim" alt=""></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/Jk2FF7m5H3.jpg?imageslim" alt=""></p>
+</li>
+<li><p><strong>如果a和b向量夹角较大，或者反方向。两个向量a,b的夹角很大可以说a向量和b向量有很底的的相似性，或者说a和b向量代表的文本基本不相似如下图</strong></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/jFa5eBiKhH.jpg?imageslim" alt=""></p>
+</li>
+<li><p><strong>的余弦定值公式为：</strong></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/lckiF37aF8.jpg?imageslim" alt=""></p>
+<script type="math/tex; mode=display">
+consin=\frac{a^2+b^2-c^2}{2ab}</script></li>
+<li><p><strong>向量表示的三角形中，假设a向量是（x1, y1），b向量是(x2, y2)，那么可以将余弦定理改写成下面的形式</strong></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/mBH40c92Ad.jpg?imageslim" alt=""></p>
+<script type="math/tex; mode=display">
+consin=\frac{x_1x_2+y_1y_2}{\sqrt{x_1^2+y_1^2}+\sqrt{x_2^2+y_2^2}}</script></li>
+<li><p><strong>扩展，如果向量a和b不是二维而是n维，上述余弦的计算法仍然正确。假定a和b是两个n维向量，a是  ，b是  ，则a与b的夹角 的余弦等于</strong></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/kjk7lFH9ji.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="余弦相似度代码实现"><a href="#余弦相似度代码实现" class="headerlink" title="余弦相似度代码实现"></a>余弦相似度代码实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">句子1：小孩很爱妈妈，妈妈也喜爱小孩</span><br><span class="line">句子2：小孩不爱妈妈，但是妈妈还是喜爱小孩</span><br></pre></td></tr></table></figure>
+<p><strong>基本思路：</strong></p>
+<ul>
+<li><p><strong>分词</strong></p>
+<p>使用jieba为两个语句分词</p>
+<p>jieba(Python <a href="https://github.com/fxsjy/jieba" target="_blank" rel="noopener">https://github.com/fxsjy/jieba</a> )</p>
+<p>jieba(Java <a href="https://github.com/huaban/jieba-analysis" target="_blank" rel="noopener">https://github.com/huaban/jieba-analysis</a>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">句子1：小孩 很 爱 妈妈 妈妈 也 喜爱 爱小 小孩</span><br><span class="line">鱼子2：小孩 不 爱 妈妈 但是 妈妈 还是 喜爱 爱小 小孩</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>列出所有词</strong></p>
+<p>通过计算合并句子1与句子2所有的词（并集）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">爱 妈妈 也 小孩 喜爱 很 不 还是 爱小 但是</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>计算词频</strong></p>
+<p>计算句子1与句子2并集词的每个词出现在对应句子当中出现的次数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">句子1：爱/1 妈妈/2 也/1 小孩/2 喜爱/1 很/1 不/0 还是/0 爱小/1 但是/0</span><br><span class="line">鱼子2：爱/1 妈妈/2 也/0 小孩/2 喜爱/1 很/0 不/1 还是/1 爱小/1 但是/1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>每个句子的向量值</strong></p>
+<p>最终形成每个句子的向量空间集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 1, 2, 1, 1, 0, 0, 1, 0]</span><br><span class="line">[1, 2, 0, 2, 1, 0, 1, 1, 1, 1]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>根据公式计算相似度</strong></p>
+<script type="math/tex; mode=display">
+x=\frac{1*1+2*2+1*0+2*2+1*1+1*0+0*1+0*1+1*1+0*1}{\sqrt{1^2+2^2+1^2+2^2+1^2+1^2+0^2+0^2+1^2+0^2} +\sqrt{1^2+2^2+0^2+2^2+1^2+0^2+1^2+1^2+1^2+1^2}}</script><p>最终结果x等于0.815374248327</p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/1ddkaK3FF2.png?imageslim" alt=""></p>
+</li>
+<li><p><strong>代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="comment"># 计算语句向量</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算一个向量值的平方和然后开更</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vector_to_pow_with_sqrt</span><span class="params">(vector)</span>:</span></span><br><span class="line">    vectorPow = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> vector:</span><br><span class="line">        vectorPow += math.pow(x, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> math.sqrt(vectorPow)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换为向量值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">word_to_vector</span><span class="params">(union_set, seg_list)</span>:</span></span><br><span class="line">    data_vector = [<span class="number">0</span>] * len(union_set)</span><br><span class="line">    index=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> union_set:</span><br><span class="line">        data_vector[index] = seg_list.count(word)</span><br><span class="line">        index += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> data_vector</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载stop word。可以直接通过百度搜索(停用词)</span></span><br><span class="line">stopWords = set()</span><br><span class="line">lines = open(<span class="string">"stop-word"</span>, <span class="string">'r'</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    <span class="keyword">if</span> len(line.strip()) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    stopWords.add(line.strip())</span><br><span class="line"></span><br><span class="line">s1 = <span class="string">"小孩很爱妈妈，妈妈也喜爱小孩"</span></span><br><span class="line">s2 = <span class="string">"小孩不爱妈妈，但是妈妈还是喜爱小孩"</span></span><br><span class="line"></span><br><span class="line">s1_seg_list = [x <span class="keyword">for</span> x <span class="keyword">in</span> jieba.cut(s1, <span class="keyword">True</span>) <span class="keyword">if</span> x != <span class="string">""</span>]</span><br><span class="line">s2_seg_list = [x <span class="keyword">for</span> x <span class="keyword">in</span> jieba.cut(s2, <span class="keyword">True</span>) <span class="keyword">if</span> x != <span class="string">""</span>]</span><br><span class="line"></span><br><span class="line">s1_seg_set = set(s1_seg_list)</span><br><span class="line">s2_seg_set = set(s2_seg_list)</span><br><span class="line">s1_with_s2_seg_set = s1_seg_set.union(s2_seg_list)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印语句分词结果</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span>  s1_seg_list:</span><br><span class="line">    <span class="keyword">print</span> x,</span><br><span class="line"><span class="keyword">print</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span>  s2_seg_list:</span><br><span class="line">        <span class="keyword">print</span> x,</span><br><span class="line"><span class="keyword">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印句子1与句子2分并集结果</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span>  s1_with_s2_seg_set:</span><br><span class="line">    <span class="keyword">print</span> x,</span><br><span class="line"><span class="keyword">print</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分词句子转换成向量值</span></span><br><span class="line">s1_vector = word_to_vector(s1_with_s2_seg_set, s1_seg_list)</span><br><span class="line">s2_vector = word_to_vector(s1_with_s2_seg_set, s2_seg_list)</span><br><span class="line"><span class="keyword">print</span> s1_vector</span><br><span class="line"><span class="keyword">print</span> s2_vector</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据余弦相似度的计算公式 计算向量值的平方更结果</span></span><br><span class="line">s1_vector_sqrt = vector_to_pow_with_sqrt(s1_vector)</span><br><span class="line">s2_vector_sqrt = vector_to_pow_with_sqrt(s2_vector)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据余弦相似度的计算公式 计算分母</span></span><br><span class="line">consine_top = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> range(len(s1_vector)):</span><br><span class="line">    consine_top += s1_vector[index] * s2_vector[index]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算余弦值</span></span><br><span class="line">consine = consine_top/(s1_vector_sqrt * s2_vector_sqrt)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> consine</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>余弦的相识度是一种非常有用的算法，只要是计算两个向量的相似度都可以使用此方法。计算流程就是：</p>
+<ul>
+<li>找出两篇文章或者两个句子的关键词</li>
+<li>每篇文章或句子个取出若干个关键词然后合并成一个集合，然后计算每篇文章或句子的关键词在这个集合中出现的次数</li>
+<li>生成两篇文章或句子的词频向量</li>
+<li>计算两个向量的余弦相似度，值越大就表示越相似</li>
+</ul>
+<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/nlp" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/nlp</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2013/03/cosine_similarity.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2013/03/cosine_similarity.html</a></li>
+</ul>
 
         
         </div>
@@ -462,7 +512,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjneo21ey000gjwqgg8i7j0ds" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html" data-id="cjneo21ey000bjwqgl2jcjzn3" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -530,7 +580,7 @@
 
             
     
-        <a href="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -539,19 +589,19 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/08/big-data/mapreduce-2.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    MapReduce Join 表连接 Python （二）
+                    NLP自然语言 之 TF-IDF（二）
                 
             </div>
         </a>
     
     
-        <a href="/2018/10/06/big-data/hadoop-install.html" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/13/big-data/hive-2.html" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">Hadoop2.7.2集群安装</div>
+            <div class="article-nav-title">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</div>
         </a>
     
 </nav>
