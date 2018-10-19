@@ -3,15 +3,25 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2018/10 | 李世佳的博客</title>
+    <title>NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://lishijia.top/archives/2018/10/index.html">
+    <meta name="description" content="前言前面我们知道了通过TF-IDF找出文章中的关键词，以及通过余弦相似度来判断两个句子或者文章的相似程度。那么我们还可以通过LCS即最长公共子序列（Longest Common Subsequence）的方式来比对两段文字之间的相似度。">
+<meta name="keywords" content="LCS,NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）">
+<meta property="og:url" content="http://lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言前面我们知道了通过TF-IDF找出文章中的关键词，以及通过余弦相似度来判断两个句子或者文章的相似程度。那么我们还可以通过LCS即最长公共子序列（Longest Common Subsequence）的方式来比对两段文字之间的相似度。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181018/Ce1KG56gCl.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181019/AFdLjBc05h.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181019/Egem20Ha56.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181019/K2EH89Ia2g.png?imageslim">
+<meta property="og:updated_time" content="2018-10-19T15:51:29.574Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）">
+<meta name="twitter:description" content="前言前面我们知道了通过TF-IDF找出文章中的关键词，以及通过余弦相似度来判断两个句子或者文章的相似程度。那么我们还可以通过LCS即最长公共子序列（Longest Common Subsequence）的方式来比对两段文字之间的相似度。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181018/Ce1KG56gCl.png?imageslim">
     
 
     
@@ -174,516 +184,7 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
-        
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/19/deeplearning/nlp-lcs-3.html" href="/2018/10/19/deeplearning/nlp-lcs-3.html">NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
-            <time datetime="2018-10-19T15:45:13.000Z" itemprop="datePublished">2018-10-19</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/NLP/">NLP</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/LCS/">LCS</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/18/deeplearning/nlp-tfidf-2.html" href="/2018/10/18/deeplearning/nlp-tfidf-2.html">NLP自然语言 之 TF-IDF（二）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
-            <time datetime="2018-10-18T14:09:13.000Z" itemprop="datePublished">2018-10-18</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/NLP/">NLP</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/TF-IDF/">TF-IDF</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/15/deeplearning/nlp-consine-1.html" href="/2018/10/15/deeplearning/nlp-consine-1.html">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/15/deeplearning/nlp-consine-1.html">
-            <time datetime="2018-10-15T12:45:13.000Z" itemprop="datePublished">2018-10-15</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/NLP/">NLP</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/余弦相似度/">余弦相似度</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/15/deeplearning/nlp-consine-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/15/deeplearning/nlp-consine-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/13/big-data/hive-2.html" href="/2018/10/13/big-data/hive-2.html">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/13/big-data/hive-2.html">
-            <time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hive/">Hive</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/13/big-data/hive-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/13/big-data/hive-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/12/big-data/hive-1.html" href="/2018/10/12/big-data/hive-1.html">Hive 安装配置 &amp; 简单使用</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/12/big-data/hive-1.html">
-            <time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hive/">Hive</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/12/big-data/hive-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/12/big-data/hive-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/10/big-data/mapreduce-3.html" href="/2018/10/10/big-data/mapreduce-3.html">MapReduce 执行过程原理（三）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/10/big-data/mapreduce-3.html">
-            <time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/08/big-data/mapreduce-2.html" href="/2018/10/08/big-data/mapreduce-2.html">MapReduce Join 表连接 Python （二）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/big-data/mapreduce-2.html">
-            <time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/hadoop-install.html" href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/hadoop-install.html">
-            <time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/centos-nat.html" href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/centos-nat.html">
-            <time datetime="2018-10-06T02:26:12.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -873,13 +374,247 @@
         return constructor;
     })()
 </script>
+<article id="post-deeplearning/nlp-lcs-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/19/deeplearning/nlp-lcs-3.html" itemprop="name">
+            NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
+            <time datetime="2018-10-19T15:45:13.000Z" itemprop="datePublished">2018-10-19</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/NLP/">NLP</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/LCS/">LCS</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181018/Ce1KG56gCl.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面我们知道了通过TF-IDF找出文章中的关键词，以及通过余弦相似度来判断两个句子或者文章的相似程度。那么我们还可以通过LCS即最长公共子序列（Longest Common Subsequence）的方式来比对两段文字之间的相似度。</p>
+<a id="more"></a>
+<h2 id="LCS定义"><a href="#LCS定义" class="headerlink" title="LCS定义"></a>LCS定义</h2><ul>
+<li>一个序列S任意删除若干个字符得到的新序列T,则T叫做S的子序列</li>
+<li>两个序列X和Y的公共子序列中，长度最长的那个定义为X和Y的最长公共子序列<ul>
+<li>字符串1234<font color="red">56789</font>与<font color="red">56789</font>1011的最长公共子序列为56789</li>
+<li>字符串<font color="red">a</font>d<font color="red">fa</font>与<font color="red">afa</font>的最长公共子序列为afa</li>
+</ul>
+</li>
+</ul>
+<h2 id="LCS作用"><a href="#LCS作用" class="headerlink" title="LCS作用"></a>LCS作用</h2><ul>
+<li>求两个序列中最长的公共子序列</li>
+<li>描述两段文字之间的相似度（根据最长子序列来判断，举例如果一个句子一共20个字符，另外一个15个字符，假如它们的最长子序列达到了10个字符，那么这里两个句子相似度应该就比较高了）</li>
+</ul>
+<h2 id="LCS公式"><a href="#LCS公式" class="headerlink" title="LCS公式"></a>LCS公式</h2><p>a = ‘BDCABA’<br>b = ‘ABCBDAB’</p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181019/AFdLjBc05h.png?imageslim" alt=""></p>
+<p>属于动态规划问题</p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181019/Egem20Ha56.png?imageslim" alt=""></p>
+<ul>
+<li><p>使用二维数组C(m,n)</p>
+</li>
+<li><p>C[i,j]记录序列X_i和Y_j的最长公共子序列的长度</p>
+<p>当i=0或j=0时，空虚了是X_i和Y_j的最长公共子序列，即C[i,j]=0</p>
+</li>
+</ul>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181019/K2EH89Ia2g.png?imageslim" alt=""></p>
+<h2 id="LCS代码实现"><a href="#LCS代码实现" class="headerlink" title="LCS代码实现"></a>LCS代码实现</h2><p>计算文本相似度</p>
+<ul>
+<li>将两个字符串分别以行和列组成矩阵。</li>
+<li>计算每个节点行列字符是否相同，如相同则为 通过公式计算。</li>
+<li>通过找出值变化 的最长对角线即可得到最长公共子串。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lcs</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="comment"># a字符的长度</span></span><br><span class="line">    n = len(a)</span><br><span class="line">    <span class="comment"># b字符的长度</span></span><br><span class="line">    m = len(b)</span><br><span class="line">    <span class="comment"># 声明一个二维数组默认值全部为0</span></span><br><span class="line">    <span class="comment"># 外层长度为 a（n）字符的长度+ 1</span></span><br><span class="line">    <span class="comment"># 内层长度为 b（m）字符的长度+ 1</span></span><br><span class="line">    <span class="comment"># data[n][m] 即 n行m列</span></span><br><span class="line">    l = [[<span class="number">0</span>]*(m+<span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 从1开始循环到n+1行</span></span><br><span class="line">    <span class="comment"># 从1开始循环到m+1列</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果相同，则取对角数值+1</span></span><br><span class="line">    <span class="comment"># 如果不相同，则取对角右和下的最大值</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>)[<span class="number">1</span>:]:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(m+<span class="number">1</span>)[<span class="number">1</span>:]:</span><br><span class="line">            <span class="keyword">if</span> a[i<span class="number">-1</span>] == b[j<span class="number">-1</span>]:</span><br><span class="line">                l[i][j] = l[i<span class="number">-1</span>][j<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                l[i][j] = max(l[i<span class="number">-1</span>][j], l[i][j<span class="number">-1</span>])</span><br><span class="line">    <span class="keyword">print</span></span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> l:</span><br><span class="line">        <span class="keyword">print</span> data</span><br><span class="line"></span><br><span class="line">a = <span class="string">'BDCABA'</span></span><br><span class="line">b = <span class="string">'ABCBDAB'</span></span><br><span class="line">lcs(a, b)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">代码结果输出：</span><br><span class="line">[0, 0, 0, 0, 0, 0, 0, 0]</span><br><span class="line">[0, 0, 1, 1, 1, 1, 1, 1]</span><br><span class="line">[0, 0, 1, 1, 1, 2, 2, 2]</span><br><span class="line">[0, 0, 1, 2, 2, 2, 2, 2]</span><br><span class="line">[0, 1, 1, 2, 2, 2, 3, 3]</span><br><span class="line">[0, 1, 2, 2, 3, 3, 3, 4]</span><br><span class="line">[0, 1, 2, 2, 3, 3, 4, 4]</span><br><span class="line">即最长公共子序列为：BDAB，即一个句子6个字符，一个句子7个字符。它们的公共子序列达到了4个字符，那么可以理解它们的相似度应该比较高了</span><br></pre></td></tr></table></figure>
+<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/nlp" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/nlp</a></p>
+<p><a href="/2018/10/15/deeplearning/nlp-consine-1.html">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a></p>
+<p><a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">NLP自然语言 之 TF-IDF（二）</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html" data-id="cjng6zwgi0006z0qg2jb99zvv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">NLP自然语言 之 TF-IDF（二）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 
