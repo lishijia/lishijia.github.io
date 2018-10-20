@@ -3,15 +3,23 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: LCS | 李世佳的博客</title>
+    <title>Scala &amp; Spark2.0.2集群安装 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://lishijia.top/tags/LCS/index.html">
+    <meta name="description" content="前言Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。">
+<meta name="keywords" content="Spark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scala &amp; Spark2.0.2集群安装">
+<meta property="og:url" content="http://lishijia.top/2018/10/20/big-data/spark2.0-install-1.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/5ejFE6c0jJ.png?imageslim">
+<meta property="og:updated_time" content="2018-10-20T14:28:50.408Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="Scala &amp; Spark2.0.2集群安装">
+<meta name="twitter:description" content="前言Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim">
     
 
     
@@ -174,66 +182,7 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#LCS</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/19/deeplearning/nlp-lcs-3.html" href="/2018/10/19/deeplearning/nlp-lcs-3.html">NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
-            <time datetime="2018-10-19T15:45:13.000Z" itemprop="datePublished">2018-10-19</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/NLP/">NLP</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/LCS/">LCS</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -423,13 +372,263 @@
         return constructor;
     })()
 </script>
+<article id="post-big-data/spark2.0-install-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/20/big-data/spark2.0-install-1.html" itemprop="name">
+            Scala &amp; Spark2.0.2集群安装
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/20/big-data/spark2.0-install-1.html">
+            <time datetime="2018-10-20T15:30:00.000Z" itemprop="datePublished">2018-10-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/20/big-data/spark2.0-install-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/20/big-data/spark2.0-install-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。</p>
+<a id="more"></a>
+<h2 id="准备安装文件"><a href="#准备安装文件" class="headerlink" title="准备安装文件"></a>准备安装文件</h2><p>以下为大家准备了安装文件，也可以自己到网上下载</p>
+<p>说明：spark的安装是有对应的hadoop版本的，所以如果安装的是2.6版本的hadoop，那么请去下载对应2.6版本的spark</p>
+<p>下载地址：<a href="https://archive.apache.org/dist/spark/spark-2.0.2/" target="_blank" rel="noopener">https://archive.apache.org/dist/spark/spark-2.0.2/</a></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>准备文件</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spark-2.0.2-bin-hadoop2.7</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ4</td>
+</tr>
+<tr>
+<td>scala-2.11.8</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ4</td>
+</tr>
+<tr>
+<td><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop 必须提前安装好</a></td>
+<td>咱们安装的Spark依赖Yarn资源管理协调系统</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Scala安装"><a href="#Scala安装" class="headerlink" title="Scala安装"></a>Scala安装</h2><p><strong>上传Scala安装包至服务器master201</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 Soft]# tar -xvf scala-2.11.8.tgz</span><br><span class="line">[root@master201 Soft]# mv scala-2.11.8 scala</span><br><span class="line">[root@master201 Soft]# mv scala /usr/local/share/</span><br><span class="line"></span><br><span class="line">然后配置环境变量：</span><br><span class="line">[root@master201 Soft]# vim /etc/profile</span><br><span class="line">增加以下配置：</span><br><span class="line">export PATH=$PATH:/usr/local/share/scala/bin</span><br><span class="line">然后source生效环境变量：</span><br><span class="line">[root@master201 Soft]# source /etc/profile</span><br><span class="line">验证测试：</span><br><span class="line">[root@master201 Soft]# scala</span><br><span class="line">Welcome to Scala 2.11.8 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_144).</span><br><span class="line">Type in expressions for evaluation. Or try :help.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span> print 12</span><br><span class="line"><span class="meta">scala&gt;</span> print(12)</span><br><span class="line">12</span><br><span class="line"><span class="meta">scala&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Spark安装"><a href="#Spark安装" class="headerlink" title="Spark安装"></a>Spark安装</h2><ul>
+<li><p><strong>上传文件至服务器master201然后解压配置环境变量</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 Soft]# tar -xvf spark-2.0.2-bin-hadoop2.7.tgz</span><br><span class="line">然后配置环境变量：</span><br><span class="line">[root@master201 Soft]# vim /etc/profile</span><br><span class="line">增加以下配置：</span><br><span class="line">export SPARK_HOME=/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7</span><br><span class="line">export PATH=$PATH:$SPARK_HOME/bin</span><br><span class="line">然后source生效环境变量：</span><br><span class="line">[root@master201 Soft]# source /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改spark-env配置文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 conf]# cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/conf</span><br><span class="line">[root@master201 conf]# cp spark-env.sh.template spark-env.sh</span><br><span class="line"></span><br><span class="line">编辑spark环境变量：</span><br><span class="line">[root@master201 conf]# vi spark-evn.sh</span><br><span class="line">增加以下配置：</span><br><span class="line">export JAVA_HOME=/home/lishijia/Soft/jdk1.8.0_144</span><br><span class="line">export SPARK_MASTER_HOST=master201</span><br><span class="line">export SPARK_MASTER_PORT=7077</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>配置slave从节点</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 conf]# cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/conf</span><br><span class="line">[root@master201 conf]# cp slaves.template slaves</span><br><span class="line">[root@master201 conf]# vi slaves</span><br><span class="line">增加以下slave节点</span><br><span class="line">slave202</span><br><span class="line">slave203</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>scp分发包到从节点</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">同步spark安装包</span><br><span class="line">[root@master201 Soft]# scp -r spark-2.0.2-bin-hadoop2.7 slave202:/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7</span><br><span class="line">[root@master201 Soft]# scp -r spark-2.0.2-bin-hadoop2.7 slave203:/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7</span><br><span class="line">同步环境变量</span><br><span class="line">[root@master201 Soft]# scp -r /etc/profile slave202:/etc/</span><br><span class="line">[root@master201 Soft]# scp -r /etc/profile slave203:/etc/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>master201启动spark，验证</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 sbin]# pwd</span><br><span class="line">/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/sbin</span><br><span class="line">[root@master201 sbin]# ./start-all.sh </span><br><span class="line">starting org.apache.spark.deploy.master.Master, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.master.Master-1-master201.out</span><br><span class="line">slave203: starting org.apache.spark.deploy.worker.Worker, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-slave203.out</span><br><span class="line">slave202: starting org.apache.spark.deploy.worker.Worker, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-slave202.out</span><br><span class="line">[root@master201 sbin]# jps</span><br><span class="line">5027 Master</span><br><span class="line">2710 ResourceManager</span><br><span class="line">5112 Jps</span><br><span class="line">2297 NameNode</span><br><span class="line">2510 SecondaryNameNode</span><br></pre></td></tr></table></figure>
+<p>访问spark管理控制台<a href="http://master201:8080/" target="_blank" rel="noopener">http://master201:8080/</a></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/5ejFE6c0jJ.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上步骤基本完成了scala与spark集群的安装，下一步就可以开发spark应用程序了。</p>
+<p> <a href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a></p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/20/big-data/spark2.0-install-1.html" data-id="cjnhjh90h0007nkqg50ahig8m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/20/big-data/spark2.0-install-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/19/deeplearning/nlp-lcs-3.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 
