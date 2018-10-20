@@ -15,7 +15,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/5ejFE6c0jJ.png?imageslim">
-<meta property="og:updated_time" content="2018-10-20T14:28:50.408Z">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/BCh7i1bId1.png?imageslim">
+<meta property="og:updated_time" content="2018-10-20T14:34:45.111Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scala &amp; Spark2.0.2集群安装">
 <meta name="twitter:description" content="前言Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。">
@@ -477,7 +478,8 @@
 <li><p>master201启动spark，验证</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 sbin]# pwd</span><br><span class="line">/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/sbin</span><br><span class="line">[root@master201 sbin]# ./start-all.sh </span><br><span class="line">starting org.apache.spark.deploy.master.Master, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.master.Master-1-master201.out</span><br><span class="line">slave203: starting org.apache.spark.deploy.worker.Worker, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-slave203.out</span><br><span class="line">slave202: starting org.apache.spark.deploy.worker.Worker, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-slave202.out</span><br><span class="line">[root@master201 sbin]# jps</span><br><span class="line">5027 Master</span><br><span class="line">2710 ResourceManager</span><br><span class="line">5112 Jps</span><br><span class="line">2297 NameNode</span><br><span class="line">2510 SecondaryNameNode</span><br></pre></td></tr></table></figure>
 <p>访问spark管理控制台<a href="http://master201:8080/" target="_blank" rel="noopener">http://master201:8080/</a></p>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/5ejFE6c0jJ.png?imageslim" alt=""></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/5ejFE6c0jJ.png?imageslim" alt="">两台slave会有这么一个Work进程</p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/BCh7i1bId1.png?imageslim" alt="mark"></p>
 </li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上步骤基本完成了scala与spark集群的安装，下一步就可以开发spark应用程序了。</p>
@@ -493,7 +495,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/20/big-data/spark2.0-install-1.html" data-id="cjnhjh90h0007nkqg50ahig8m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/20/big-data/spark2.0-install-1.html" data-id="cjnhjpzew000g4cqgl1ips1kl" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
