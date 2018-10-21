@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/2beAmcC38h.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/dgDBkfGK3D.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/f8hHg0JFAk.png?imageslim">
-<meta property="og:updated_time" content="2018-10-11T14:18:02.352Z">
+<meta property="og:updated_time" content="2018-10-21T03:43:50.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop2.7.2集群安装">
 <meta name="twitter:description" content="前言上一遍我们搭建了虚拟机集群环境，现在我们就开始搭建Hadoop集群环境，为后续的数据处理提供HDFS存储，MapReduce计算环境。">
@@ -544,9 +544,9 @@
 <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181006/dgDBkfGK3D.png?imageslim" alt=""></p>
 </li>
 </ol>
-<h2 id="安装问题以及以往遇到的问题"><a href="#安装问题以及以往遇到的问题" class="headerlink" title="安装问题以及以往遇到的问题"></a>安装问题以及以往遇到的问题</h2><ol>
+<h2 id="安装问题以及以往遇到的问题"><a href="#安装问题以及以往遇到的问题" class="headerlink" title="安装问题以及以往遇到的问题"></a>安装问题以及以往遇到的问题</h2><ul>
 <li><p><strong>防火墙问题（切记三台机器都需要执行，要不然在访问后台管理访问不了，在put文件至hdfs的时候也会报错java.net.NoRouteToHostException: No route to host）</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop firewalld.service</span><br><span class="line">sudo systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop firewalld.service</span><br><span class="line">sudo systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Hadoop运行一段时间后（几天后），停止重启，发现停止不了报错（之前使用遇到的问题）</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# stop-dfs.sh</span><br><span class="line">Stopping namenodes on [master]</span><br><span class="line">hadoop100: no namenode to stop</span><br><span class="line">hadoop101: no datanode to stop</span><br><span class="line">hadoop102: no datanode to stop</span><br><span class="line">hadoop103: no datanode to stop</span><br><span class="line">hadoop104: no datanode to stop</span><br></pre></td></tr></table></figure>
@@ -560,9 +560,12 @@
 <font color="red">以上修改记得把对应的配置同步到hadoop对应的slave</font>
 
 <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181006/f8hHg0JFAk.png?imageslim" alt="mark"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上整体完成了hadoop集群安装，当中包含了hdfs，mapreduce核心组件，以及做了一个简单的hdfs操作示例，创建、查看、上传文件至hdfs集群</p>
 </li>
-</ol>
+<li><p><strong>三台服务器时间不同步问题</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/crontab</span><br><span class="line">*/10 * * * * ntpdate -u ntp.api.bz</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上整体完成了hadoop集群安装，当中包含了hdfs，mapreduce核心组件，以及做了一个简单的hdfs操作示例，创建、查看、上传文件至hdfs集群</p>
 <p>   <a href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a></p>
 
         
@@ -574,7 +577,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjnhjpzep00064cqghmerchoa" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjnidl7a40007wsqgyii2sbk5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
