@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/2beAmcC38h.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/dgDBkfGK3D.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181006/f8hHg0JFAk.png?imageslim">
-<meta property="og:updated_time" content="2018-10-21T13:01:27.900Z">
+<meta property="og:updated_time" content="2018-10-21T13:10:01.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop2.7.2集群安装">
 <meta name="twitter:description" content="前言上一遍我们搭建了虚拟机集群环境，现在我们就开始搭建Hadoop集群环境，为后续的数据处理提供HDFS存储，MapReduce计算环境。">
@@ -562,7 +562,7 @@
 <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181006/f8hHg0JFAk.png?imageslim" alt="mark"></p>
 </li>
 <li><p><strong>三台服务器时间不同步问题</strong></p>
-<p>修改时间：2018-10-21</p>
+<p>添加时间：2018-10-21 21:09:22</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">18/10/21 20:58:21 INFO yarn.Client: </span><br><span class="line">         client token: N/A</span><br><span class="line">         diagnostics: Application application_1540122054916_0004 failed 2 times due to Error launching appattempt_1540122054916_0004_000002. Got exception: org.apache.hadoop.yarn.exceptions.YarnException: Unauthorized request to start container. </span><br><span class="line">This token is expired. current time is 1540155500688 found 1540127301513</span><br><span class="line">Note: System times on machines may be out of sync. Check system time and time zones.</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/crontab</span><br><span class="line">*/10 * * * * ntpdate -u ntp.api.bz</span><br></pre></td></tr></table></figure>
 </li>
@@ -579,7 +579,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjniw1wsg000zogqgjchymrx7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjniw5fij000l1oqgifkp0mia" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
