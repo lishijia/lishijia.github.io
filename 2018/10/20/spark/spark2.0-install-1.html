@@ -3,24 +3,31 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MapReduce Join 表连接 Python （二） | 李世佳的博客</title>
+    <title>Scala &amp; Spark2.0.2集群安装 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言上一遍文章简单编写了MapReduce WordCount，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。">
-<meta name="keywords" content="MapReduce,Hadoop">
+    <meta name="description" content="前言Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。">
+<meta name="keywords" content="Spark">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MapReduce Join 表连接 Python （二）">
-<meta property="og:url" content="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html">
+<meta property="og:title" content="Scala &amp; Spark2.0.2集群安装">
+<meta property="og:url" content="http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言上一遍文章简单编写了MapReduce WordCount，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。">
+<meta property="og:description" content="前言Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim">
-<meta property="og:updated_time" content="2018-10-14T01:30:17.708Z">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/5ejFE6c0jJ.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/BCh7i1bId1.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/G6I3Jh6dAi.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/20cFheLc1L.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/fCaELlma0f.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/i7he1hEjgc.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/iF4Ieja9j4.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/ic25093G0L.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/2e11k80hH0.png?imageslim">
+<meta property="og:updated_time" content="2018-10-21T11:30:44.644Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MapReduce Join 表连接 Python （二）">
-<meta name="twitter:description" content="前言上一遍文章简单编写了MapReduce WordCount，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。">
-<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim">
+<meta name="twitter:title" content="Scala &amp; Spark2.0.2集群安装">
+<meta name="twitter:description" content="前言Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim">
     
 
     
@@ -373,15 +380,15 @@
         return constructor;
     })()
 </script>
-<article id="post-big-data/mapreduce-2" class="article article-type-post" itemscope itemprop="blogPost">
+<article id="post-spark/spark2.0-install-1" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
             <header class="article-header">
                 
     
-        <h1 class="article-title leancloud_visitors" title="/2018/10/08/big-data/mapreduce-2.html" itemprop="name">
-            MapReduce Join 表连接 Python （二）
+        <h1 class="article-title leancloud_visitors" title="/2018/10/20/spark/spark2.0-install-1.html" itemprop="name">
+            Scala &amp; Spark2.0.2集群安装
         </h1>
     
 
@@ -390,8 +397,8 @@
                         
     <div class="article-date">
         <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/big-data/mapreduce-2.html">
-            <time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time>
+        <a href="/2018/10/20/spark/spark2.0-install-1.html">
+            <time datetime="2018-10-20T15:30:00.000Z" itemprop="datePublished">2018-10-20</time>
         </a>
     </div>
 
@@ -399,25 +406,25 @@
                         
     <div class="article-category">
     	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
     </div>
 
                         
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>
     </div>
 
                         <div class="article-visitor">
     <i class="fas fa-eye"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html">
+    <a href="/2018/10/20/spark/spark2.0-install-1.html">
         <span class="visitor"></span>
     </a>
 </div>
 
                         <div class="article-visitor">
     <i class="fas fa-comment"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html#comments">
+    <a href="/2018/10/20/spark/spark2.0-install-1.html#comments">
         <span class="comment_num"></span>
     </a>
 </div>
@@ -430,26 +437,82 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一遍文章简单编写了<a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount</a>，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。</p>
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。</p>
 <a id="more"></a>
-<h2 id="MapReduce-Join实现思路"><a href="#MapReduce-Join实现思路" class="headerlink" title="MapReduce Join实现思路"></a>MapReduce Join实现思路</h2><p>假设有关系O(o,a,u)和I(o,g,p)，对二者进行自然连接操作<br>使用Map过程，<font color="red">把来自O的每个元组<o,a,u>转换成一个键值对<o, <o,a,u="">&gt;,</o,></o,a,u></font>，其中的键就是属性o的值。把关系O包含到值中，这样做使得我们可以在Reduce阶段，只把那些来自O的元组和来自I的元组进行匹配。类似地，使用Map过程，把来自I的每个元组<o,g,p>，转换成一个键值对<o,<i,g,p>&gt;<br>所有具有相同o值的元组被发送到同一个Reduce进程中<font color="red">（此处是由Hadoop MapReduce框架完成的，它会根据reduce所设定的数量进行分区，最终把相同分区的数据发送到同一reduce单重进行处理）</font>，Reduce进程的任务是，把来自关系O和I的、具有相同属性o值的元组进行合并<br>Reduce进程的输出则是连接后的元组<o,a,u,g,p>，输出被写到一个单独的输出文件中</o,a,u,g,p></o,<i,g,p></o,g,p></p>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim" alt=""></p>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map接收标准输入，然后再此处做一定的处理，标记一下每一条出现的数据来源，后续在reduce阶段需要使用。此处也可以通过写多个Map处理。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/usr/bin/env python</span><br><span class="line"><span class="meta">#</span> coding=utf-8</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    order = line.strip().split(',')</span><br><span class="line">    if len(order) == 3:</span><br><span class="line">        print "%s,1,%s,%s" % (order[0], order[1], order[2])</span><br><span class="line">    elif len(order) == 4:</span><br><span class="line">        print "%s,2,%s,%s,%s" % (order[0], order[1], order[2], order[3])</span><br></pre></td></tr></table></figure>
-<h2 id="Reduce"><a href="#Reduce" class="headerlink" title="Reduce"></a>Reduce</h2><p>Reduce 实现简单的Join操作，<font color="red">此处依赖Map当中自带的排序操作，可以往下看，如果是本地调试模式，则需要加上sort命令。</font>试想一下，比如order_item表当中有数据，而order表又没有数据，那么实际上程序也是会存在问题的。所以还是有很多没有考虑周全的地方，此处仅仅是一个简单实现（前提清洗过后数据都能保证一致性）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 join]# vim reduce_join.py </span><br><span class="line"><span class="meta">#</span>!/usr/bin/env python</span><br><span class="line"><span class="meta">#</span> coding=utf-8</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">v_order = None</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    order = line.strip().split(',')</span><br><span class="line">    if v_order == None:</span><br><span class="line">        v_order = order</span><br><span class="line">    elif order[1] == "1":</span><br><span class="line">        v_order = order</span><br><span class="line">    elif order[1] == "2":</span><br><span class="line">        print "%s\t%s\t%s\t%s\t%s\t%s" % (v_order[0], v_order[2], v_order[3], order[2], order[3], order[4])</span><br></pre></td></tr></table></figure>
-<h2 id="本地调试（服务器）"><a href="#本地调试（服务器）" class="headerlink" title="本地调试（服务器）"></a>本地调试（服务器）</h2><p>通过以下方式在本地调试基础功能结果</p>
-<p>命令解释：通过Cat order 与 order_item文件进行输入到map，然后map通过计算过滤输出，reduce把map的输入作为输入计算并且进行join。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 join]# ls</span><br><span class="line">map_item.py  map_order.py  map.py  order  order_item  reduce_join.py  run.sh</span><br><span class="line">[root@master201 join]# cat order order_item | python map.py | sort | python reduce_join.py </span><br><span class="line">orderId01       20.00   lishijia        itemId1 Mac     10</span><br><span class="line">orderId01       20.00   lishijia        itemId2 Iphone  10</span><br><span class="line">orderId02       30.00   eva     itemId3 Aoc     30</span><br><span class="line">orderId03       50.00   john    itemId4 Xiaomi  10</span><br><span class="line">orderId03       50.00   john    itemId5 Huawei  30</span><br><span class="line">orderId03       50.00   john    itemId6 Vivo    10</span><br></pre></td></tr></table></figure>
-<h2 id="集群运行MapReduce-Join"><a href="#集群运行MapReduce-Join" class="headerlink" title="集群运行MapReduce Join"></a>集群运行MapReduce Join</h2><p>run.sh脚本内容，以下方式相当于在一个脚本里面执行三个任务，其实也可以跟<a href="/2018/10/07/big-data/mapreduce-1.html">WrodCount</a>例子一样，因为在Map的代码里面做了特殊处理。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_CMD="/home/lishijia/Soft/hadoop-2.7.2/bin/hadoop"</span><br><span class="line"></span><br><span class="line">STREAM_JAR_PATH="/home/lishijia/Soft/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar"</span><br><span class="line"></span><br><span class="line">INPUT_FILE_PATH_ORDER="/lishijia/input/mapreducejoin/order"</span><br><span class="line">INPUT_FILE_PATH_ITEM="/lishijia/input/mapreducejoin/order_item"</span><br><span class="line"></span><br><span class="line">OUTPUT_PATH_ORDER="/lishijia/output/maporder"</span><br><span class="line">OUTPUT_PATH_ITEM="/lishijia/output/maporderitem"</span><br><span class="line"></span><br><span class="line">OUTPUT_PATH_JOIN="/lishijia/output/mapreducejoin/"</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD fs -rmr -skipTrash $OUTPUT_PATH_ORDER $OUTPUT_PATH_ITEM $OUTPUT_PATH_JOIN</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_ORDER \</span><br><span class="line">    -output $OUTPUT_PATH_ORDER \</span><br><span class="line">    -mapper "python map_order.py" \</span><br><span class="line">    -file ./map_order.py \</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $INPUT_FILE_PATH_ITEM \</span><br><span class="line">    -output $OUTPUT_PATH_ITEM \</span><br><span class="line">    -mapper "python map_item.py" \</span><br><span class="line">    -file ./map_item.py \</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span>HADOOP_CMD jar $STREAM_JAR_PATH \</span><br><span class="line">    -input $OUTPUT_PATH_ORDER,$OUTPUT_PATH_ITEM \</span><br><span class="line">    -output $OUTPUT_PATH_JOIN \</span><br><span class="line">    -mapper "cat" \</span><br><span class="line">    -reducer "python reduce_join.py" \</span><br><span class="line">    -file ./reduce_join.py</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">18/10/08 22:44:43 INFO streaming.StreamJob: Output directory: /lishijia/output/mapreducejoin/</span><br><span class="line">[root@master201 join]# hadoop fs -ls /lishijia/output/mapreducejoin</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   2 root supergroup          0 2018-10-08 22:44 /lishijia/output/mapreducejoin/_SUCCESS</span><br><span class="line">-rw-r--r--   2 root supergroup        233 2018-10-08 22:44 /lishijia/output/mapreducejoin/part-00000</span><br><span class="line">[root@master201 join]# hadoop fs -cat /lishijia/output/mapreducejoin/part-00000</span><br><span class="line">orderId01       20.00   lishijia        itemId1 Mac     10</span><br><span class="line">orderId01       20.00   lishijia        itemId2 Iphone  10</span><br><span class="line">orderId02       30.00   eva     itemId3 Aoc     30</span><br><span class="line">orderId03       50.00   john    itemId4 Xiaomi  10</span><br><span class="line">orderId03       50.00   john    itemId5 Huawei  30</span><br><span class="line">orderId03       50.00   john    itemId6 Vivo    10</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单实现MapReduce join 表连接操作，主要还是表达，灵活使用Mapreduce以及后续理解Hive。Hive当中的所有sql都是转换成一个一个MapReduce任务来实现的。</p>
-<p>代码：<a href="https://github.com/lishijia/py-data-demo/tree/master/mapreduce" target="_blank" rel="noopener">https://github.com/lishijia/py-data-demo/tree/master/mapreduce</a></p>
-<p><a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount</a></p>
+<h2 id="准备安装文件"><a href="#准备安装文件" class="headerlink" title="准备安装文件"></a>准备安装文件</h2><p>以下为大家准备了安装文件，也可以自己到网上下载</p>
+<p>说明：spark的安装是有对应的hadoop版本的，所以如果安装的是2.6版本的hadoop，那么请去下载对应2.6版本的spark</p>
+<p>下载地址：<a href="https://archive.apache.org/dist/spark/spark-2.0.2/" target="_blank" rel="noopener">https://archive.apache.org/dist/spark/spark-2.0.2/</a></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>准备文件</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spark-2.0.2-bin-hadoop2.7</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ4</td>
+</tr>
+<tr>
+<td>scala-2.11.8</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ4</td>
+</tr>
+<tr>
+<td><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop 必须提前安装好</a></td>
+<td>咱们安装的Spark依赖Yarn资源管理协调系统</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Scala安装"><a href="#Scala安装" class="headerlink" title="Scala安装"></a>Scala安装</h2><p><strong>上传Scala安装包至服务器master201</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 Soft]# tar -xvf scala-2.11.8.tgz</span><br><span class="line">[root@master201 Soft]# mv scala-2.11.8 scala</span><br><span class="line">[root@master201 Soft]# mv scala /usr/local/share/</span><br><span class="line"></span><br><span class="line">然后配置环境变量：</span><br><span class="line">[root@master201 Soft]# vim /etc/profile</span><br><span class="line">增加以下配置：</span><br><span class="line">export PATH=$PATH:/usr/local/share/scala/bin</span><br><span class="line">然后source生效环境变量：</span><br><span class="line">[root@master201 Soft]# source /etc/profile</span><br><span class="line">验证测试：</span><br><span class="line">[root@master201 Soft]# scala</span><br><span class="line">Welcome to Scala 2.11.8 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_144).</span><br><span class="line">Type in expressions for evaluation. Or try :help.</span><br><span class="line"></span><br><span class="line"><span class="meta">scala&gt;</span> print 12</span><br><span class="line"><span class="meta">scala&gt;</span> print(12)</span><br><span class="line">12</span><br><span class="line"><span class="meta">scala&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Spark安装"><a href="#Spark安装" class="headerlink" title="Spark安装"></a>Spark安装</h2><ul>
+<li><p><strong>上传文件至服务器master201然后解压配置环境变量</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 Soft]# tar -xvf spark-2.0.2-bin-hadoop2.7.tgz</span><br><span class="line">然后配置环境变量：</span><br><span class="line">[root@master201 Soft]# vim /etc/profile</span><br><span class="line">增加以下配置：</span><br><span class="line">export SPARK_HOME=/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7</span><br><span class="line">export PATH=$PATH:$SPARK_HOME/bin</span><br><span class="line">然后source生效环境变量：</span><br><span class="line">[root@master201 Soft]# source /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改spark-env配置文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 conf]# cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/conf</span><br><span class="line">[root@master201 conf]# cp spark-env.sh.template spark-env.sh</span><br><span class="line"></span><br><span class="line">编辑spark环境变量：</span><br><span class="line">[root@master201 conf]# vi spark-evn.sh</span><br><span class="line">增加以下配置：</span><br><span class="line">export JAVA_HOME=/home/lishijia/Soft/jdk1.8.0_144</span><br><span class="line">export SPARK_MASTER_HOST=master201</span><br><span class="line">export SPARK_MASTER_PORT=7077</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>配置slave从节点</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 conf]# cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/conf</span><br><span class="line">[root@master201 conf]# cp slaves.template slaves</span><br><span class="line">[root@master201 conf]# vi slaves</span><br><span class="line">增加以下slave节点</span><br><span class="line">slave202</span><br><span class="line">slave203</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>scp分发包到从节点</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">同步spark安装包</span><br><span class="line">[root@master201 Soft]# scp -r spark-2.0.2-bin-hadoop2.7 slave202:/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7</span><br><span class="line">[root@master201 Soft]# scp -r spark-2.0.2-bin-hadoop2.7 slave203:/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7</span><br><span class="line">同步环境变量</span><br><span class="line">[root@master201 Soft]# scp -r /etc/profile slave202:/etc/</span><br><span class="line">[root@master201 Soft]# scp -r /etc/profile slave203:/etc/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>master201启动spark，验证</strong></p>
+<p>此处的启动时spark自身的一个集群</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 sbin]# pwd</span><br><span class="line">/home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/sbin</span><br><span class="line">[root@master201 sbin]# ./start-all.sh </span><br><span class="line">starting org.apache.spark.deploy.master.Master, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.master.Master-1-master201.out</span><br><span class="line">slave203: starting org.apache.spark.deploy.worker.Worker, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-slave203.out</span><br><span class="line">slave202: starting org.apache.spark.deploy.worker.Worker, logging to /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-slave202.out</span><br><span class="line">[root@master201 sbin]# jps</span><br><span class="line">5027 Master</span><br><span class="line">2710 ResourceManager</span><br><span class="line">5112 Jps</span><br><span class="line">2297 NameNode</span><br><span class="line">2510 SecondaryNameNode</span><br></pre></td></tr></table></figure>
+<p>访问spark管理控制台<a href="http://master201:8080/" target="_blank" rel="noopener">http://master201:8080/</a></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/5ejFE6c0jJ.png?imageslim" alt="">两台slave会有这么一个Work进程</p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/BCh7i1bId1.png?imageslim" alt="mark"></p>
+</li>
+</ul>
+<h2 id="Spark本地模式与集群模式验证"><a href="#Spark本地模式与集群模式验证" class="headerlink" title="Spark本地模式与集群模式验证"></a>Spark本地模式与集群模式验证</h2><p>依赖spark自带的example来验证以下方式</p>
+<ul>
+<li><p><strong>Spark本地模式</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 bin]# cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/bin</span><br><span class="line">[root@master201 bin]# ./run-example SparkPi 10 --master local[2]</span><br><span class="line"></span><br><span class="line">验证结果如下，本次的任务执行在spark管理控制台是查看不到历史记录的</span><br><span class="line">即：http://master201:8080/查看不到</span><br></pre></td></tr></table></figure>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/G6I3Jh6dAi.png?imageslim" alt=""></p>
+</li>
+<li><p><strong>集群模式Spark Standalone</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 bin]# cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/bin</span><br><span class="line">[root@master201 bin]# ./spark-submit --class org.apache.spark.examples.SparkPi --master spark://master201:7077 ../examples/jars/spark-examples_2.11-2.0.2.jar 100</span><br><span class="line"></span><br><span class="line">本次执行任务是在spark自带的集群当中运行即可通过spark的管理控制台查看job执行情况进度</span><br><span class="line">即：http://master201:8080/ 如下</span><br></pre></td></tr></table></figure>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/20cFheLc1L.png?imageslim" alt=""></p>
+</li>
+<li><p><strong>集群模式Spark on yarn运行yarn之上的yarn-cluster模式</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 bin]# cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/bin</span><br><span class="line">[root@master201 bin]# ./spark-submit --class org.apache.spark.examples.SparkPi --master yarn-cluster ../examples/jars/spark-examples_2.11-2.0.2.jar 10</span><br><span class="line"></span><br><span class="line">本次执行任务是在hadoop yarn当中</span><br><span class="line">即通过http://master201:8080/查看任务执行情况是查询不到的，是通过yarn的 AM来执行调度申请资源</span><br><span class="line">可以通过hadoop集群组件yarn的管理控制台查看：http://master201:8088/cluster/apps</span><br><span class="line"></span><br><span class="line">通过Yarn管理控制台找到对应的Application id，然后进入点击日志，查看标准输出日志即可，这个demo的日志是通过标准输出方式输出的，在服务器执行控制台查看不到。</span><br></pre></td></tr></table></figure>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/fCaELlma0f.png?imageslim" alt=""></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/i7he1hEjgc.png?imageslim" alt=""></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/iF4Ieja9j4.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><p>刚刚通过yarn运行spark的任务的时候，失败了两次，一直在找原因（一直没注意看到错误信息在哪里）。大家可以看到对应的失败Application id 记录，然后进入日志查看（<font color="red">仔细看</font>），最终发现还是自己输入命令的时候多了一个k导致数字转换失败了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">控制台的日志</span><br><span class="line">18/10/21 12:19:08 INFO yarn.Client: Deleting staging directory hdfs://master201:9000/user/root/.sparkStaging/application_1540120893010_0002</span><br><span class="line">Exception in thread &quot;main&quot; org.apache.spark.SparkException: Application application_1540120893010_0002 finished with failed status</span><br><span class="line">        at org.apache.spark.deploy.yarn.Client.run(Client.scala:1132)</span><br><span class="line">        at org.apache.spark.deploy.yarn.Client$.main(Client.scala:1178)</span><br><span class="line">        at org.apache.spark.deploy.yarn.Client.main(Client.scala)</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">        at java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="line">        at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:736)</span><br><span class="line">        at org.apache.spark.deploy.SparkSubmit$.doRunMain$1(SparkSubmit.scala:185)</span><br><span class="line">        at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:210)</span><br><span class="line">        at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:124)</span><br><span class="line">        at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)</span><br><span class="line">18/10/21 12:19:09 INFO util.ShutdownHookManager: Shutdown hook called</span><br><span class="line">18/10/21 12:19:09 INFO util.ShutdownHookManager: Deleting directory /tmp/spark-13cc7b77-4e91-47b4-a83a-fa4cbb77bfb4</span><br></pre></td></tr></table></figure>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/ic25093G0L.png?imageslim" alt=""></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/2e11k80hH0.png?imageslim" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上步骤基本完成了scala与spark集群的安装，下一步就可以开发spark应用程序了。</p>
+<p> <a href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a></p>
 <p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
 
         
@@ -461,7 +524,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html" data-id="cjniu66ld000bisqg6toul334" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html" data-id="cjniu66lk000sisqgrj54n97s" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -529,7 +592,7 @@
 
             
     
-        <a href="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html#comments" class="article-comment-link">评论</a>
+        <a href="http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -538,19 +601,19 @@
         
 <nav id="article-nav">
     
-        <a href="/2018/10/10/big-data/mapreduce-3.html" id="article-nav-newer" class="article-nav-link-wrap">
+        <a href="/2018/10/20/big-data/spark2.0-install-1.html" id="article-nav-newer" class="article-nav-link-wrap">
             <strong class="article-nav-caption">上一篇</strong>
             <div class="article-nav-title">
                 
-                    MapReduce 执行过程原理（三）
+                    Scala &amp; Spark2.0.2集群安装
                 
             </div>
         </a>
     
     
-        <a href="/2018/10/07/big-data/mapreduce-1.html" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2018/10/19/deeplearning/nlp-lcs-3.html" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">MapReduce WordCount 入门 Python（一）</div>
+            <div class="article-nav-title">NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）</div>
         </a>
     
 </nav>

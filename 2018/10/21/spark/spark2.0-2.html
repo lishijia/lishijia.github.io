@@ -3,15 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: Hive | 李世佳的博客</title>
+    <title>Spark Scala WrodCount 入门（一） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://lishijia.top/tags/Hive/index.html">
+    <meta name="description" content="前言通过WordCount简单实现一个Scala以及Spark程序。">
+<meta name="keywords" content="Spark,Scala">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark Scala WrodCount 入门（一）">
+<meta property="og:url" content="http://lishijia.top/2018/10/21/spark/spark2.0-2.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言通过WordCount简单实现一个Scala以及Spark程序。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim">
+<meta property="og:updated_time" content="2018-10-21T12:16:09.848Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="Spark Scala WrodCount 入门（一）">
+<meta name="twitter:description" content="前言通过WordCount简单实现一个Scala以及Spark程序。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim">
     
 
     
@@ -174,116 +181,7 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#Hive</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/13/big-data/hive-2.html" href="/2018/10/13/big-data/hive-2.html">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/13/big-data/hive-2.html">
-            <time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hive/">Hive</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/13/big-data/hive-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/13/big-data/hive-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/12/big-data/hive-1.html" href="/2018/10/12/big-data/hive-1.html">Hive 安装配置 &amp; 简单使用</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/12/big-data/hive-1.html">
-            <time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hive/">Hive</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/12/big-data/hive-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/12/big-data/hive-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -473,13 +371,227 @@
         return constructor;
     })()
 </script>
+<article id="post-spark/spark2.0-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/21/spark/spark2.0-2.html" itemprop="name">
+            Spark Scala WrodCount 入门（一）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/21/spark/spark2.0-2.html">
+            <time datetime="2018-10-21T14:22:00.000Z" itemprop="datePublished">2018-10-21</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Scala/">Scala</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/21/spark/spark2.0-2.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/21/spark/spark2.0-2.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181020/2CE0c6mIgC.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过WordCount简单实现一个Scala以及Spark程序。</p>
+<a id="more"></a>
+<h2 id="Spark-shell方式执行WordCount"><a href="#Spark-shell方式执行WordCount" class="headerlink" title="Spark-shell方式执行WordCount"></a>Spark-shell方式执行WordCount</h2><font color="red">注意以下每次转换之后得到RDD的数据结构，每上次的转换都是为后续的步骤做铺垫</font>
+
+<ul>
+<li>textFile：通过内置的sc（SparkContext）对象调用textFile方法加载原文件</li>
+<li>flatMap：对文件的lines执行flatMap函数（打平，即把数组转换为一条一条的数据）即每一个单词为一条记录</li>
+<li>map：通过map函数转换数据即(word, number)</li>
+<li>reduceByKey：通过reduceByKey函数，会把相同的值转换为前后关系即（x，y）,然后把它们相加即得到这个word的数量</li>
+<li>map：再通过map函数转换数据（number，word）为后续的排序取top10做数据准备</li>
+<li>sortByKey：false倒序，然后调用take方法取top10</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> lines = sc.textFile(<span class="string">"hdfs://master201:9000/lishijia/input/the_man_of_property.txt"</span>)</span><br><span class="line">lines: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = hdfs:<span class="comment">//master201:9000/lishijia/input/the_man_of_property.txt MapPartitionsRDD[52] at textFile at &lt;console&gt;:24</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>)).reduceByKey((x,y)=&gt;x+y).map(x=&gt;(x._2,x._1)).sortByKey(<span class="literal">false</span>).take(<span class="number">10</span>)</span><br><span class="line">res16: <span class="type">Array</span>[(<span class="type">Int</span>, <span class="type">String</span>)] = <span class="type">Array</span>((<span class="number">5144</span>,the), (<span class="number">3407</span>,of), (<span class="number">2782</span>,to), (<span class="number">2573</span>,and), (<span class="number">2543</span>,a), (<span class="number">2139</span>,he), (<span class="number">1912</span>,his), (<span class="number">1702</span>,was), (<span class="number">1694</span>,in), (<span class="number">1526</span>,had))</span><br></pre></td></tr></table></figure>
+<p>分解之后的关键步骤</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> lines = sc.textFile(<span class="string">"hdfs://master201:9000/lishijia/input/the_man_of_property.txt"</span>)</span><br><span class="line">lines: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = hdfs:<span class="comment">//master201:9000/lishijia/input/the_man_of_property.txt MapPartitionsRDD[52] at textFile at &lt;console&gt;:24</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>))</span><br><span class="line">res17: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = <span class="type">MapPartitionsRDD</span>[<span class="number">60</span>] at flatMap at &lt;console&gt;:<span class="number">27</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>))</span><br><span class="line">res18: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">MapPartitionsRDD</span>[<span class="number">62</span>] at map at &lt;console&gt;:<span class="number">27</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>)).reduceByKey((x,y)=&gt;x+y)</span><br><span class="line">res19: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">ShuffledRDD</span>[<span class="number">65</span>] at reduceByKey at &lt;console&gt;:<span class="number">27</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>)).reduceByKey((x,y)=&gt;x+y).map(x=&gt;(x._2,x._1))</span><br><span class="line">res20: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">Int</span>, <span class="type">String</span>)] = <span class="type">MapPartitionsRDD</span>[<span class="number">69</span>] at map at &lt;console&gt;:<span class="number">27</span></span><br></pre></td></tr></table></figure>
+<p> <a href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a></p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/21/spark/spark2.0-2.html" data-id="cjniu66li000lisqg8tlba8j6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/21/spark/spark2.0-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/20/big-data/spark2.0-install-1.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Scala &amp; Spark2.0.2集群安装</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 
