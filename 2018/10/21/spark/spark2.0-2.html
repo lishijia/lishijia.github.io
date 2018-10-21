@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/iHDjB2i2Cj.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/magE950a7B.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/a16K6cLGGI.png?imageslim">
-<meta property="og:updated_time" content="2018-10-21T13:13:07.223Z">
+<meta property="og:updated_time" content="2018-10-21T13:40:36.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark Scala WrodCount 入门（一）">
 <meta name="twitter:description" content="前言通过WordCount简单实现一个Scala以及Spark程序，来了解Spark中的对RDD数据转换Transformation，动作Action。">
@@ -155,7 +155,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                14
+                15
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -436,7 +436,7 @@
 <h2 id="Spark-shell方式执行WordCount"><a href="#Spark-shell方式执行WordCount" class="headerlink" title="Spark-shell方式执行WordCount"></a>Spark-shell方式执行WordCount</h2><font color="red">注意以下每次转换之后得到RDD的数据结构，每上次的转换都是为后续的步骤做铺垫</font>
 
 <ul>
-<li><strong>textFile：通过内置的sc（SparkContext）对象调用textFile方法加载原文件</strong></li>
+<li><strong>textFile：通过内置的sc（SparkContext）对象调用textFile方法加载原hdfs文件</strong></li>
 <li><strong>flatMap：对文件的lines执行flatMap函数（打平，即把数组转换为一条一条的数据）即每一个单词为一条记录</strong></li>
 <li><strong>map：通过map函数转换数据即(word, number)</strong></li>
 <li><strong>reduceByKey：通过reduceByKey函数，会把相同的值转换为前后关系即（x，y）,然后把它们相加即得到这个word的数量</strong></li>
@@ -476,7 +476,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/21/spark/spark2.0-2.html" data-id="cjniw7dpx000nx4qgnjiomlu7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/21/spark/spark2.0-2.html" data-id="cjnixxvfn000txgqgjbk6j18i" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -553,6 +553,15 @@
         
 <nav id="article-nav">
     
+        <a href="/2018/10/21/spark/spark2.0-3.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Spark Scala 统计多个文件中的最大值与最小值 map自定义函数实现（二）
+                
+            </div>
+        </a>
+    
     
         <a href="/2018/10/20/spark/spark2.0-install-1.html" id="article-nav-older" class="article-nav-link-wrap">
             <strong class="article-nav-caption">下一篇</strong>
@@ -627,6 +636,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/Spark/">Spark</a></p>
+                            <p class="item-title"><a href="/2018/10/21/spark/spark2.0-3.html" class="title">Spark Scala 统计多个文件中的最大值与最小值 map自定义函数实现（二）</a></p>
+                            <p class="item-date"><time datetime="2018-10-21T15:22:00.000Z" itemprop="datePublished">2018-10-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark/">Spark</a></p>
                             <p class="item-title"><a href="/2018/10/21/spark/spark2.0-2.html" class="title">Spark Scala WrodCount 入门（一）</a></p>
                             <p class="item-date"><time datetime="2018-10-21T14:22:00.000Z" itemprop="datePublished">2018-10-21</time></p>
                         </div>
@@ -659,15 +677,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2018/10/15/deeplearning/nlp-consine-1.html" class="title">NLP自然语言 之 余弦相似度 （一 Python代码实现）</a></p>
-                            <p class="item-date"><time datetime="2018-10-15T12:45:13.000Z" itemprop="datePublished">2018-10-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -677,7 +686,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -686,7 +695,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -695,7 +704,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/NLP/" style="font-size: 16.67px;">NLP</a> <a href="/tags/Scala/" style="font-size: 10px;">Scala</a> <a href="/tags/Spark/" style="font-size: 13.33px;">Spark</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 13.33px;">Hive</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 16.67px;">MapReduce</a> <a href="/tags/NLP/" style="font-size: 16.67px;">NLP</a> <a href="/tags/Scala/" style="font-size: 13.33px;">Scala</a> <a href="/tags/Spark/" style="font-size: 16.67px;">Spark</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
         </div>
     </div>
 
