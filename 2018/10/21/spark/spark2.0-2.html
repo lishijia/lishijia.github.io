@@ -5,19 +5,19 @@
     
     <title>Spark Scala WrodCount 入门（一） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言通过WordCount简单实现一个Scala以及Spark程序。">
+    <meta name="description" content="前言通过WordCount简单实现一个Scala以及Spark程序，来了解Spark中的对RDD数据转换Transformation，动作Action。">
 <meta name="keywords" content="Spark,Scala">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spark Scala WrodCount 入门（一）">
 <meta property="og:url" content="http://lishijia.top/2018/10/21/spark/spark2.0-2.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言通过WordCount简单实现一个Scala以及Spark程序。">
+<meta property="og:description" content="前言通过WordCount简单实现一个Scala以及Spark程序，来了解Spark中的对RDD数据转换Transformation，动作Action。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/iHDjB2i2Cj.png?imageslim">
-<meta property="og:updated_time" content="2018-10-21T12:20:09.720Z">
+<meta property="og:updated_time" content="2018-10-21T13:08:49.888Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spark Scala WrodCount 入门（一）">
-<meta name="twitter:description" content="前言通过WordCount简单实现一个Scala以及Spark程序。">
+<meta name="twitter:description" content="前言通过WordCount简单实现一个Scala以及Spark程序，来了解Spark中的对RDD数据转换Transformation，动作Action。">
 <meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181021/iHDjB2i2Cj.png?imageslim">
     
 
@@ -429,21 +429,49 @@
         
             
             <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181021/iHDjB2i2Cj.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过WordCount简单实现一个Scala以及Spark程序。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过WordCount简单实现一个Scala以及Spark程序，来了解Spark中的对RDD数据转换Transformation，动作Action。</p>
 <a id="more"></a>
-<h2 id="Spark-shell方式执行WordCount"><a href="#Spark-shell方式执行WordCount" class="headerlink" title="Spark-shell方式执行WordCount"></a>Spark-shell方式执行WordCount</h2><font color="red">注意以下每次转换之后得到RDD的数据结构，每上次的转换都是为后续的步骤做铺垫</font>
+<h2 id="Spark-shell方式执行WordCount"><a href="#Spark-shell方式执行WordCount" class="headerlink" title="Spark-shell方式执行WordCount"></a>Spark-shell方式执行WordCount</h2><font color="red">**注意以下每次转换之后得到RDD的数据结构，每上次的转换都是为后续的步骤做铺垫</font>**
 
-<ul>
-<li>textFile：通过内置的sc（SparkContext）对象调用textFile方法加载原文件</li>
-<li>flatMap：对文件的lines执行flatMap函数（打平，即把数组转换为一条一条的数据）即每一个单词为一条记录</li>
-<li>map：通过map函数转换数据即(word, number)</li>
-<li>reduceByKey：通过reduceByKey函数，会把相同的值转换为前后关系即（x，y）,然后把它们相加即得到这个word的数量</li>
-<li>map：再通过map函数转换数据（number，word）为后续的排序取top10做数据准备</li>
-<li>sortByKey：false倒序，然后调用take方法取top10</li>
-</ul>
++ **textFile：通过内置的sc（SparkContext）对象调用textFile方法加载原文件**
++ **flatMap：对文件的lines执行flatMap函数（打平，即把数组转换为一条一条的数据）即每一个单词为一条记录**
++ **map：通过map函数转换数据即(word, number)**
++ **reduceByKey：通过reduceByKey函数，会把相同的值转换为前后关系即（x，y）,然后把它们相加即得到这个word的数量**
++ **map：再通过map函数转换数据（number，word）为后续的排序取top10做数据准备**
++ **sortByKey：false倒序，然后调用take方法取top10**
+
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> lines = sc.textFile(<span class="string">"hdfs://master201:9000/lishijia/input/the_man_of_property.txt"</span>)</span><br><span class="line">lines: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = hdfs:<span class="comment">//master201:9000/lishijia/input/the_man_of_property.txt MapPartitionsRDD[52] at textFile at &lt;console&gt;:24</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>)).reduceByKey((x,y)=&gt;x+y).map(x=&gt;(x._2,x._1)).sortByKey(<span class="literal">false</span>).take(<span class="number">10</span>)</span><br><span class="line">res16: <span class="type">Array</span>[(<span class="type">Int</span>, <span class="type">String</span>)] = <span class="type">Array</span>((<span class="number">5144</span>,the), (<span class="number">3407</span>,of), (<span class="number">2782</span>,to), (<span class="number">2573</span>,and), (<span class="number">2543</span>,a), (<span class="number">2139</span>,he), (<span class="number">1912</span>,his), (<span class="number">1702</span>,was), (<span class="number">1694</span>,in), (<span class="number">1526</span>,had))</span><br></pre></td></tr></table></figure>
-<p>分解之后的关键步骤</p>
+
+分解之后的关键步骤
+
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> lines = sc.textFile(<span class="string">"hdfs://master201:9000/lishijia/input/the_man_of_property.txt"</span>)</span><br><span class="line">lines: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = hdfs:<span class="comment">//master201:9000/lishijia/input/the_man_of_property.txt MapPartitionsRDD[52] at textFile at &lt;console&gt;:24</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>))</span><br><span class="line">res17: org.apache.spark.rdd.<span class="type">RDD</span>[<span class="type">String</span>] = <span class="type">MapPartitionsRDD</span>[<span class="number">60</span>] at flatMap at &lt;console&gt;:<span class="number">27</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>))</span><br><span class="line">res18: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">MapPartitionsRDD</span>[<span class="number">62</span>] at map at &lt;console&gt;:<span class="number">27</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>)).reduceByKey((x,y)=&gt;x+y)</span><br><span class="line">res19: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = <span class="type">ShuffledRDD</span>[<span class="number">65</span>] at reduceByKey at &lt;console&gt;:<span class="number">27</span></span><br><span class="line"></span><br><span class="line">scala&gt; lines.flatMap(x=&gt;x.split(<span class="string">" "</span>)).map(x=&gt;(x,<span class="number">1</span>)).reduceByKey((x,y)=&gt;x+y).map(x=&gt;(x._2,x._1))</span><br><span class="line">res20: org.apache.spark.rdd.<span class="type">RDD</span>[(<span class="type">Int</span>, <span class="type">String</span>)] = <span class="type">MapPartitionsRDD</span>[<span class="number">69</span>] at map at &lt;console&gt;:<span class="number">27</span></span><br></pre></td></tr></table></figure>
+
+## Spark sbt打包 集群运行Yarn WordCount
+
+通过Idea sbt创建一个demo工程，并且打包部署提交任务到hadoop yarn集群运行，并且查看运行结果。
+
+此处的代码与在Spark上面运行多了几个步骤
+
++ 需要自己初始化SparkContext对象
++ 通过标准输出的方式输出top10结果，方便日志查看
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.spark.demo.wordcount</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Spark WordCount"</span>)</span><br><span class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</span><br><span class="line">    <span class="keyword">val</span> lines = sc.textFile(<span class="string">"hdfs://master201:9000/lishijia/input/the_man_of_property.txt"</span>)</span><br><span class="line">    lines.flatMap(x=&gt;x.split(<span class="string">" "</span>))</span><br><span class="line">      .map(x=&gt;(x,<span class="number">1</span>))</span><br><span class="line">      .reduceByKey((x,y)=&gt;x+y)</span><br><span class="line">      .map(x=&gt;(x._2,x._1))</span><br><span class="line">      .sortByKey(<span class="literal">false</span>)</span><br><span class="line">      .take(<span class="number">10</span>)</span><br><span class="line">      .foreach(println)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// sbt依赖文件类似pom依赖</span><br><span class="line">name := &quot;spark-scala-demo&quot;</span><br><span class="line">version := &quot;0.1&quot;</span><br><span class="line">scalaVersion := &quot;2.11.8&quot;</span><br><span class="line"></span><br><span class="line">// https://mvnrepository.com/artifact/org.apache.spark/spark-core</span><br><span class="line">libraryDependencies += &quot;org.apache.spark&quot; %% &quot;spark-core&quot; % &quot;2.1.0&quot;</span><br><span class="line">libraryDependencies += &quot;org.apache.hbase&quot; % &quot;hbase-client&quot; % &quot;1.1.12&quot;</span><br><span class="line">libraryDependencies += &quot;org.apache.hbase&quot; % &quot;hbase-common&quot; % &quot;1.1.12&quot;</span><br><span class="line">libraryDependencies += &quot;org.apache.hbase&quot; % &quot;hbase-server&quot; % &quot;1.1.12&quot;</span><br></pre></td></tr></table></figure>
+
+通过Idea Sbt打包工程项目jar包，然后上传至master服务器，然后执行以下命令即可
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 bin]# ./spark-submit --class lishijia.spark.demo.wordcount.WordCount --master yarn-cluster ../demo/spark-scala-demo.jar 1</span><br></pre></td></tr></table></figure>
+
+![](http://pfpltafka.bkt.clouddn.com/blog/181021/magE950a7B.png?imageslim)
+
+![](http://pfpltafka.bkt.clouddn.com/blog/181021/a16K6cLGGI.png?imageslim)
+
+<font color="red">运行过程中出现一些问题，有可能是时间没同步的原因，也有可能是防火墙的问题，出现问题后就只做了这么两个操作，程序没有变动，错误信息如下：</font>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">18/10/21 20:47:22 INFO ui.SparkUI: Stopped Spark web UI at http://192.168.152.203:35460</span><br><span class="line">18/10/21 20:47:23 INFO scheduler.TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, slave203, partition 0, NODE_LOCAL, 5418 bytes)</span><br><span class="line">18/10/21 20:47:23 INFO scheduler.TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1, slave203, partition 1, NODE_LOCAL, 5418 bytes)</span><br><span class="line">18/10/21 20:47:23 ERROR scheduler.LiveListenerBus: SparkListenerBus has already stopped! Dropping event SparkListenerTaskStart(0,0,org.apache.spark.scheduler.TaskInfo@5afb2e48)</span><br><span class="line">18/10/21 20:47:23 INFO scheduler.DAGScheduler: ShuffleMapStage 0 (map at WordCount.scala:12) failed in 2.602 s</span><br><span class="line">18/10/21 20:47:23 ERROR scheduler.LiveListenerBus: SparkListenerBus has already stopped! Dropping event SparkListenerStageCompleted(org.apache.spark.scheduler.StageInfo@2968ae8d)</span><br><span class="line">18/10/21 20:47:23 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Launching task 0 on executor id: 2 hostname: slave203.</span><br><span class="line">18/10/21 20:47:23 ERROR scheduler.LiveListenerBus: SparkListenerBus has already stopped! Dropping event SparkListenerJobEnd(0,1540126043173,JobFailed(org.apache.spark.SparkException: Job 0 cancelled because SparkContext was shut down))</span><br><span class="line">18/10/21 20:47:23 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Launching task 1 on executor id: 4 hostname: slave203.</span><br><span class="line">18/10/21 20:47:23 INFO yarn.YarnAllocator: Driver requested a total number of 0 executor(s).</span><br><span class="line">18/10/21 20:47:23 INFO cluster.YarnClusterSchedulerBackend: Shutting down all executors</span><br><span class="line">18/10/21 20:47:23 INFO cluster.YarnSchedulerBackend$YarnDriverEndpoint: Asking each executor to shut down</span><br><span class="line">18/10/21 20:47:23 INFO cluster.SchedulerExtensionServices: Stopping SchedulerExtensionServices</span><br><span class="line">(serviceOption=None,</span><br><span class="line"> services=List(),</span><br><span class="line"> started=false)</span><br><span class="line">18/10/21 20:47:23 INFO spark.MapOutputTrackerMasterEndpoint: MapOutputTrackerMasterEndpoint stopped!</span><br><span class="line">18/10/21 20:47:23 INFO memory.MemoryStore: MemoryStore cleared</span><br><span class="line">18/10/21 20:47:23 INFO storage.BlockManager: BlockManager stopped</span><br><span class="line">18/10/21 20:47:24 INFO storage.BlockManagerMaster: BlockManagerMaster stopped</span><br><span class="line">18/10/21 20:47:24 INFO scheduler.OutputCommitCoordinator$OutputCommitCoordinatorEndpoint: OutputCommitCoordinator stopped!</span><br><span class="line">18/10/21 20:47:24 INFO spark.SparkContext: Successfully stopped SparkContext</span><br><span class="line">18/10/21 20:47:24 INFO yarn.ApplicationMaster: Unregistering ApplicationMaster with FAILED (diag message: Max number of executor failures (3) reached)</span><br><span class="line">18/10/21 20:47:25 INFO impl.AMRMClientImpl: Waiting for application to be successfully unregistered.</span><br><span class="line">18/10/21 20:47:25 INFO yarn.ApplicationMaster: Deleting staging directory hdfs://master201:9000/user/root/.sparkStaging/application_1540122054916_0002</span><br><span class="line">18/10/21 20:47:25 INFO util.ShutdownHookManager: Shutdown hook called</span><br><span class="line">18/10/21 20:47:25 INFO util.ShutdownHookManager: Deleting directory /home/lishijia/Soft/hadoop-2.7.2/tmp/nm-local-dir/usercache/root/appcache/application_1540122054916_0002/spark-5434fc83-4c7e-4975-856e-73a4d797c25a</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过本地模式了解到了Spark RDD的一些简单操作，并且通过打包并且上传提交任务至yarn当中运行了自己编写的scala程序。</p>
+<p>代码：<a href="https://github.com/lishijia/spark-scala-demo/tree/master/src/main/scala/lishijia/spark/demo/wordcount" target="_blank" rel="noopener">https://github.com/lishijia/spark-scala-demo/tree/master/src/main/scala/lishijia/spark/demo/wordcount</a></p>
 <p> <a href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a></p>
 <p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
 <p><a href="/2018/10/20/spark/spark2.0-install-1.html">Scala &amp; Spark2.0.2集群安装</a></p>
@@ -457,7 +485,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/21/spark/spark2.0-2.html" data-id="cjniub91t000hl8qg37iw0c3s" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/21/spark/spark2.0-2.html" data-id="cjniw1wso001dogqgpnwg2kix" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
