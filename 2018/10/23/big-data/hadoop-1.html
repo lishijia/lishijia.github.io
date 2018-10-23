@@ -3,15 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2018/10 | 李世佳的博客</title>
+    <title>Hadoop2.0资源调度框架Yarn基本概念与总体结构 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://lishijia.top/archives/2018/10/page/2/index.html">
+    <meta name="description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
+<meta name="keywords" content="Yarn,Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop2.0资源调度框架Yarn基本概念与总体结构">
+<meta property="og:url" content="http://lishijia.top/2018/10/23/big-data/hadoop-1.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/H3ilACB6di.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/mdEfak5mDL.png?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/IED65gAH6J.jpg?imageslim">
+<meta property="og:updated_time" content="2018-10-23T14:49:30.811Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="Hadoop2.0资源调度框架Yarn基本概念与总体结构">
+<meta name="twitter:description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim">
     
 
     
@@ -174,270 +185,7 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
-        
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/10/big-data/mapreduce-3.html" href="/2018/10/10/big-data/mapreduce-3.html">MapReduce 执行过程原理（三）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/10/big-data/mapreduce-3.html">
-            <time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/08/big-data/mapreduce-2.html" href="/2018/10/08/big-data/mapreduce-2.html">MapReduce Join 表连接 Python （二）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/big-data/mapreduce-2.html">
-            <time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/hadoop-install.html" href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/hadoop-install.html">
-            <time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/centos-nat.html" href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/centos-nat.html">
-            <time datetime="2018-10-06T02:26:12.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-    <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/10/">&laquo; 上一页</a><a class="page-number" href="/archives/2018/10/">1</a><span class="page-number current">2</span>
-    </nav>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -627,13 +375,264 @@
         return constructor;
     })()
 </script>
+<article id="post-big-data/hadoop-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/23/big-data/hadoop-1.html" itemprop="name">
+            Hadoop2.0资源调度框架Yarn基本概念与总体结构
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/23/big-data/hadoop-1.html">
+            <time datetime="2018-10-23T14:48:16.000Z" itemprop="datePublished">2018-10-23</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Yarn/">Yarn</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/23/big-data/hadoop-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/23/big-data/hadoop-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。</p>
+<a id="more"></a>
+<h2 id="Hadoop1-0和Hadoop2-0"><a href="#Hadoop1-0和Hadoop2-0" class="headerlink" title="Hadoop1.0和Hadoop2.0"></a>Hadoop1.0和Hadoop2.0</h2><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/H3ilACB6di.png?imageslim" alt=""></p>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/mdEfak5mDL.png?imageslim" alt=""></p>
+<p>通过上面两张图可以看出来，Hadoop1.0即不存在Yarn这么一个资源框架，那么在2.0当中Hadoop就多出了一个Yarn这么东西。那么多出来的东西是干什么呢？以及1.0又是怎么运算呢？</p>
+<ul>
+<li><p>Hadoop1.0 MapReduce即通过JobTracker这么一个资源管理任务协调组件来完成整个hadoop当中对TaskTracker组件的Job任务进行资源分配与任务协调工作。相当于JobTracker组件即需要对job任务的资源分配，还需要对Job任务的协调，<font color="red">即MapReduce1.0是一个计算框架，也是一个资源调度框架，工作相当的繁重。</font></p>
+</li>
+<li><p>Hadoop2.0即通过抽离出Yarn这么一个资源调度框架，把JobTracker分解为ResourceManager与ApplicationMaster，然后TaskTracker对应NodeManager。另外Yarn当中不止可以运行MapReduce作业还可以运行其他计算框架的作业如Spark等，相当于插拔式的方式为计算框架提供资源分配，任务协调。即它存粹的是一个资源管理调度框架，而不是一个计算框架。<font color="red">被玻璃出来的MapReduce就变成了MRv2（MapReduce2.0）一个存粹的计算框架，不再自己负责资源调度管理服务，而是由Yarn为其提供资源管理调度服务</font></p>
+</li>
+</ul>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim" alt=""></p>
+<h2 id="Yarn的体系结构"><a href="#Yarn的体系结构" class="headerlink" title="Yarn的体系结构"></a>Yarn的体系结构</h2><ul>
+<li><p>ResourceManager（RM）</p>
+<ul>
+<li>RM处理客户端请求，接收JobSubmitter提交的作业，按照作业的上下文（Context）信息以及从NodeManager收集到的各节点资源的状态信息，启动调度过程分配一个Container作为ApplicationMaster（运行在NodeManager，由ResourceManager告知NodeManager负责启动）</li>
+</ul>
+<ul>
+<li>RM拥有为系统所有Job任务的资源分配的决定权，是中心服务，做的事情就是调度，资源分配，把集群中的资源已Container容器的形式进行分配给提出申请的应用程序，容器的通常选择会考虑应用程序所要处理的数据所在的位置，就近选择，<font color="red">从而实现计算向数据靠拢，减少网络开销</font></li>
+<li>容器（Container）作为资源的分配单位，主要包含一定数量的CPU，内存。</li>
+<li>与运行中每个节点上的NodeManager进行通讯交互（心跳的方式）监控NodeManager运行状态资源使用状态</li>
+<li>与运行中的所有ApplicationMaster进行通讯交互（心跳的方式）监控每个Job的运行情况</li>
+</ul>
+</li>
+<li><p>ApplicationManager（AM）</p>
+<ul>
+<li>当用户作业提交时，ApplicationMaster与ResourceManager协商获取资源，ResourceManager会以容器的形式为ApplicationMaster分配资源，每一个应用程序都会有一个ApplicationMaster，运行在RM机器之外</li>
+<li>负责一个Job任务的生命周期，包括申请资源，通过NodeManager启动任务</li>
+<li>与NM协同工作与Scheduler协商合适的Container进行Container的监控</li>
+<li>定时向ResourceManager发送“心跳”消息，报告资源的使用情况和应用的进度信息</li>
+<li>当作业完成时，ApplicationMaster向ResourceManager注销容器，执行周期完成</li>
+</ul>
+</li>
+<li><p>NodeManager（NM）</p>
+<p>NodeManager主要负责管理抽象的容器，只处理与容器相关的事情，而不具体负责每个任务（Map任务或Reduce任务）自身状态的管理，因为这些管理工作是由ApplicationMaster完成的，ApplicationMaster会通过不断与NodeManager通信来掌握各个任务的执行状态</p>
+<ul>
+<li>接收并处理来自ApplicationMaster的Container启动、停止等各种请求</li>
+<li>负责启动应用程序的Container（执行应用程序的容器），并监控他们的资源使<br>用情况（CPU、内存、磁盘和网络），并报告给RM</li>
+<li>总的来说，在单节点上进行资源管理和任务管理</li>
+</ul>
+</li>
+</ul>
+<h2 id="Yarn的工作流程"><a href="#Yarn的工作流程" class="headerlink" title="Yarn的工作流程"></a>Yarn的工作流程</h2><p>以下为Spark运行在Yarn之上一个简单的流程，主要包含提交任务，申请资源，计算。</p>
+<ul>
+<li>Client请求Resource Manager运行一个Application Master实例（step 2）</li>
+<li>Resource Manager选择一个Node Manager，启动一个Container并运行Application Master实例（step 3a、step 3b）；</li>
+<li>Application Master根据实际需要向Resource Manager请求更多的Container资源（step 4）；</li>
+<li>Application Master通过获取到的Container资源执行分布式计算（step 5a、step 5b）</li>
+</ul>
+<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/IED65gAH6J.jpg?imageslim" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体而言，YARN相对于MapReduce1.0来说具有以下优势：大大减少了承担中心服务功能的ResourceManager的资源消耗ApplicationMaster来完成需要大量资源消耗的任务调度和监控多个作业对应多个ApplicationMaster，实现了监控分布化</p>
+<p>MapReduce1.0既是一个计算框架，又是一个资源管理调度框架，但是，只能支持MapReduce编程模型。而YARN则是一个纯粹的资源调度管理框架，在它上面可以运行包括MapReduce在内的不同类型的计算框架，只要编程实现相应的ApplicationMaster</p>
+<p>YARN中的资源管理比MapReduce1.0更加高效以容器为单位，而不是以slot为单位</p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/23/big-data/hadoop-1.html" data-id="cjnlujag200025oqgc30ae0af" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/23/big-data/hadoop-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/22/spark/spark2.0-4.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Spark Scala 多字段二次排序（三）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 
