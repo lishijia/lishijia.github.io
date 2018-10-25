@@ -3,15 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>归档: 2018/10 | 李世佳的博客</title>
+    <title>SparkSql操作Hive表数据（四） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://lishijia.top/archives/2018/10/page/2/index.html">
+    <meta name="description" content="前言前面关于Spark的一些操作都是基于RDD操作，以下我们将通过SparkSql DataFrame操作Hive的数据库表，以及与RDD的操作做一些简单对比。">
+<meta name="keywords" content="Hive,Spark,SparkSql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SparkSql操作Hive表数据（四）">
+<meta property="og:url" content="http://lishijia.top/2018/10/25/spark/spark2.0-5.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言前面关于Spark的一些操作都是基于RDD操作，以下我们将通过SparkSql DataFrame操作Hive的数据库表，以及与RDD的操作做一些简单对比。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181025/eIJ345aKmG.png?imageslim">
+<meta property="og:updated_time" content="2018-10-25T15:20:00.908Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="SparkSql操作Hive表数据（四）">
+<meta name="twitter:description" content="前言前面关于Spark的一些操作都是基于RDD操作，以下我们将通过SparkSql DataFrame操作Hive的数据库表，以及与RDD的操作做一些简单对比。">
+<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181025/eIJ345aKmG.png?imageslim">
     
 
     
@@ -174,370 +181,7 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fas fa-calendar-alt"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
-        
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/13/big-data/hive-2.html" href="/2018/10/13/big-data/hive-2.html">Hive Join 优化 与 udf (python + java)自定义方法使用 &amp; Java连接Hive(Thrift接口服务)</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/13/big-data/hive-2.html">
-            <time datetime="2018-10-13T14:56:13.000Z" itemprop="datePublished">2018-10-13</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hive/">Hive</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/13/big-data/hive-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/13/big-data/hive-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/12/big-data/hive-1.html" href="/2018/10/12/big-data/hive-1.html">Hive 安装配置 &amp; 简单使用</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/12/big-data/hive-1.html">
-            <time datetime="2018-10-12T15:30:00.000Z" itemprop="datePublished">2018-10-12</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hive/">Hive</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hive/">Hive</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/12/big-data/hive-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/12/big-data/hive-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/10/big-data/mapreduce-3.html" href="/2018/10/10/big-data/mapreduce-3.html">MapReduce 执行过程原理（三）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/10/big-data/mapreduce-3.html">
-            <time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/08/big-data/mapreduce-2.html" href="/2018/10/08/big-data/mapreduce-2.html">MapReduce Join 表连接 Python （二）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/big-data/mapreduce-2.html">
-            <time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/hadoop-install.html" href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/hadoop-install.html">
-            <time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/centos-nat.html" href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/centos-nat.html">
-            <time datetime="2018-10-06T02:26:12.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-    <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2018/10/">&laquo; 上一页</a><a class="page-number" href="/archives/2018/10/">1</a><span class="page-number current">2</span>
-    </nav>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -727,13 +371,243 @@
         return constructor;
     })()
 </script>
+<article id="post-spark/spark2.0-5" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/10/25/spark/spark2.0-5.html" itemprop="name">
+            SparkSql操作Hive表数据（四）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/25/spark/spark2.0-5.html">
+            <time datetime="2018-10-25T15:42:00.000Z" itemprop="datePublished">2018-10-25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/SparkSql/">SparkSql</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/25/spark/spark2.0-5.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/25/spark/spark2.0-5.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181025/eIJ345aKmG.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面关于Spark的一些操作都是基于RDD操作，以下我们将通过SparkSql DataFrame操作Hive的数据库表，以及与RDD的操作做一些简单对比。</p>
+<a id="more"></a>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ul>
+<li><p><strong>前置环境</strong></p>
+<p>前提把hive，spark环境准备好，如果还没准备好的，可以根据以下连接尝试安装</p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+<p><a href="/2018/10/20/spark/spark2.0-install-1.html">Scala &amp; Spark2.0.2集群安装</a></p>
+<p><a href="2018/10/11/big-data/hive-1.html">Hive 安装配置 &amp; 简单使用</a></p>
+</li>
+<li><p><strong>spark操作hive环境</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 hive]# cp /home/lishijia/Soft/apache-hive-1.2.2-bin/conf/hive-site.xml /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/conf/</span><br><span class="line">[root@hadoop100 data]# cp /home/lishijia/Soft/apache-hive-1.2.2/lib/mysql-connector-java-5.1.43.jar /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/jars/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="SparkSql操作Hive表原理"><a href="#SparkSql操作Hive表原理" class="headerlink" title="SparkSql操作Hive表原理"></a>SparkSql操作Hive表原理</h2><ul>
+<li>解析sql语法树获取需要读书的数据库，表等信息。以及后续的数据解析转换等</li>
+<li>首先借助于hive的元数据信息获取到表结构，以及对应表数据存储hdfs位置信息（包括分区分桶等）</li>
+<li>加载hdfs数据，根据sql语法树的解析规则生成执行计划</li>
+<li>根据sql加载出来的数据未Dataframe</li>
+</ul>
+<h2 id="Spark-shell操作hive表"><a href="#Spark-shell操作hive表" class="headerlink" title="Spark-shell操作hive表"></a>Spark-shell操作hive表</h2><p>通过以下方式进入到spark-shell本地模式，然后通过Spark Session即内置对象spark操作</p>
+<p>如下：通过内置对象spark.sql函数执行sql语句，返回一个df（Dataframe），然后通过show的方式显示出来</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@hadoop</span>100 bin]# ./spark-shell --master local[<span class="number">2</span>]</span><br><span class="line">scala&gt; <span class="keyword">val</span> df = spark.sql(<span class="string">"select * from default.lsj_order"</span>)</span><br><span class="line">df: org.apache.spark.sql.<span class="type">DataFrame</span> = [order_id: string, amount: string ... <span class="number">1</span> more field]</span><br><span class="line"></span><br><span class="line">scala&gt; df.show</span><br><span class="line">+--------+------+---------+</span><br><span class="line">|order_id|amount|user_name|</span><br><span class="line">+--------+------+---------+</span><br><span class="line">|       <span class="number">1</span>|   <span class="number">100</span>| lishijia|</span><br><span class="line">|       <span class="number">2</span>|   <span class="number">200</span>| lishijia|</span><br><span class="line">|       <span class="number">3</span>|   <span class="number">300</span>|     john|</span><br><span class="line">|       <span class="number">4</span>|   <span class="number">400</span>|      eva|</span><br><span class="line">+--------+------+---------+</span><br></pre></td></tr></table></figure>
+<p>以下通过Dataframe的函数进行分组，然后count显示，它相对于RDD的操作来说更加的简单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; df.select(&quot;order_id&quot;,&quot;user_name&quot;).groupBy(&quot;user_name&quot;).count.show</span><br><span class="line">+---------+-----+</span><br><span class="line">|user_name|count|</span><br><span class="line">+---------+-----+</span><br><span class="line">| lishijia|    2|</span><br><span class="line">|     john|    1|</span><br><span class="line">|      eva|    1|</span><br><span class="line">+---------+-----+</span><br></pre></td></tr></table></figure>
+<p>可以看到，以下是通过模拟rdd的方式得出以上的结果。先通过Dataframe转换为rdd模型，然后把数据转换为(k,v)方式进行groupByKey，返回一个新的(K, Iterable)形式的数据集，最终再通过map转换为（key，count）最终的结果数据集，然后输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; df.select(&quot;order_id&quot;,&quot;user_name&quot;).rdd.map(x=&gt;(x(1),x(0))).groupByKey().map(x=&gt;(x._1,x._2.size)).foreach(println)</span><br><span class="line">(lishijia,2)</span><br><span class="line">(eva,1)</span><br><span class="line">(john,1)</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>即通过Spark-shell的方式操作Hive的表数据，以及对Spark DataFrame的数据模型做个简单初步了解，另外对比RDD的数据操作进行简单比较，从示例也可以看出来，DataFrame数据模型在做数据转换的时候会更加的方便，而且Spark3.0以后RDD将不在维护，逐渐全部转换为DataFrame数据集模型。</p>
+<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+<p><a href="/2018/10/20/spark/spark2.0-install-1.html">Scala &amp; Spark2.0.2集群安装</a></p>
+<p><a href="/2018/10/21/spark/spark2.0-2.html">Spark Scala WrodCount 入门（一）</a></p>
+<p><a href="/2018/10/21/spark/spark2.0-3.html">Spark Scala 统计多个文件中的最大值与最小值 map自定义函数实现（二）</a></p>
+<p><a href="/2018/10/22/spark/spark2.0-4.html">Spark Scala 多字段二次排序（三）</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://spark.apache.org/docs/2.0.2/sql-programming-guide.html" target="_blank" rel="noopener">https://spark.apache.org/docs/2.0.2/sql-programming-guide.html</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/25/spark/spark2.0-5.html" data-id="cjnoqiene00101wqgoxg51ylm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/25/spark/spark2.0-5.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/10/24/vue/vue-1.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">vue-cli 脚手架快速搭建Vue项目 与 jj-admin后台管理模板</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 

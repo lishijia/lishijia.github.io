@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://lishijia.top/2018/10/25/spark/spark2.0-5.html</loc>
+    <lastmod>2018-10-25T15:20:00.908Z</lastmod>
+  </url>  <url>
+    <loc>http://lishijia.top/2018/10/24/vue/vue-1.html</loc>
+    <lastmod>2018-10-25T14:07:47.143Z</lastmod>
+  </url>  <url>
+    <loc>http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html</loc>
+    <lastmod>2018-10-25T14:07:47.141Z</lastmod>
+  </url>  <url>
     <loc>http://lishijia.top/2018/10/23/big-data/hadoop-1.html</loc>
-    <lastmod>2018-10-23T14:49:30.811Z</lastmod>
+    <lastmod>2018-10-25T14:07:47.136Z</lastmod>
   </url>  <url>
     <loc>http://lishijia.top/2018/10/22/spark/spark2.0-4.html</loc>
     <lastmod>2018-10-22T15:17:03.011Z</lastmod>
@@ -15,9 +24,6 @@
   </url>  <url>
     <loc>http://lishijia.top/2018/10/06/big-data/hadoop-install.html</loc>
     <lastmod>2018-10-21T13:10:01.664Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html</loc>
-    <lastmod>2018-10-21T11:30:44.644Z</lastmod>
   </url>  <url>
     <loc>http://lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html</loc>
     <lastmod>2018-10-19T15:51:29.574Z</lastmod>
