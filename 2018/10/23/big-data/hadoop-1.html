@@ -6,7 +6,7 @@
     <title>Hadoop2.0资源调度框架Yarn基本概念与总体结构 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
-<meta name="keywords" content="Yarn,Hadoop">
+<meta name="keywords" content="Hadoop,Yarn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop2.0资源调度框架Yarn基本概念与总体结构">
 <meta property="og:url" content="http://lishijia.top/2018/10/23/big-data/hadoop-1.html">
@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181024/CHEKg2kd7l.png?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim">
 <meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/IED65gAH6J.jpg?imageslim">
-<meta property="og:updated_time" content="2018-10-25T14:07:47.136Z">
+<meta property="og:updated_time" content="2018-11-03T14:18:15.456Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop2.0资源调度框架Yarn基本概念与总体结构">
 <meta name="twitter:description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
@@ -448,19 +448,25 @@
 <h2 id="Yarn的体系结构"><a href="#Yarn的体系结构" class="headerlink" title="Yarn的体系结构"></a>Yarn的体系结构</h2><ul>
 <li><p>ResourceManager（RM）</p>
 <ul>
-<li>RM处理客户端请求，接收JobSubmitter提交的作业，按照作业的上下文（Context）信息以及从NodeManager收集到的各节点资源的状态信息，启动调度过程分配一个Container作为ApplicationMaster（运行在NodeManager，由ResourceManager告知NodeManager负责启动）</li>
+<li>RM处理客户端请求，接收JobSubmitter提交的作业，按照作业的上下文（Context）信息以及从NodeManager收集到的各节点资源的状态信息，启动调度过程分配一个Container作为ApplicationMaster（运行在NodeManager，由ResourceManager告知NodeManager负责启动），（另外会有一个ApplicationManager负责监控重启AM）</li>
 </ul>
 <ul>
 <li>RM拥有为系统所有Job任务的资源分配的决定权，是中心服务，做的事情就是调度，资源分配，把集群中的资源已Container容器的形式进行分配给提出申请的应用程序，容器的通常选择会考虑应用程序所要处理的数据所在的位置，就近选择，<font color="red">从而实现计算向数据靠拢，减少网络开销</font></li>
 <li>容器（Container）作为资源的分配单位，主要包含一定数量的CPU，内存。</li>
 <li>与运行中每个节点上的NodeManager进行通讯交互（心跳的方式）监控NodeManager运行状态资源使用状态</li>
 <li>与运行中的所有ApplicationMaster进行通讯交互（心跳的方式）监控每个Job的运行情况</li>
+<li>RM Scheduler（默认FIFO）<ul>
+<li>FIFO：排队形式 first in first out</li>
+<li>Faire公平调度：简单理解就是会有这么以这个pool资源此，最低下限会保证任务启动</li>
+<li>CapacityScheduler：简单理解就是分等级的FIFO</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>ApplicationManager（AM）</p>
 <ul>
 <li>当用户作业提交时，ApplicationMaster与ResourceManager协商获取资源，ResourceManager会以容器的形式为ApplicationMaster分配资源，每一个应用程序都会有一个ApplicationMaster，运行在RM机器之外</li>
-<li>负责一个Job任务的生命周期，包括申请资源，通过NodeManager启动任务</li>
+<li>负责一个Job任务的生命周期，包括申请资源，通过NodeManager启动任务，然后在把从ResourceManager申请到的资源告知NodeManager，由NodeManager帮忙启动对应的Container（即task任务）</li>
 <li>与NM协同工作与Scheduler协商合适的Container进行Container的监控</li>
 <li>定时向ResourceManager发送“心跳”消息，报告资源的使用情况和应用的进度信息</li>
 <li>当作业完成时，ApplicationMaster向ResourceManager注销容器，执行周期完成</li>
@@ -480,7 +486,7 @@
 <li>Client请求Resource Manager运行一个Application Master实例（step 2）</li>
 <li>Resource Manager选择一个Node Manager，启动一个Container并运行Application Master实例（step 3a、step 3b）；</li>
 <li>Application Master根据实际需要向Resource Manager请求更多的Container资源（step 4）；</li>
-<li>Application Master通过获取到的Container资源执行分布式计算（step 5a、step 5b）</li>
+<li>Application Master通过获取到的资源再想NodeManager申请启动Container资源执行分布式计算（step 5a、step 5b）</li>
 </ul>
 <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/IED65gAH6J.jpg?imageslim" alt=""></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体而言，YARN相对于MapReduce1.0来说具有以下优势：大大减少了承担中心服务功能的ResourceManager的资源消耗ApplicationMaster来完成需要大量资源消耗的任务调度和监控多个作业对应多个ApplicationMaster，实现了监控分布化</p>
@@ -497,7 +503,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/23/big-data/hadoop-1.html" data-id="cjnoqiel600011wqg56479n0r" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/23/big-data/hadoop-1.html" data-id="cjo1jjj6300138gqg2c787m35" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
