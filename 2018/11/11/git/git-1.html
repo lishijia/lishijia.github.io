@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: Flume | 李世佳的博客</title>
+    <title>阿里云Centos7.4搭建git服务器 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://lishijia.top/tags/Flume/index.html">
+    <meta name="description" content="前言阿里云Centos7.4搭建git服务器。">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里云Centos7.4搭建git服务器">
+<meta property="og:url" content="http://lishijia.top/2018/11/11/git/git-1.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言阿里云Centos7.4搭建git服务器。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-16T14:57:23.216Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="阿里云Centos7.4搭建git服务器">
+<meta name="twitter:description" content="前言阿里云Centos7.4搭建git服务器。">
     
 
     
@@ -174,66 +179,7 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#Flume</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/11/15/flume/flume-1.html" href="/2018/11/15/flume/flume-1.html">Flume 从安装到采集数据至 HDFS</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/11/15/flume/flume-1.html">
-            <time datetime="2018-11-15T14:35:05.000Z" itemprop="datePublished">2018-11-15</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Flume/">Flume</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Flume/">Flume</a>, <a class="tag-link" href="/tags/HDFS/">HDFS</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/11/15/flume/flume-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/11/15/flume/flume-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -423,13 +369,227 @@
         return constructor;
     })()
 </script>
+<article id="post-git/git-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/11/11/git/git-1.html" itemprop="name">
+            阿里云Centos7.4搭建git服务器
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/11/11/git/git-1.html">
+            <time datetime="2018-11-11T02:42:22.000Z" itemprop="datePublished">2018-11-11</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/git/">git</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/git/">git</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/11/11/git/git-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/11/11/git/git-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>阿里云Centos7.4搭建git服务器。</p>
+<a id="more"></a>
+<h2 id="安装git及初始化用户-服务器"><a href="#安装git及初始化用户-服务器" class="headerlink" title="安装git及初始化用户(服务器)"></a>安装git及初始化用户(服务器)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装Git</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z ~]# yum install git</span><br><span class="line"><span class="meta">#</span> 创建一个git用户组和用户，用来运行git服务</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z ~]# groupadd git</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z ~]# adduser git -g git</span><br><span class="line"><span class="meta">#</span> 设置git用户密码</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z /]# passwd git</span><br></pre></td></tr></table></figure>
+<h2 id="进制git用户登录-服务器"><a href="#进制git用户登录-服务器" class="headerlink" title="进制git用户登录(服务器)"></a>进制git用户登录(服务器)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z ~]# vim /etc/passwd</span><br><span class="line"><span class="meta">#</span> 找到这句：</span><br><span class="line">git:x:503:503::/home/git:/bin/bash</span><br><span class="line"><span class="meta">#</span> 改为：</span><br><span class="line">git:x:503:503::/home/git:/bin/git-shell</span><br></pre></td></tr></table></figure>
+<h2 id="创建证书登录-服务器"><a href="#创建证书登录-服务器" class="headerlink" title="创建证书登录(服务器)"></a>创建证书登录(服务器)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z git]# mkdir /home/git/.ssh</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z git]# chmod 700 /home/git/.ssh</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z git]# touch 700 /home/git/.ssh/authorized_keys</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z git]# chmod 600 /home/git/.ssh/authorized_keys</span><br><span class="line"><span class="meta">#</span> 注意，如果是采用的sudo方式来创建git和相应的文件的，需要设置/home/git/.ssh/的owner为git，否则还是每次要输入密码的。</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z git]# sudo chown -R git:git /home/git/.ssh/</span><br></pre></td></tr></table></figure>
+<h2 id="配置git免密码-服务器"><a href="#配置git免密码-服务器" class="headerlink" title="配置git免密码(服务器)"></a>配置git免密码(服务器)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 添加如下内容</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z ~]# vim etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 开启RSA认证功能</span><br><span class="line">RSAAuthentication yes</span><br><span class="line"><span class="meta">#</span> 开启公匙认证</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line"><span class="meta">#</span> author公匙文件</span><br><span class="line">AuthorizedKeysFile /home/git/.ssh/authorized_keys</span><br><span class="line"><span class="meta">#</span> 如果是yes在某些情况下可能会强制要求登录用户和文件拥有者用户相同</span><br><span class="line">StricModes no</span><br></pre></td></tr></table></figure>
+<h2 id="初始化git仓库-服务器"><a href="#初始化git仓库-服务器" class="headerlink" title="初始化git仓库(服务器)"></a>初始化git仓库(服务器)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z git]# cd /srv</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z srv]# mkdir gitrepo</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z srv]# chown git:git gitrepo/</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z srv]# cd gitrepo</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z gitrepo]# git init --bare lishijia.git</span><br><span class="line">Initialized empty Git repository in /srv/gitrepo/project.git/</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z gitrepo]# chown -R git:git lishijia.git</span><br></pre></td></tr></table></figure>
+<h2 id="生成git秘钥-客户端"><a href="#生成git秘钥-客户端" class="headerlink" title="生成git秘钥(客户端)"></a>生成git秘钥(客户端)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 创建私钥，文件位于用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件</span><br><span class="line"><span class="meta">$</span> ssh-keygen -t rsa -C "5878842@qq.com"</span><br><span class="line"><span class="meta">$</span> cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<h2 id="配置git秘钥-服务器"><a href="#配置git秘钥-服务器" class="headerlink" title="配置git秘钥(服务器)"></a>配置git秘钥(服务器)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 把上一步在客户端生成的git秘钥配置到如下文件</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z git]# vim /home/git/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<h2 id="克隆仓库-amp-验证-客户端"><a href="#克隆仓库-amp-验证-客户端" class="headerlink" title="克隆仓库&amp;验证(客户端)"></a>克隆仓库&amp;验证(客户端)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> git clone git@47.107.168.156:/srv/gitrepo/lishijia.git</span><br><span class="line"><span class="meta">#</span> 提示输入密码，密码就是之前给git用户设置的密码</span><br><span class="line"><span class="meta">$</span> git push origin master</span><br></pre></td></tr></table></figure>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/11/11/git/git-1.html" data-id="cjok5dlfj000ul4qgw68zxv5z" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/11/11/git/git-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/11/11/nginx/nginx-1.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Nginx 安装 &amp; 代理个人网站服务
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/11/08/spark/spark2.0-6.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Spark使用Jieba分词Hive数据生成新表（五）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 

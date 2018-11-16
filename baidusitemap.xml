@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://lishijia.top/2018/11/11/git/git-1.html</loc>
+    <lastmod>2018-11-16T14:57:23.216Z</lastmod>
+  </url>  <url>
     <loc>http://lishijia.top/2018/11/16/algorithm/linear-regression-1.html</loc>
     <lastmod>2018-11-16T14:51:14.896Z</lastmod>
   </url>  <url>
@@ -30,9 +33,6 @@
   </url>  <url>
     <loc>http://lishijia.top/2018/10/21/spark/spark2.0-2.html</loc>
     <lastmod>2018-11-16T14:40:52.079Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/11/16/git/git-1.html</loc>
-    <lastmod>2018-11-16T14:40:52.069Z</lastmod>
   </url>  <url>
     <loc>http://lishijia.top/2018/11/15/flume/flume-1.html</loc>
     <lastmod>2018-11-16T14:40:52.065Z</lastmod>
