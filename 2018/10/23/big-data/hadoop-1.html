@@ -6,23 +6,23 @@
     <title>Hadoop2.0资源调度框架Yarn基本概念与总体结构 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
-<meta name="keywords" content="Hadoop,Yarn">
+<meta name="keywords" content="Yarn,Hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop2.0资源调度框架Yarn基本概念与总体结构">
 <meta property="og:url" content="http://lishijia.top/2018/10/23/big-data/hadoop-1.html">
 <meta property="og:site_name" content="李世佳的博客">
 <meta property="og:description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/H3ilACB6di.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181024/CHEKg2kd7l.png?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim">
-<meta property="og:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/IED65gAH6J.jpg?imageslim">
-<meta property="og:updated_time" content="2018-11-03T14:18:15.456Z">
+<meta property="og:image" content="http://image.lishijia.top/blog/181023/hdgEcaDEEc.jpg?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/181023/H3ilACB6di.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/181024/CHEKg2kd7l.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/181023/hdgEcaDEEc.jpg?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/181023/IED65gAH6J.jpg?imageslim">
+<meta property="og:updated_time" content="2018-11-16T14:40:52.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop2.0资源调度框架Yarn基本概念与总体结构">
 <meta name="twitter:description" content="前言Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。">
-<meta name="twitter:image" content="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim">
+<meta name="twitter:image" content="http://image.lishijia.top/blog/181023/hdgEcaDEEc.jpg?imageslim">
     
 
     
@@ -157,11 +157,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                20
+                26
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                20
+                27
                 <span>标签</span>
             </div>
         </div>
@@ -432,11 +432,11 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim" alt=""></p>
+            <p><img src="http://image.lishijia.top/blog/181023/hdgEcaDEEc.jpg?imageslim" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hadoop1.0咱们讲他们的两个核心组件即MapReduce与HDFS，那么到了2.0之后它的核心应该就是Yarn与HDFS，当中的MapReduce就仅仅只是Hadoop当中的一个计算框架了，即MapReduce运行在Yarn（可以把它当做一个操作系统）上，同样其他的计算框架，包括storm，spark，flink，hive等都可以运行再Yarn之上。</p>
 <a id="more"></a>
-<h2 id="Hadoop1-0和Hadoop2-0"><a href="#Hadoop1-0和Hadoop2-0" class="headerlink" title="Hadoop1.0和Hadoop2.0"></a>Hadoop1.0和Hadoop2.0</h2><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/H3ilACB6di.png?imageslim" alt=""></p>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181024/CHEKg2kd7l.png?imageslim" alt=""></p>
+<h2 id="Hadoop1-0和Hadoop2-0"><a href="#Hadoop1-0和Hadoop2-0" class="headerlink" title="Hadoop1.0和Hadoop2.0"></a>Hadoop1.0和Hadoop2.0</h2><p><img src="http://image.lishijia.top/blog/181023/H3ilACB6di.png?imageslim" alt=""></p>
+<p><img src="http://image.lishijia.top/blog/181024/CHEKg2kd7l.png?imageslim" alt=""></p>
 <p>通过上面两张图可以看出来，Hadoop1.0即不存在Yarn这么一个资源框架，那么在2.0当中Hadoop就多出了一个Yarn这么东西。那么多出来的东西是干什么呢？以及1.0又是怎么运算呢？</p>
 <ul>
 <li><p>Hadoop1.0 MapReduce即通过JobTracker这么一个资源管理任务协调组件来完成整个hadoop当中对TaskTracker组件的Job任务进行资源分配与任务协调工作。相当于JobTracker组件即需要对job任务的资源分配，还需要对Job任务的协调，<font color="red">即MapReduce1.0是一个计算框架，也是一个资源调度框架，工作相当的繁重。</font></p>
@@ -444,7 +444,7 @@
 <li><p>Hadoop2.0即通过抽离出Yarn这么一个资源调度框架，把JobTracker分解为ResourceManager与ApplicationMaster，然后TaskTracker对应NodeManager。另外Yarn当中不止可以运行MapReduce作业还可以运行其他计算框架的作业如Spark等，相当于插拔式的方式为计算框架提供资源分配，任务协调。即它存粹的是一个资源管理调度框架，而不是一个计算框架。<font color="red">被玻璃出来的MapReduce就变成了MRv2（MapReduce2.0）一个存粹的计算框架，不再自己负责资源调度管理服务，而是由Yarn为其提供资源管理调度服务</font></p>
 </li>
 </ul>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/hdgEcaDEEc.jpg?imageslim" alt=""></p>
+<p><img src="http://image.lishijia.top/blog/181023/hdgEcaDEEc.jpg?imageslim" alt=""></p>
 <h2 id="Yarn的体系结构"><a href="#Yarn的体系结构" class="headerlink" title="Yarn的体系结构"></a>Yarn的体系结构</h2><ul>
 <li><p>ResourceManager（RM）</p>
 <ul>
@@ -488,7 +488,7 @@
 <li>Application Master根据实际需要向Resource Manager请求更多的Container资源（step 4）；</li>
 <li>Application Master通过获取到的资源再想NodeManager申请启动Container资源执行分布式计算（step 5a、step 5b）</li>
 </ul>
-<p><img src="http://pfpltafka.bkt.clouddn.com/blog/181023/IED65gAH6J.jpg?imageslim" alt=""></p>
+<p><img src="http://image.lishijia.top/blog/181023/IED65gAH6J.jpg?imageslim" alt=""></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总体而言，YARN相对于MapReduce1.0来说具有以下优势：大大减少了承担中心服务功能的ResourceManager的资源消耗ApplicationMaster来完成需要大量资源消耗的任务调度和监控多个作业对应多个ApplicationMaster，实现了监控分布化</p>
 <p>MapReduce1.0既是一个计算框架，又是一个资源管理调度框架，但是，只能支持MapReduce编程模型。而YARN则是一个纯粹的资源调度管理框架，在它上面可以运行包括MapReduce在内的不同类型的计算框架，只要编程实现相应的ApplicationMaster</p>
 <p>YARN中的资源管理比MapReduce1.0更加高效以容器为单位，而不是以slot为单位</p>
@@ -503,7 +503,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/23/big-data/hadoop-1.html" data-id="cjo2csn3w001go0qg0xoki3zl" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/23/big-data/hadoop-1.html" data-id="cjok56rxb0007e8qgqfn4ugmk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -662,45 +662,45 @@
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2018/11/03/deeplearning/webpy-jieba.html" class="title">Webpy + jieba 搭建分词服务</a></p>
-                            <p class="item-date"><time datetime="2018-11-03T15:09:13.000Z" itemprop="datePublished">2018-11-03</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/11/16/algorithm/linear-regression-1.html" class="title">线性回归(一元)</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T15:56:32.000Z" itemprop="datePublished">2018-11-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Spark/">Spark</a></p>
-                            <p class="item-title"><a href="/2018/10/25/spark/spark2.0-5.html" class="title">SparkSql操作Hive表数据（四）</a></p>
-                            <p class="item-date"><time datetime="2018-10-25T15:42:00.000Z" itemprop="datePublished">2018-10-25</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/git/">git</a></p>
+                            <p class="item-title"><a href="/2018/11/16/git/git-1.html" class="title">阿里云Centos7.4搭建git服务器</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T14:42:22.000Z" itemprop="datePublished">2018-11-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/vue/">vue</a></p>
-                            <p class="item-title"><a href="/2018/10/24/vue/vue-1.html" class="title">vue-cli 脚手架快速搭建Vue项目 与 jj-admin后台管理模板</a></p>
-                            <p class="item-date"><time datetime="2018-10-24T08:43:00.000Z" itemprop="datePublished">2018-10-24</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/MarkDown/">MarkDown</a></p>
+                            <p class="item-title"><a href="/2018/11/16/markdown/mkdown-1.html" class="title">MarkDown 数学符号</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T12:42:22.000Z" itemprop="datePublished">2018-11-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/10/23/big-data/hadoop-1.html" class="title">Hadoop2.0资源调度框架Yarn基本概念与总体结构</a></p>
-                            <p class="item-date"><time datetime="2018-10-23T14:48:16.000Z" itemprop="datePublished">2018-10-23</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Flume/">Flume</a></p>
+                            <p class="item-title"><a href="/2018/11/15/flume/flume-1.html" class="title">Flume 从安装到采集数据至 HDFS</a></p>
+                            <p class="item-date"><time datetime="2018-11-15T14:35:05.000Z" itemprop="datePublished">2018-11-15</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Spark/">Spark</a></p>
-                            <p class="item-title"><a href="/2018/10/22/spark/spark2.0-4.html" class="title">Spark Scala 多字段二次排序（三）</a></p>
-                            <p class="item-date"><time datetime="2018-10-22T15:42:00.000Z" itemprop="datePublished">2018-10-22</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Nginx/">Nginx</a></p>
+                            <p class="item-title"><a href="/2018/11/11/nginx/nginx-1.html" class="title">Nginx 安装 &amp; 代理个人网站服务</a></p>
+                            <p class="item-date"><time datetime="2018-11-11T10:35:05.000Z" itemprop="datePublished">2018-11-11</time></p>
                         </div>
                     </li>
                 
@@ -713,7 +713,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -722,7 +722,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -731,7 +731,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 15px;">MapReduce</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 12.5px;">虚拟机</a>
+            <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 18px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 16px;">Hive</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 14px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NLP/" style="font-size: 16px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Scala/" style="font-size: 14px;">Scala</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/虚拟机/" style="font-size: 12px;">虚拟机</a>
         </div>
     </div>
 

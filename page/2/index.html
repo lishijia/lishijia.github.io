@@ -146,11 +146,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                20
+                26
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                20
+                27
                 <span>标签</span>
             </div>
         </div>
@@ -175,6 +175,894 @@
 
             
             <section id="main">
+    <article id="post-spark/spark2.0-4" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/22/spark/spark2.0-4.html" href="/2018/10/22/spark/spark2.0-4.html">Spark Scala 多字段二次排序（三）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/22/spark/spark2.0-4.html">
+            <time datetime="2018-10-22T15:42:00.000Z" itemprop="datePublished">2018-10-22</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Scala/">Scala</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/22/spark/spark2.0-4.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/22/spark/spark2.0-4.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://image.lishijia.top/blog/181022/IhK6e573C6.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面的文章我们已经使用了很多次sort方法进行排序了，但是如何通过两个字段排序呢？即如果第一个字段的值相同，如何通过另外一个字段排序呢？下面我们将通过一个demo演示如何实现。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/22/spark/spark2.0-4.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/22/spark/spark2.0-4.html" data-id="cjok56rxw001he8qg64smzaiv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/22/spark/spark2.0-4.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-spark/spark2.0-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/21/spark/spark2.0-3.html" href="/2018/10/21/spark/spark2.0-3.html">Spark Scala 统计多个文件中的最大值与最小值 map自定义函数实现（二）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/21/spark/spark2.0-3.html">
+            <time datetime="2018-10-21T15:22:00.000Z" itemprop="datePublished">2018-10-21</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Scala/">Scala</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/21/spark/spark2.0-3.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/21/spark/spark2.0-3.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://image.lishijia.top/blog/181021/04JKFLHH06.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一章节我们了解到如何通过scala变成来统计一篇文章中的词频从而了解使用rdd当中函数使用，这篇我们进一步来学习熟练使用rdd函数，实现map自定义函数。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/21/spark/spark2.0-3.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/21/spark/spark2.0-3.html" data-id="cjok56rxv001de8qgibyx72uk" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/21/spark/spark2.0-3.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-spark/spark2.0-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/21/spark/spark2.0-2.html" href="/2018/10/21/spark/spark2.0-2.html">Spark Scala WrodCount 入门（一）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/21/spark/spark2.0-2.html">
+            <time datetime="2018-10-21T14:22:00.000Z" itemprop="datePublished">2018-10-21</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Scala/">Scala</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/21/spark/spark2.0-2.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/21/spark/spark2.0-2.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://image.lishijia.top/blog/181021/iHDjB2i2Cj.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过WordCount简单实现一个Scala以及Spark程序，来了解Spark中的对RDD数据转换Transformation，动作Action。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/21/spark/spark2.0-2.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/21/spark/spark2.0-2.html" data-id="cjok56rxu001ce8qgdpcaf5co" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/21/spark/spark2.0-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-spark/spark2.0-install-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/20/spark/spark2.0-install-1.html" href="/2018/10/20/spark/spark2.0-install-1.html">Scala &amp; Spark2.0.2集群安装</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/20/spark/spark2.0-install-1.html">
+            <time datetime="2018-10-20T15:30:00.000Z" itemprop="datePublished">2018-10-20</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark/">Spark</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/20/spark/spark2.0-install-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/20/spark/spark2.0-install-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://image.lishijia.top/blog/181020/2CE0c6mIgC.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Scala函数式变成语言，Spark的开发语言。下面将记录Scala安装与Spark的集群安装。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/20/spark/spark2.0-install-1.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html" data-id="cjok56ry2001te8qgroghminz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-deeplearning/nlp-lcs-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/19/deeplearning/nlp-lcs-3.html" href="/2018/10/19/deeplearning/nlp-lcs-3.html">NLP自然语言 之 LCS最长公共子序列（Longest Common Subsequence）（三）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
+            <time datetime="2018-10-19T15:45:13.000Z" itemprop="datePublished">2018-10-19</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/NLP/">NLP</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/LCS/">LCS</a>, <a class="tag-link" href="/tags/NLP/">NLP</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/19/deeplearning/nlp-lcs-3.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://image.lishijia.top/blog/181018/Ce1KG56gCl.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面我们知道了通过TF-IDF找出文章中的关键词，以及通过余弦相似度来判断两个句子或者文章的相似程度。那么我们还可以通过LCS即最长公共子序列（Longest Common Subsequence）的方式来比对两段文字之间的相似度。</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/19/deeplearning/nlp-lcs-3.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html" data-id="cjok56rxl000pe8qggdjme3ve" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-deeplearning/nlp-tfidf-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2018/10/18/deeplearning/nlp-tfidf-2.html" href="/2018/10/18/deeplearning/nlp-tfidf-2.html">NLP自然语言 之 TF-IDF（二）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
+            <time datetime="2018-10-18T14:09:13.000Z" itemprop="datePublished">2018-10-18</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/NLP/">NLP</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/TF-IDF/">TF-IDF</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://image.lishijia.top/blog/181018/132IHmb2GL.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前面一篇文章我们了解到了如何基于余弦相似度的计算方式去评估两个句子或者文章的相似程度。那么本篇我们就从一篇文章中提取当中的关键词，来获取一篇文章所要表达的意思。即TF-IDF</p></p>
+            <p class="article-more-link">
+                <a href="/2018/10/18/deeplearning/nlp-tfidf-2.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html" data-id="cjok56rxo000ve8qga6k6x4vc" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-deeplearning/nlp-consine-1" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -231,7 +1119,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181015/7kCahd0l75.jpg?imageslim" alt=""></p>
+            <p><p><img src="http://image.lishijia.top/blog/181015/7kCahd0l75.jpg?imageslim" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>如何计算两个句子的相似度度？一般来说，我们可以根据两个句子的用词越相似，它们的内容所表达的意思就应该越相似。即可以使用余弦相似度的方式来计算。</p></p>
             <p class="article-more-link">
                 <a href="/2018/10/15/deeplearning/nlp-consine-1.html#more">查看更多</a>
@@ -245,7 +1133,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html" data-id="cjo2csn3e000fo0qgb8vf1f18" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html" data-id="cjok56rxn000te8qghq5ok5iu" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -379,7 +1267,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181013/65D0Ib6ja1.jpg?imageslim" alt=""></p>
+            <p><p><img src="http://image.lishijia.top/blog/181013/65D0Ib6ja1.jpg?imageslim" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hive提供类似Sql的查询语句，那么join在实际工作中可能是使用最多的地方，大多数业务都是关联查询的。下面将介绍john的优化，以及udf自定义函数配置使用。</p></p>
             <p class="article-more-link">
                 <a href="/2018/10/13/big-data/hive-2.html#more">查看更多</a>
@@ -393,7 +1281,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/13/big-data/hive-2.html" data-id="cjo2csn3j000mo0qgo5an8n6r" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/13/big-data/hive-2.html" data-id="cjok56rxx001je8qgzfmjethz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -527,7 +1415,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181011/64la060adj.jpg?imageslim" alt=""></p>
+            <p><p><img src="http://image.lishijia.top/blog/181011/64la060adj.jpg?imageslim" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hive一个执行在Hadoop集群之上的Sql引擎工具，它提供类似Sql的编写方式进行对Hadoop HDFS上的文件进行查询统计。接下来我们将安装配置Hive及简单使用</p></p>
             <p class="article-more-link">
                 <a href="/2018/10/12/big-data/hive-1.html#more">查看更多</a>
@@ -541,7 +1429,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/12/big-data/hive-1.html" data-id="cjo2csn3o000xo0qgvairb69o" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/12/big-data/hive-1.html" data-id="cjok56rxf000be8qgdj2sweuq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -675,7 +1563,7 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181010/gm2dEKlIAk.png?imageslim" alt=""></p>
+            <p><p><img src="http://image.lishijia.top/blog/181010/gm2dEKlIAk.png?imageslim" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。</p>
 <p>以下我们将了解MapReduce运行原理及过程。</p></p>
             <p class="article-more-link">
@@ -690,7 +1578,7 @@
 
 </div>
 
-    <a data-url="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjo2csn3v001do0qgxd65koin" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjok56rxk000ne8qgbilq87ra" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -768,897 +1656,8 @@
 
 
 
-    <article id="post-big-data/mapreduce-2" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/10/08/big-data/mapreduce-2.html" href="/2018/10/08/big-data/mapreduce-2.html">MapReduce Join 表连接 Python （二）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/08/big-data/mapreduce-2.html">
-            <time datetime="2018-10-08T15:30:06.000Z" itemprop="datePublished">2018-10-08</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/08/big-data/mapreduce-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/gK7AF7cDki.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一遍文章简单编写了<a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount</a>，如何通过MapReduce统计一个单词在一篇文章中出现的次数，但是如何来实现两个表连接类似sql 的join查询呢？下文将简单介绍如何实现。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/10/08/big-data/mapreduce-2.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html" data-id="cjo2csn3m000to0qgvr0m4uv7" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://lishijia.top/2018/10/08/big-data/mapreduce-2.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-big-data/mapreduce-1" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/10/07/big-data/mapreduce-1.html" href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/07/big-data/mapreduce-1.html">
-            <time datetime="2018-10-07T14:32:23.000Z" itemprop="datePublished">2018-10-07</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Hadoop-Streaming/">Hadoop Streaming</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/07/big-data/mapreduce-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>根据已经搭建好的<a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群</a>，就可以在集群上跑任务了，一个简单的WordCount开始。使用Python脚本语言，它可以更快捷更方便咱们开发调试。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/10/07/big-data/mapreduce-1.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html" data-id="cjo2csn3l000qo0qgj77zo6pq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://lishijia.top/2018/10/07/big-data/mapreduce-1.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-big-data/hadoop-install" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/10/06/big-data/hadoop-install.html" href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/hadoop-install.html">
-            <time datetime="2018-10-06T14:32:16.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/180927/jH66f70bAB.jpg?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上一遍我们搭建了虚拟机集群环境，现在我们就开始搭建Hadoop集群环境，为后续的数据处理提供HDFS存储，MapReduce计算环境。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/10/06/big-data/hadoop-install.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://lishijia.top/2018/10/06/big-data/hadoop-install.html" data-id="cjo2csn3i000lo0qg944kp4ua" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://lishijia.top/2018/10/06/big-data/hadoop-install.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-big-data/centos-nat" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/10/06/big-data/centos-nat.html" href="/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/centos-nat.html">
-            <time datetime="2018-10-06T02:26:12.000Z" itemprop="datePublished">2018-10-06</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/centos-nat.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181006/l8B6990mK8.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大数据，机器学习必备的工具之一，也是咱们学习的运行环境。搭建虚拟机以及机器集群环境。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/10/06/big-data/centos-nat.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://lishijia.top/2018/10/06/big-data/centos-nat.html" data-id="cjo2csn3p0011o0qgi2da1isz" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://lishijia.top/2018/10/06/big-data/centos-nat.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-algorithm/skip-list" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/09/30/algorithm/skip-list.html" href="/2018/09/30/algorithm/skip-list.html">跳跃表(skip-list)</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/30/algorithm/skip-list.html">
-            <time datetime="2018-09-30T15:12:32.000Z" itemprop="datePublished">2018-09-30</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/算法/">算法</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/数据结构/">数据结构</a>, <a class="tag-link" href="/tags/算法/">算法</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/09/30/algorithm/skip-list.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/09/30/algorithm/skip-list.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/181008/bB1DiI6iL4.jpg?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近看了一种数据结构叫做skipList，redis和levelDB都是用了它。Skip List是在有序链表的基础上进行了扩展，解决了有序链表结构查找特定值困难的问题，查找特定值的时间复杂度为O(logn)，他是一种可以代替平衡树的数据结构。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/09/30/algorithm/skip-list.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://lishijia.top/2018/09/30/algorithm/skip-list.html" data-id="cjo2csn360005o0qgozt5u52o" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://lishijia.top/2018/09/30/algorithm/skip-list.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-algorithm/algorithm-time-space" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2018/09/29/algorithm/algorithm-time-space.html" href="/2018/09/29/algorithm/algorithm-time-space.html">时间复杂度&amp;空间复杂度</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/09/29/algorithm/algorithm-time-space.html">
-            <time datetime="2018-09-29T14:57:00.000Z" itemprop="datePublished">2018-09-29</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/算法/">算法</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/算法/">算法</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/09/29/algorithm/algorithm-time-space.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/09/29/algorithm/algorithm-time-space.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://pfpltafka.bkt.clouddn.com/blog/180929/G9lFa1AjdA.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一个算法的好坏，我们该如何衡量呢？在算法领域是用时间与空间来衡量的。</p>
-<p>我们通常根据算法的复杂度来衡量一个程序设计。复杂度分为时间复杂度、空间复杂度，接下来我们就讨论下什么怎么计算时间复杂度与空间复杂度。</p></p>
-            <p class="article-more-link">
-                <a href="/2018/09/29/algorithm/algorithm-time-space.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html" data-id="cjo2csn330002o0qglt1juv92" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+        <a class="extend prev" rel="prev" href="/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">下一页 &raquo;</a>
     </nav>
 
 <script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
@@ -1887,45 +1886,45 @@
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/NLP/">NLP</a></p>
-                            <p class="item-title"><a href="/2018/11/03/deeplearning/webpy-jieba.html" class="title">Webpy + jieba 搭建分词服务</a></p>
-                            <p class="item-date"><time datetime="2018-11-03T15:09:13.000Z" itemprop="datePublished">2018-11-03</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/11/16/algorithm/linear-regression-1.html" class="title">线性回归(一元)</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T15:56:32.000Z" itemprop="datePublished">2018-11-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Spark/">Spark</a></p>
-                            <p class="item-title"><a href="/2018/10/25/spark/spark2.0-5.html" class="title">SparkSql操作Hive表数据（四）</a></p>
-                            <p class="item-date"><time datetime="2018-10-25T15:42:00.000Z" itemprop="datePublished">2018-10-25</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/git/">git</a></p>
+                            <p class="item-title"><a href="/2018/11/16/git/git-1.html" class="title">阿里云Centos7.4搭建git服务器</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T14:42:22.000Z" itemprop="datePublished">2018-11-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/vue/">vue</a></p>
-                            <p class="item-title"><a href="/2018/10/24/vue/vue-1.html" class="title">vue-cli 脚手架快速搭建Vue项目 与 jj-admin后台管理模板</a></p>
-                            <p class="item-date"><time datetime="2018-10-24T08:43:00.000Z" itemprop="datePublished">2018-10-24</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/MarkDown/">MarkDown</a></p>
+                            <p class="item-title"><a href="/2018/11/16/markdown/mkdown-1.html" class="title">MarkDown 数学符号</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T12:42:22.000Z" itemprop="datePublished">2018-11-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Hadoop/">Hadoop</a></p>
-                            <p class="item-title"><a href="/2018/10/23/big-data/hadoop-1.html" class="title">Hadoop2.0资源调度框架Yarn基本概念与总体结构</a></p>
-                            <p class="item-date"><time datetime="2018-10-23T14:48:16.000Z" itemprop="datePublished">2018-10-23</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Flume/">Flume</a></p>
+                            <p class="item-title"><a href="/2018/11/15/flume/flume-1.html" class="title">Flume 从安装到采集数据至 HDFS</a></p>
+                            <p class="item-date"><time datetime="2018-11-15T14:35:05.000Z" itemprop="datePublished">2018-11-15</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Spark/">Spark</a></p>
-                            <p class="item-title"><a href="/2018/10/22/spark/spark2.0-4.html" class="title">Spark Scala 多字段二次排序（三）</a></p>
-                            <p class="item-date"><time datetime="2018-10-22T15:42:00.000Z" itemprop="datePublished">2018-10-22</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/Nginx/">Nginx</a></p>
+                            <p class="item-title"><a href="/2018/11/11/nginx/nginx-1.html" class="title">Nginx 安装 &amp; 代理个人网站服务</a></p>
+                            <p class="item-date"><time datetime="2018-11-11T10:35:05.000Z" itemprop="datePublished">2018-11-11</time></p>
                         </div>
                     </li>
                 
@@ -1938,7 +1937,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -1947,7 +1946,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -1956,7 +1955,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 15px;">Hive</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 15px;">MapReduce</a> <a href="/tags/NLP/" style="font-size: 17.5px;">NLP</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/虚拟机/" style="font-size: 12.5px;">虚拟机</a>
+            <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 18px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 16px;">Hive</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 14px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NLP/" style="font-size: 16px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Scala/" style="font-size: 14px;">Scala</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/虚拟机/" style="font-size: 12px;">虚拟机</a>
         </div>
     </div>
 

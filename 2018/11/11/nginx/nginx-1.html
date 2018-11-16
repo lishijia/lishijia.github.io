@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Nginx 安装 &amp; 代理个人网站服务 | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言Nginx一款高性能反向代理服务器，而且支持负载均衡，包括权重策略，回话策略(Sticker)，随机策略。">
+<meta name="keywords" content="Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx 安装 &amp; 代理个人网站服务">
+<meta property="og:url" content="http://lishijia.top/2018/11/11/nginx/nginx-1.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言Nginx一款高性能反向代理服务器，而且支持负载均衡，包括权重策略，回话策略(Sticker)，随机策略。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://abc.youzhihui.xyz/blog/181116/2kjDbcGDl6.jpg?imageslim">
+<meta property="og:updated_time" content="2018-11-16T14:50:06.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx 安装 &amp; 代理个人网站服务">
+<meta name="twitter:description" content="前言Nginx一款高性能反向代理服务器，而且支持负载均衡，包括权重策略，回话策略(Sticker)，随机策略。">
+<meta name="twitter:image" content="http://abc.youzhihui.xyz/blog/181116/2kjDbcGDl6.jpg?imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                26
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                27
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-nginx/nginx-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/11/11/nginx/nginx-1.html" itemprop="name">
+            Nginx 安装 &amp; 代理个人网站服务
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/11/11/nginx/nginx-1.html">
+            <time datetime="2018-11-11T10:35:05.000Z" itemprop="datePublished">2018-11-11</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Nginx/">Nginx</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Nginx/">Nginx</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/11/11/nginx/nginx-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/11/11/nginx/nginx-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://abc.youzhihui.xyz/blog/181116/2kjDbcGDl6.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Nginx一款高性能反向代理服务器，而且支持负载均衡，包括权重策略，回话策略(Sticker)，随机策略。</p>
+<a id="more"></a>
+<h2 id="准备安装文件"><a href="#准备安装文件" class="headerlink" title="准备安装文件"></a>准备安装文件</h2><p>以下为大家准备了安装文件，也可以自己到网上下载</p>
+<p>下载地址：<a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>准备文件</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nginx-1.8.1.tar</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ4</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="安装Nginx所需环境"><a href="#安装Nginx所需环境" class="headerlink" title="安装Nginx所需环境"></a>安装Nginx所需环境</h2><ul>
+<li><p><strong>./configure(进入解压目录执行./configure，会提示所需要的依赖包，一个一个安装即可)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z soft]# tar -xvf nginx-1.8.1.tar.gz</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z soft]# cd nginx-1.8.1</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# ./configure</span><br><span class="line">./configure: error: the HTTP rewrite module requires the PCRE library.</span><br><span class="line">You can either disable the module by using --without-http_rewrite_module</span><br><span class="line">option, or install the PCRE library into the system, or build the PCRE library</span><br><span class="line">statically from the source with nginx by using --with-pcre=&lt;path&gt; option.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>安装 gcc</strong> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# yum install gcc-c++</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>安装 pcre pcre-devel</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# yum install -y pcre pcre-devel</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>安装 zlib</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# yum install -y zlib zlib-devel</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>安装 Open SSL</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# yum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><ul>
+<li><p><strong>配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# ./configure</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>编译安装</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# vim /etc/profile</span><br><span class="line"># 增加以下环境配置</span><br><span class="line">export NGINX_HOME=/usr/local/nginx</span><br><span class="line">export PATH=$PATH:$NGINX_HOME/sbin</span><br><span class="line"></span><br><span class="line"># 使之生效</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z nginx-1.8.1]# source /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Nginx启动"><a href="#Nginx启动" class="headerlink" title="Nginx启动"></a>Nginx启动</h2><ul>
+<li><p><strong>启动</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z /]# cd /usr/local/nginx/sbin</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ./nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查验证</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ps -ef | grep nginx</span><br><span class="line">root     23310     1  0 17:38 ?        00:00:00 nginx: master process ./nginx</span><br><span class="line">nobody   23311 23310  0 17:38 ?        00:00:00 nginx: worker process</span><br><span class="line">root     23319 19627  0 17:38 pts/0    00:00:00 grep --color=auto nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>关闭</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ./nginx -s stop</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ps -ef | grep nginx</span><br><span class="line">root     23324 19627  0 17:38 pts/0    00:00:00 grep --color=auto nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>重启</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ./nginx -s reload</span><br><span class="line">nginx: [error] open() &quot;/usr/local/nginx/logs/nginx.pid&quot; failed (2: No such file or directory)</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ./nginx</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ./nginx -s reload</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ps -ef | grep nginx</span><br><span class="line">root     23327     1  0 17:39 ?        00:00:00 nginx: master process ./nginx</span><br><span class="line">nobody   23336 23327  0 17:39 ?        00:00:00 nginx: worker process</span><br><span class="line">root     23342 19627  0 17:39 pts/0    00:00:00 grep --color=auto nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查配置文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ./nginx -t</span><br><span class="line">nginx: [emerg] unexpected &quot;&#125;&quot; in /usr/local/nginx/conf/nginx.conf:24</span><br><span class="line">nginx: configuration file /usr/local/nginx/conf/nginx.conf test failed</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]# ./nginx -t</span><br><span class="line">nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z sbin]#</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Nginx配置网站服务"><a href="#Nginx配置网站服务" class="headerlink" title="Nginx配置网站服务"></a>Nginx配置网站服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z conf]# cd /usr/local/nginx/conf</span><br><span class="line">[root@iZwz94664y88uf68wjzri0Z conf]# vim nginx.conf</span><br><span class="line">worker_processes  1;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line"><span class="meta">	#</span> 通过以下方式隔离每个域名配置文件</span><br><span class="line">	include extra/lishijia.conf</span><br><span class="line">    #include extra/back.conf;</span><br><span class="line">    #include extra/front.conf;</span><br><span class="line">    #include extra/mall.conf;</span><br><span class="line">    #include extra/pay.conf;</span><br><span class="line">    #include extra/hotelapp.conf;</span><br><span class="line">    #include extra/consume.conf;</span><br><span class="line">    #include extra/youzhihui.conf;</span><br><span class="line">    #include extra/resource.conf;</span><br><span class="line">    #include extra/mobile.conf;</span><br><span class="line">    #include extra/https.conf;</span><br><span class="line">    #include extra/rs.conf;</span><br><span class="line">    #include extra/website.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@iZwz94664y88uf68wjzri0Z conf]# vimextra/lishijia.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen       80; </span><br><span class="line">    server_name  www.lishijia.top;</span><br><span class="line">          </span><br><span class="line">    location / &#123; </span><br><span class="line">       root /www/lishijia;</span><br><span class="line">       index index.html;</span><br><span class="line">    &#125;                                                                                   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上方式把个人博客迁移的自己的服务器，之前是通过github、coding发布的pages服务来运行的个人博客。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://lishijia.top/2018/11/11/nginx/nginx-1.html" data-id="cjok56rxt0019e8qgav69gubb" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://lishijia.top/2018/11/11/nginx/nginx-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/11/15/flume/flume-1.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Flume 从安装到采集数据至 HDFS
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/11/08/spark/spark2.0-6.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Spark使用Jieba分词Hive数据生成新表（五）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/算法/">算法</a></p>
+                            <p class="item-title"><a href="/2018/11/16/algorithm/linear-regression-1.html" class="title">线性回归(一元)</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T15:56:32.000Z" itemprop="datePublished">2018-11-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/git/">git</a></p>
+                            <p class="item-title"><a href="/2018/11/16/git/git-1.html" class="title">阿里云Centos7.4搭建git服务器</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T14:42:22.000Z" itemprop="datePublished">2018-11-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/MarkDown/">MarkDown</a></p>
+                            <p class="item-title"><a href="/2018/11/16/markdown/mkdown-1.html" class="title">MarkDown 数学符号</a></p>
+                            <p class="item-date"><time datetime="2018-11-16T12:42:22.000Z" itemprop="datePublished">2018-11-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Flume/">Flume</a></p>
+                            <p class="item-title"><a href="/2018/11/15/flume/flume-1.html" class="title">Flume 从安装到采集数据至 HDFS</a></p>
+                            <p class="item-date"><time datetime="2018-11-15T14:35:05.000Z" itemprop="datePublished">2018-11-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Nginx/">Nginx</a></p>
+                            <p class="item-title"><a href="/2018/11/11/nginx/nginx-1.html" class="title">Nginx 安装 &amp; 代理个人网站服务</a></p>
+                            <p class="item-date"><time datetime="2018-11-11T10:35:05.000Z" itemprop="datePublished">2018-11-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 18px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 16px;">Hive</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 14px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NLP/" style="font-size: 16px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Scala/" style="font-size: 14px;">Scala</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/虚拟机/" style="font-size: 12px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
