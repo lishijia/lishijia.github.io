@@ -1,82 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://lishijia.top/2018/11/11/git/git-1.html</loc>
+    <loc>http://www.lishijia.top/2018/10/24/vue/vue-1.html</loc>
+    <lastmod>2018-11-18T14:03:12.952Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/20/spark/spark2.0-install-1.html</loc>
+    <lastmod>2018-11-18T14:03:05.073Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/25/spark/spark2.0-5.html</loc>
+    <lastmod>2018-11-18T14:02:36.597Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/22/spark/spark2.0-4.html</loc>
+    <lastmod>2018-11-18T14:02:24.917Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/21/spark/spark2.0-3.html</loc>
+    <lastmod>2018-11-18T14:02:18.526Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/21/spark/spark2.0-2.html</loc>
+    <lastmod>2018-11-18T14:02:10.448Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/11/16/markdown/mkdown-1.html</loc>
+    <lastmod>2018-11-18T14:02:02.970Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/11/03/deeplearning/webpy-jieba.html</loc>
+    <lastmod>2018-11-18T14:01:41.151Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html</loc>
+    <lastmod>2018-11-18T14:01:34.615Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html</loc>
+    <lastmod>2018-11-18T14:01:28.239Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html</loc>
+    <lastmod>2018-11-18T14:01:19.840Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/11/18/deeplearning/dense-sparse-vector.html</loc>
+    <lastmod>2018-11-18T14:01:14.380Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/07/big-data/mapreduce-1.html</loc>
+    <lastmod>2018-11-18T14:01:06.032Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/13/big-data/hive-2.html</loc>
+    <lastmod>2018-11-18T14:01:01.902Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/12/big-data/hive-1.html</loc>
+    <lastmod>2018-11-18T14:00:58.208Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/06/big-data/hadoop-install.html</loc>
+    <lastmod>2018-11-18T14:00:50.094Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/23/big-data/hadoop-1.html</loc>
+    <lastmod>2018-11-18T14:00:34.246Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/10/06/big-data/centos-nat.html</loc>
+    <lastmod>2018-11-18T14:00:29.797Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/09/30/algorithm/skip-list.html</loc>
+    <lastmod>2018-11-18T14:00:23.321Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/11/16/algorithm/linear-regression-1.html</loc>
+    <lastmod>2018-11-18T14:00:13.668Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/09/29/algorithm/algorithm-time-space.html</loc>
+    <lastmod>2018-11-18T14:00:08.258Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/11/11/git/git-1.html</loc>
     <lastmod>2018-11-16T15:04:25.387Z</lastmod>
   </url>  <url>
-    <loc>http://lishijia.top/2018/11/16/algorithm/linear-regression-1.html</loc>
-    <lastmod>2018-11-16T14:51:14.896Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/11/16/markdown/mkdown-1.html</loc>
-    <lastmod>2018-11-16T14:50:44.475Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/11/11/nginx/nginx-1.html</loc>
+    <loc>http://www.lishijia.top/2018/11/11/nginx/nginx-1.html</loc>
     <lastmod>2018-11-16T14:50:06.174Z</lastmod>
   </url>  <url>
-    <loc>http://lishijia.top/2018/10/24/vue/vue-1.html</loc>
-    <lastmod>2018-11-16T14:40:52.102Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/20/spark/spark2.0-install-1.html</loc>
-    <lastmod>2018-11-16T14:40:52.099Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/11/08/spark/spark2.0-6.html</loc>
+    <loc>http://www.lishijia.top/2018/11/08/spark/spark2.0-6.html</loc>
     <lastmod>2018-11-16T14:40:52.095Z</lastmod>
   </url>  <url>
-    <loc>http://lishijia.top/2018/10/25/spark/spark2.0-5.html</loc>
-    <lastmod>2018-11-16T14:40:52.091Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/22/spark/spark2.0-4.html</loc>
-    <lastmod>2018-11-16T14:40:52.088Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/21/spark/spark2.0-3.html</loc>
-    <lastmod>2018-11-16T14:40:52.084Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/21/spark/spark2.0-2.html</loc>
-    <lastmod>2018-11-16T14:40:52.079Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/11/15/flume/flume-1.html</loc>
+    <loc>http://www.lishijia.top/2018/11/15/flume/flume-1.html</loc>
     <lastmod>2018-11-16T14:40:52.065Z</lastmod>
   </url>  <url>
-    <loc>http://lishijia.top/2018/11/03/deeplearning/webpy-jieba.html</loc>
-    <lastmod>2018-11-16T14:40:52.062Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/18/deeplearning/nlp-tfidf-2.html</loc>
-    <lastmod>2018-11-16T14:40:52.058Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/19/deeplearning/nlp-lcs-3.html</loc>
-    <lastmod>2018-11-16T14:40:52.054Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html</loc>
-    <lastmod>2018-11-16T14:40:52.051Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/10/big-data/mapreduce-3.html</loc>
+    <loc>http://www.lishijia.top/2018/10/10/big-data/mapreduce-3.html</loc>
     <lastmod>2018-11-16T14:40:52.047Z</lastmod>
   </url>  <url>
-    <loc>http://lishijia.top/2018/10/08/big-data/mapreduce-2.html</loc>
+    <loc>http://www.lishijia.top/2018/10/08/big-data/mapreduce-2.html</loc>
     <lastmod>2018-11-16T14:40:52.043Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/07/big-data/mapreduce-1.html</loc>
-    <lastmod>2018-11-16T14:40:52.040Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/13/big-data/hive-2.html</loc>
-    <lastmod>2018-11-16T14:40:52.037Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/12/big-data/hive-1.html</loc>
-    <lastmod>2018-11-16T14:40:52.034Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/06/big-data/hadoop-install.html</loc>
-    <lastmod>2018-11-16T14:40:52.031Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/23/big-data/hadoop-1.html</loc>
-    <lastmod>2018-11-16T14:40:52.029Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/10/06/big-data/centos-nat.html</loc>
-    <lastmod>2018-11-16T14:40:52.027Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/09/30/algorithm/skip-list.html</loc>
-    <lastmod>2018-11-16T14:40:52.018Z</lastmod>
-  </url>  <url>
-    <loc>http://lishijia.top/2018/09/29/algorithm/algorithm-time-space.html</loc>
-    <lastmod>2018-11-16T14:40:52.016Z</lastmod>
   </url>
 </urlset>
