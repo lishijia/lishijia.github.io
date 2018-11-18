@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.lishijia.top/2018/11/18/deeplearning/dense-sparse-vector.html</loc>
+    <lastmod>2018-11-18T14:06:05.717Z</lastmod>
+  </url>  <url>
     <loc>http://www.lishijia.top/2018/10/24/vue/vue-1.html</loc>
     <lastmod>2018-11-18T14:03:12.952Z</lastmod>
   </url>  <url>
@@ -33,9 +36,6 @@
   </url>  <url>
     <loc>http://www.lishijia.top/2018/10/15/deeplearning/nlp-consine-1.html</loc>
     <lastmod>2018-11-18T14:01:19.840Z</lastmod>
-  </url>  <url>
-    <loc>http://www.lishijia.top/2018/11/18/deeplearning/dense-sparse-vector.html</loc>
-    <lastmod>2018-11-18T14:01:14.380Z</lastmod>
   </url>  <url>
     <loc>http://www.lishijia.top/2018/10/07/big-data/mapreduce-1.html</loc>
     <lastmod>2018-11-18T14:01:06.032Z</lastmod>
