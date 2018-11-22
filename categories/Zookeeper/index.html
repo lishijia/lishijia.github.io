@@ -3,24 +3,15 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MapReduce 执行过程原理（三） | 李世佳的博客</title>
+    <title>分类: Zookeeper | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
-<meta name="keywords" content="MapReduce,Hadoop">
-<meta property="og:type" content="article">
-<meta property="og:title" content="MapReduce 执行过程原理（三）">
-<meta property="og:url" content="http://www.lishijia.top/2018/10/10/big-data/mapreduce-3.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="李世佳的博客">
+<meta property="og:url" content="http://www.lishijia.top/categories/Zookeeper/index.html">
 <meta property="og:site_name" content="李世佳的博客">
-<meta property="og:description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://image.lishijia.top/blog/181010/gm2dEKlIAk.png?imageslim">
-<meta property="og:image" content="http://image.lishijia.top/blog/181009/5jdJ1bHAbG.png?imageslim">
-<meta property="og:image" content="http://image.lishijia.top/blog/181010/gm2dEKlIAk.png?imageslim">
-<meta property="og:updated_time" content="2018-11-16T14:40:52.047Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MapReduce 执行过程原理（三）">
-<meta name="twitter:description" content="前言Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。 以下我们将了解MapReduce运行原理及过程。">
-<meta name="twitter:image" content="http://image.lishijia.top/blog/181010/gm2dEKlIAk.png?imageslim">
+<meta name="twitter:title" content="李世佳的博客">
     
 
     
@@ -183,7 +174,66 @@
 </aside>
 
             
-            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main">
+<div class="timeline timeline-wrap">
+    <div class="timeline-row timeline-row-major">
+        <span class="node"><i class="fas fa-folder"></i></span>
+        <h1 class="title">Zookeeper</h1>
+    </div>
+    
+        <div class="timeline-row">
+            <span class="node"></span>
+            <div class="content">
+                
+    
+        <h1 itemprop="name">
+            <a class="timeline-article-title leancloud_visitors" title="/2018/11/22/zookeeper/zookeeper-1.html" href="/2018/11/22/zookeeper/zookeeper-1.html">Zookeeper集群安装配置</a>
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/11/22/zookeeper/zookeeper-1.html">
+            <time datetime="2018-11-22T12:38:51.000Z" itemprop="datePublished">2018-11-22 20:38:51</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Zookeeper/">Zookeeper</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Zookeeper/">Zookeeper</a>
+    </div>
+
+                    <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/11/22/zookeeper/zookeeper-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                    <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/11/22/zookeeper/zookeeper-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                </div>
+            </div>
+        </div>
+    
+</div>
+
+<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -373,244 +423,13 @@
         return constructor;
     })()
 </script>
-<article id="post-big-data/mapreduce-3" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 class="article-title leancloud_visitors" title="/2018/10/10/big-data/mapreduce-3.html" itemprop="name">
-            MapReduce 执行过程原理（三）
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/10/big-data/mapreduce-3.html">
-            <time datetime="2018-10-10T15:47:56.000Z" itemprop="datePublished">2018-10-10 23:47:56</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/MapReduce/">MapReduce</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/MapReduce/">MapReduce</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/10/big-data/mapreduce-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p><img src="http://image.lishijia.top/blog/181010/gm2dEKlIAk.png?imageslim" alt=""></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hadoop两大核心组件之一MapReduce的计算框架，它将复杂的、运行于大规模集群上的并行计算过程高度地抽象到了两个函数：Map和Reduce，MapReduce它是属于并发计算框架。</p>
-<p>以下我们将了解MapReduce运行原理及过程。</p>
-<a id="more"></a>
-<h2 id="MapReduce基本执行过程"><a href="#MapReduce基本执行过程" class="headerlink" title="MapReduce基本执行过程"></a>MapReduce基本执行过程</h2><p><img src="http://image.lishijia.top/blog/181009/5jdJ1bHAbG.png?imageslim" alt=""></p>
-<h2 id="MapReduce执行过程示例说明"><a href="#MapReduce执行过程示例说明" class="headerlink" title="MapReduce执行过程示例说明"></a>MapReduce执行过程示例说明</h2><p><img src="http://image.lishijia.top/blog/181010/gm2dEKlIAk.png?imageslim" alt=""></p>
-<p>在上图中一共有6个map进程和2个reduce进程，一共有8个独立的进程空间，但这个MapReduce跑起来，那么它则需要8个进程空间。它们当中有可能在同一个节点，也有可能是独立不同的节点。根据上面的运行过程一起来解析下它的执行过程。</p>
-<ol>
-<li>通过节点1，节点2输入文件（HDFS文件系统中的文件）</li>
-<li>MapReduce通过InputFormat来进行对接数据（MapReduce自带的接口，我们只需要开发Map与Reduce行数即可），这个接口主要完成两个功能，第一个就是数据切割（Split），第二个就是记录读取器（Record Reader）</li>
-<li>那么上图InputFormat接口相当于把原数据一共切割为6个Split，那么就会MapReduce框架就会生成6个Map来处理（结论：即一个Split对应一个Map，所以可以使用Split的个数来控制Map的个数），数据切割它会在合适的位置对原数据（即Block）进行切割，并且保证它的完整性。</li>
-<li>然后RecordReader会从Split中正确读出一条一条的数据输出作为标准输入调用map方法，由map方法执行计算或者清洗。</li>
-<li>Map输出过程中有一个重要的阶段，即Shuffle，那么Shuffle阶段其实包含以下部分（其实Shuffle阶段也包含Reduce当中的一部分，比如归并）。<ul>
-<li>分区：根据Reduce的数量对key进行hash取模，这个partition处理是在Map当中的Buffer当中实现的，内存缓冲区默认是100m，如果100m内超过了80m，就会把这80m的数据给锁住，然后将这些数据进行排序然后能够清空内存并且写入本地磁盘（也称之为溢写）</li>
-<li>排序：根据key进行排序（此处是发生在溢写的过程中就会排序好）</li>
-<li>Combiner（则会运行来化简压缩输出的数据，比如当中的一条数据可能在map输出的时候会输出两条数据，那么经过combiner之后最终存储就只会存汇总的结果，<font color="red">前提不能防止扰乱最终的结果</font>）</li>
-<li>归并：每次溢写都会生成一个新的文件，那么最终处理完之后，map最终还是会把所有溢写的文件合并成一个文件（合并后的文件内容仍然会保持分区与排序的状态）</li>
-</ul>
-</li>
-<li>Reduce阶段，每个reduce任务开始从多个map上拷贝属于自己partition（map阶段已经做好partition，而且每个reduce任务知道应该拷贝哪个partition；拷贝过程是在不同节点之间，Reducer上拷贝线程基于HTTP来通过网络传输数据）</li>
-<li>最后，执行reduce阶段，运行我们实现的Reducer中化简逻辑，最终将结果直接输出到HDFS中（因为Reducer运行在DataNode上，输出结果的第一个replica直接在存储在本地节点上）。</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过上面的描述我们看到，在MR执行过程中，存在Shuffle过程的MapReduce需要在网络中的节点之间（Mapper节点和Reducer节点）拷贝数据，如果传输的数据量很大会造成一定的网络开销。而且，Map端和Reduce端都会通过一个特定的buffer来在内存中临时缓存数据，如果无法根据实际应用场景中数据的规模来使用MapReduce，尤其是做大数据两并且计算复杂，有可能很浪费资源，降低了系统处理任务的效率，还可能因为内存不足造成oom问题，导致计算任务失败。</p>
-<p><a href="/2018/10/07/big-data/mapreduce-1.html">MapReduce WordCount 入门 Python（一）</a></p>
-<p><a href="/2018/10/08/big-data/mapreduce-2.html">MapReduce Join 表连接 Python （二）</a></p>
-<p><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2018/10/10/big-data/mapreduce-3.html" data-id="cjosl7dpf0007qgqgbxoci8v8" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2018/10/10/big-data/mapreduce-3.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-        
-<nav id="article-nav">
-    
-        <a href="/2018/10/12/big-data/hive-1.html" id="article-nav-newer" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">上一篇</strong>
-            <div class="article-nav-title">
-                
-                    Hive 安装配置 &amp; 简单使用
-                
-            </div>
-        </a>
-    
-    
-        <a href="/2018/10/08/big-data/mapreduce-2.html" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">下一篇</strong>
-            <div class="article-nav-title">MapReduce Join 表连接 Python （二）</div>
-        </a>
-    
-</nav>
-
-
-    
-</article>
-
-
-    
-    
-        <section id="comments">
-            <div id="vcomment" class="comment"></div>
-<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
-<script>
-   new Valine({
-            av: AV,
-            el: '#vcomment',
-            notify:false,
-            verify:false,
-            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
-            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
-            placeholder: "",
-            avatar: "",
-            avatar_cdn: "https://sdn.geekzu.org/avatar/",
-            pageSize: 10
-    });
-</script>
-        </section>
-    
-
-
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var visitor = new leanCloud()._initToDetail('Visitors');
-
-        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+        var todo = new leanCloud()._initToList('Visitors');
+        var comment = new leanCloudComment()._initCommentToList('Comment');
     });
-</script>
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https'){
-   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-  }
-  else{
-  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-  }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
 </script></section>
             
                 
