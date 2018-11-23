@@ -3,15 +3,27 @@
 <head>
     <meta charset="utf-8">
     
-    <title>标签: 分词 | 李世佳的博客</title>
+    <title>阿里云Centos7.4安装vpn(pptp)服务器 | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://www.lishijia.top/tags/分词/index.html">
+    <meta name="description" content="前言vpn服务器搭建，由于调用的一些接口服务加入了白名单，本地ip是每天变化的，所以在服务器搭建了vpn服务器用于请求接口服务。以下记录下搭建流程。">
+<meta name="keywords" content="虚拟机,vpm,pptp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿里云Centos7.4安装vpn(pptp)服务器">
+<meta property="og:url" content="http://www.lishijia.top/2018/11/23/linux/linux-vpn.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言vpn服务器搭建，由于调用的一些接口服务加入了白名单，本地ip是每天变化的，所以在服务器搭建了vpn服务器用于请求接口服务。以下记录下搭建流程。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181123/TktGITE3UuGQ.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181123/5JGLgs00fVTt.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181123/2T0RCALIlVEi.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181123/0x0XcG8ie0mV.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181123/MIcqc9QuF34d.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181123/lFqnzSKT91IP.png?imageslim">
+<meta property="og:updated_time" content="2018-11-23T15:13:34.160Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="阿里云Centos7.4安装vpn(pptp)服务器">
+<meta name="twitter:description" content="前言vpn服务器搭建，由于调用的一些接口服务加入了白名单，本地ip是每天变化的，所以在服务器搭建了vpn服务器用于请求接口服务。以下记录下搭建流程。">
+<meta name="twitter:image" content="http://image.lishijia.top/blog/20181123/TktGITE3UuGQ.png?imageslim">
     
 
     
@@ -174,66 +186,7 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-tag"></i></span>
-        <h1 class="title">#分词</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/11/03/deeplearning/webpy-jieba.html" href="/2018/11/03/deeplearning/webpy-jieba.html">Webpy + jieba 搭建分词服务</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/11/03/deeplearning/webpy-jieba.html">
-            <time datetime="2018-11-03T15:09:46.000Z" itemprop="datePublished">2018-11-03 23:09:46</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/NLP/">NLP</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NLP/">NLP</a>, <a class="tag-link" href="/tags/jieba/">jieba</a>, <a class="tag-link" href="/tags/webpy/">webpy</a>, <a class="tag-link" href="/tags/分词/">分词</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/11/03/deeplearning/webpy-jieba.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/11/03/deeplearning/webpy-jieba.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -423,13 +376,263 @@
         return constructor;
     })()
 </script>
+<article id="post-linux/linux-vpn" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/11/23/linux/linux-vpn.html" itemprop="name">
+            阿里云Centos7.4安装vpn(pptp)服务器
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/11/23/linux/linux-vpn.html">
+            <time datetime="2018-11-23T15:11:25.000Z" itemprop="datePublished">2018-11-23 23:11:25</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/虚拟机/">虚拟机</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/pptp/">pptp</a>, <a class="tag-link" href="/tags/vpm/">vpm</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/11/23/linux/linux-vpn.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/11/23/linux/linux-vpn.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://image.lishijia.top/blog/20181123/TktGITE3UuGQ.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>vpn服务器搭建，由于调用的一些接口服务加入了白名单，本地ip是每天变化的，所以在服务器搭建了vpn服务器用于请求接口服务。以下记录下搭建流程。</p>
+<a id="more"></a>
+<h2 id="安装前检查"><a href="#安装前检查" class="headerlink" title="安装前检查"></a>安装前检查</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 先看看你的主机是否支持pptp，返回结果为yes就表示通过</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# modprobe ppp-compress-18 &amp;&amp; echo yes</span><br><span class="line">yes</span><br><span class="line"><span class="meta">#</span> 是否开启了TUN，有的虚拟机主机需要开启，返回结果为cat: /dev/net/tun: File descriptor in bad state。就表示通过。</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# cat /dev/net/tun </span><br><span class="line">cat: /dev/net/tun: File descriptor in bad state</span><br><span class="line"><span class="meta">#</span> 应该输出：success</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# modprobe ppp-compress-18 &amp;&amp; echo success</span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+<h2 id="安装必要包"><a href="#安装必要包" class="headerlink" title="安装必要包"></a>安装必要包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 首先安装epel源</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# yum install epel-release</span><br><span class="line"><span class="meta">#</span> 安装pptp相关包</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# yum install ppp pptpd</span><br></pre></td></tr></table></figure>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><ul>
+<li><p>配置pptpd.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@izwz94664y88uf68wjzri0z ~]# vim /etc/pptpd.conf </span><br><span class="line"><span class="meta">#</span> 找到localip，去掉开始的那个 # 符号 如下</span><br><span class="line"><span class="meta">#</span> (Recommended)</span><br><span class="line">localip 192.168.0.1</span><br><span class="line">remoteip 192.168.0.234-238,192.168.0.245         </span><br><span class="line"><span class="meta">#</span> or</span><br><span class="line"><span class="meta">#</span>localip 192.168.0.234-238,192.168.0.245</span><br><span class="line"><span class="meta">#</span>remoteip 192.168.1.234-238,192.168.1.245</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置options.pptpd dsn</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@izwz94664y88uf68wjzri0z ~]# vim /etc/ppp/options.pptpd</span><br><span class="line"># 在文件末尾添加如下dns</span><br><span class="line">ms-dns 8.8.8.8</span><br><span class="line">ms-dns 8.8.4.4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置连接VPN客户端要用到的帐号密码<font color="red">==》用户名密码最好加双引号“”</font></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@izwz94664y88uf68wjzri0z ~]# vim /etc/ppp/chap-secrets</span><br><span class="line"><span class="meta">#</span> 内容如下</span><br><span class="line"><span class="meta">#</span> 账号：test  密码：123456</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# vim /etc/ppp/chap-secrets</span><br><span class="line"><span class="meta">#</span> Secrets for authentication using CHAP</span><br><span class="line"><span class="meta">#</span> client    server  secret          IP addresses</span><br><span class="line"><span class="meta">#</span>                    </span><br><span class="line">"test" pptpd "123456" *</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置sysctl.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@izwz94664y88uf68wjzri0z ~]# vim /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 添加以下内容到文件末尾</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 注释以下这一行(解决不能上网问题)</span><br><span class="line"><span class="meta">#</span> net.ipv4.tcp_syncookies = 1 </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 执行以下命令使它生效</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# sysctl -p</span><br><span class="line">net.ipv6.conf.all.disable_ipv6 = 1</span><br><span class="line">net.ipv6.conf.default.disable_ipv6 = 1</span><br><span class="line">net.ipv6.conf.lo.disable_ipv6 = 1</span><br><span class="line">vm.swappiness = 0</span><br><span class="line">net.ipv4.neigh.default.gc_stale_time = 120</span><br><span class="line">net.ipv4.conf.all.rp_filter = 0</span><br><span class="line">net.ipv4.conf.default.rp_filter = 0</span><br><span class="line">net.ipv4.conf.default.arp_announce = 2</span><br><span class="line">net.ipv4.conf.lo.arp_announce = 2</span><br><span class="line">net.ipv4.conf.all.arp_announce = 2</span><br><span class="line">net.ipv4.tcp_max_tw_buckets = 5000</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 1024</span><br><span class="line">net.ipv4.tcp_synack_retries = 2</span><br><span class="line">kernel.sysrq = 1</span><br><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>阿里云安全组端口开放</p>
+<p>阿里云只需要关闭这个打开这个端口安全组即可，如果是其他Linux服务器，关闭防火墙即可。<font color="red">网上很多打开什么端口，都是没有必要的针对阿里云</font></p>
+<p><img src="http://image.lishijia.top/blog/20181123/5JGLgs00fVTt.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="启动pptpd服务"><a href="#启动pptpd服务" class="headerlink" title="启动pptpd服务"></a>启动pptpd服务</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@izwz94664y88uf68wjzri0z ~]# systemctl restart pptpd</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# ps aux|grep pptpd</span><br><span class="line">root     14532  0.0  0.0  10684   864 ?        Ss   22:33   0:00 /usr/sbin/pptpd -f</span><br><span class="line">root     14534  0.0  0.0 112660   964 pts/0    R+   22:33   0:00 grep --color=auto pptpd</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# netstat -ntlp|grep pptpd</span><br><span class="line">tcp        0      0 0.0.0.0:1723            0.0.0.0:*               LISTEN      14532/pptpd</span><br></pre></td></tr></table></figure>
+<h2 id="Window连接vpn网络"><a href="#Window连接vpn网络" class="headerlink" title="Window连接vpn网络"></a>Window连接vpn网络</h2><ul>
+<li><p>打开网络和共享中心</p>
+<p><img src="http://image.lishijia.top/blog/20181123/2T0RCALIlVEi.png?imageslim" alt=""></p>
+</li>
+<li><p>使用vpn连接</p>
+<p><img src="http://image.lishijia.top/blog/20181123/0x0XcG8ie0mV.png?imageslim" alt=""></p>
+</li>
+<li><p>输入服务器ip连接</p>
+<p><img src="http://image.lishijia.top/blog/20181123/MIcqc9QuF34d.png?imageslim" alt=""></p>
+</li>
+<li><p>输入用户名密码一直下一步连接即可</p>
+<p><img src="http://image.lishijia.top/blog/20181123/lFqnzSKT91IP.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="安装遇到的问题汇总"><a href="#安装遇到的问题汇总" class="headerlink" title="安装遇到的问题汇总"></a>安装遇到的问题汇总</h2><ul>
+<li><p>vpn pptp 连接 619错误(以下方式都可以尝试)</p>
+<p>解决办法1：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> logwtmp冲突 不兼容导致（公司电脑解决方案）</span><br><span class="line"><span class="meta">#</span> 解决：编辑 /etc/pptpd.conf，找到logwtmp用#注释掉</span><br></pre></td></tr></table></figure>
+<p>解决办法2：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 查看系统日志 把用户名密码加上双引号解决了（家里电脑是这么解决的）</span><br><span class="line">[root@izwz94664y88uf68wjzri0z ~]# tail -f /var/log/messages</span><br><span class="line">Nov 23 22:51:27 izwz94664y88uf68wjzri0z pppd[14807]: LCP: timeout sending Config-Requests</span><br><span class="line">Nov 23 22:51:27 izwz94664y88uf68wjzri0z pppd[14807]: Connection terminated.</span><br><span class="line">Nov 23 22:51:27 izwz94664y88uf68wjzri0z pppd[14807]: Modem hangup</span><br><span class="line">Nov 23 22:51:27 izwz94664y88uf68wjzri0z pppd[14807]: Exit.</span><br><span class="line">Nov 23 22:51:27 izwz94664y88uf68wjzri0z pptpd[14806]: GRE: read(fd=6,buffer=55f7ed389480,len=8196) from PTY failed: status = -1 error = Input/output error, usually caused by unexpected termination of pppd, check option syntax and pppd logs</span><br><span class="line">Nov 23 22:51:27 izwz94664y88uf68wjzri0z pptpd[14806]: CTRL: PTY read or GRE write failed (pty,gre)=(6,7)</span><br><span class="line">Nov 23 22:51:27 izwz94664y88uf68wjzri0z pptpd[14806]: CTRL: Client 220.112.15.251 control connection finished</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vpn pptp 解决不能上网问题</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@izwz94664y88uf68wjzri0z ~]# vim /etc/sysctl.conf</span><br><span class="line"><span class="meta">#</span> 注释以下内容</span><br><span class="line"><span class="meta">#</span> net.ipv4.tcp_syncookies = 1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/Dreamweav2004/article/details/82458398" target="_blank" rel="noopener">https://blog.csdn.net/Dreamweav2004/article/details/82458398</a></p>
+<p><a href="https://www.centos.bz/2018/03/centos-7%E4%B8%8B%E5%AE%89%E8%A3%85pptp%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%89%8B%E8%AE%B0/" target="_blank" rel="noopener">https://www.centos.bz/2018/03/centos-7%E4%B8%8B%E5%AE%89%E8%A3%85pptp%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%89%8B%E8%AE%B0/</a></p>
+<p><a href="https://blog.csdn.net/wyvbboy/article/details/62037878" target="_blank" rel="noopener">https://blog.csdn.net/wyvbboy/article/details/62037878</a></p>
+<p><a href="https://www.landui.com/help/show-4437.html" target="_blank" rel="noopener">https://www.landui.com/help/show-4437.html</a></p>
+<p><a href="https://www.itency.com/topic/show.do?id=291380" target="_blank" rel="noopener">https://www.itency.com/topic/show.do?id=291380</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2018/11/23/linux/linux-vpn.html" data-id="cjou65ych001essqgpdxoinhe" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2018/11/23/linux/linux-vpn.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/11/22/zookeeper/zookeeper-1.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Zookeeper集群安装配置</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 
