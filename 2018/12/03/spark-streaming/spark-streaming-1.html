@@ -3,15 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>分类: Hadoop | 李世佳的博客</title>
+    <title>Spark Streaming 接Socket WrodCount（一） | 李世佳的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="李世佳的博客">
-<meta property="og:url" content="http://www.lishijia.top/categories/Hadoop/index.html">
+    <meta name="description" content="前言通过一个WordCount来简单了解Spark Streaming执行过程。">
+<meta name="keywords" content="Spark,Spark Streaming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark Streaming 接Socket WrodCount（一）">
+<meta property="og:url" content="http://www.lishijia.top/2018/12/03/spark-streaming/spark-streaming-1.html">
 <meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言通过一个WordCount来简单了解Spark Streaming执行过程。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/G7FmLYGzKxLh.jpg?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/HSI3phvgWaUu.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/M1WIsdodb60E.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/FOkQjVPPhJMV.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/PfEG0OB94jCj.png?imageslim">
+<meta property="og:updated_time" content="2018-12-03T13:33:02.309Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="李世佳的博客">
+<meta name="twitter:title" content="Spark Streaming 接Socket WrodCount（一）">
+<meta name="twitter:description" content="前言通过一个WordCount来简单了解Spark Streaming执行过程。">
+<meta name="twitter:image" content="http://image.lishijia.top/blog/20181203/G7FmLYGzKxLh.jpg?imageslim">
     
 
     
@@ -174,116 +185,7 @@
 </aside>
 
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fas fa-folder"></i></span>
-        <h1 class="title">Hadoop</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/23/big-data/hadoop-1.html" href="/2018/10/23/big-data/hadoop-1.html">Hadoop2.0资源调度框架Yarn基本概念与总体结构</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/23/big-data/hadoop-1.html">
-            <time datetime="2018-10-23T14:48:18.000Z" itemprop="datePublished">2018-10-23 22:48:18</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/Yarn/">Yarn</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/23/big-data/hadoop-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/23/big-data/hadoop-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title leancloud_visitors" title="/2018/10/06/big-data/hadoop-install.html" href="/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2018/10/06/big-data/hadoop-install.html">
-            <time datetime="2018-10-06T14:38:11.000Z" itemprop="datePublished">2018-10-06 22:38:11</time>
-        </a>
-    </div>
-
-
-                    
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Hadoop/">Hadoop</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/Hadoop/">Hadoop</a>, <a class="tag-link" href="/tags/虚拟机/">虚拟机</a>
-    </div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                    <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2018/10/06/big-data/hadoop-install.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                </div>
-            </div>
-        </div>
-    
-</div>
-
-<script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
 <script>
     var leanCloud = (function(){
         var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
@@ -473,13 +375,250 @@
         return constructor;
     })()
 </script>
+<article id="post-spark-streaming/spark-streaming-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/12/03/spark-streaming/spark-streaming-1.html" itemprop="name">
+            Spark Streaming 接Socket WrodCount（一）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/12/03/spark-streaming/spark-streaming-1.html">
+            <time datetime="2018-12-03T11:52:45.000Z" itemprop="datePublished">2018-12-03 19:52:45</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark-Streaming/">Spark Streaming</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/Spark-Streaming/">Spark Streaming</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/12/03/spark-streaming/spark-streaming-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/12/03/spark-streaming/spark-streaming-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://image.lishijia.top/blog/20181203/G7FmLYGzKxLh.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过一个WordCount来简单了解Spark Streaming执行过程。</p>
+<a id="more"></a>
+<h2 id="Spark-Streaming示例之WordCount"><a href="#Spark-Streaming示例之WordCount" class="headerlink" title="Spark Streaming示例之WordCount"></a>Spark Streaming示例之WordCount</h2><p>以下方式可以直接在本地运行，在运行前先在Master201机器上通过nc -lk 9999的方式开启一个socket服务，用于发送数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 ~]# nc -lk 9999</span><br><span class="line">12</span><br><span class="line">11</span><br><span class="line">22</span><br><span class="line">11</span><br><span class="line">11</span><br><span class="line">22</span><br><span class="line">33</span><br><span class="line">44</span><br><span class="line">1`1</span><br><span class="line">11</span><br><span class="line">111</span><br></pre></td></tr></table></figure>
+<p>然后直接通过以下代码在本地运行即可，咱们在正常开发的时候也可以使用这种方式调试好自己的代码，然后再提交带集群当中去执行</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.spark.demo.streaming</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkConf</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.&#123;<span class="type">Seconds</span>, <span class="type">StreamingContext</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Streaming 读取 socket 数据</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">SocketToStreaming</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"SocketToStreaming"</span>).setMaster(<span class="string">"local[2]"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 批次执行间隔</span></span><br><span class="line">    <span class="keyword">val</span> ssc = <span class="keyword">new</span> <span class="type">StreamingContext</span>(sc, <span class="type">Seconds</span>(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 接收来自socket的输入源数据</span></span><br><span class="line">    <span class="keyword">val</span> lines = ssc.socketTextStream(<span class="string">"master201"</span>, <span class="number">9999</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">val</span> words = lines.flatMap(_.split(<span class="string">" "</span>))</span><br><span class="line">    <span class="keyword">val</span> wordCounts = words.map( x =&gt; (x, <span class="number">1</span>)).reduceByKey(_+_)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 打印每个批次单词出现的次数（此处打印单词出现的次数不包含上一个批次单词出现的此处，即不会累加上一个批次同一个单词出现的次数）</span></span><br><span class="line">    <span class="comment">// 如果需要累加上一个批次同一个单词出现的次数需要另做处理</span></span><br><span class="line">    wordCounts.print()</span><br><span class="line"></span><br><span class="line">    ssc.start()</span><br><span class="line"></span><br><span class="line">    ssc.awaitTermination()</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://image.lishijia.top/blog/20181203/HSI3phvgWaUu.png?imageslim" alt=""></p>
+<h2 id="Spark-Streaming-工作原理"><a href="#Spark-Streaming-工作原理" class="headerlink" title="Spark Streaming 工作原理"></a>Spark Streaming 工作原理</h2><ul>
+<li><p>在Spark Streaming中会有一个组件Receiver作为一个长期运行的Task执行在Executor上</p>
+</li>
+<li><p>每个Receiver都会负责一个Input DStream，这个Input可以来源于文件流、套接字流、或者Kafka等</p>
+</li>
+<li><p>Spark Streaming通过Input DStream与外部数据进行连接，读取相关数据。</p>
+<p>DStream可以理解为是一个数据集（数组或者List），它里面存储的每一个元素是RDD结构；即DStream是由一串RDD所组成的数据集</p>
+<p><img src="http://image.lishijia.top/blog/20181203/M1WIsdodb60E.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="Spark-Streaming程序基本执行步骤"><a href="#Spark-Streaming程序基本执行步骤" class="headerlink" title="Spark Streaming程序基本执行步骤"></a>Spark Streaming程序基本执行步骤</h2><p>编写Spark Streaming程序的基本步骤如下：</p>
+<ul>
+<li>通过创建输入DStream来定义输入源</li>
+<li>通过DStream应用转换操作和输出操作来定义流计算</li>
+<li>用streamContext.start()来开始接收数据和处理流程</li>
+<li>通过streamContext.awaitTermination()方法来等待处理结束（手动结束或因错误结束）</li>
+<li>通过streamContext.stop()来手动结算计算进程或者kill方式</li>
+</ul>
+<h2 id="Spark-Streaming提交Yarn运行"><a href="#Spark-Streaming提交Yarn运行" class="headerlink" title="Spark Streaming提交Yarn运行"></a>Spark Streaming提交Yarn运行</h2><p>提交到Yarn任务调度中心执行最好把setMaster删除，之前写的是local[0]执行方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">val sc = new SparkConf().setAppName(&quot;SocketToStreaming&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># maven打包，通过assembly打全量包</span><br><span class="line">mvn assembly:assembly</span><br></pre></td></tr></table></figure>
+<p>创建提交任务执行命令脚本：run_wordcount.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7              </span><br><span class="line">./bin/spark-submit \                                          </span><br><span class="line">    --class lishijia.spark.demo.streaming.SocketToStreaming \                                                                             </span><br><span class="line">    --master yarn-cluster \                                   </span><br><span class="line">    /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/demo/scala-spark-demo-mvn-1.0-SNAPSHOT-jar-with-dependencies.jar</span><br></pre></td></tr></table></figure>
+<p>通过Hadoop的Yarn管理控制台可以看到任务执行情况</p>
+<p><img src="http://image.lishijia.top/blog/20181203/FOkQjVPPhJMV.png?imageslim" alt=""></p>
+<p>执行结果如下，也可以看执行的间隔时间为2s</p>
+<p><img src="http://image.lishijia.top/blog/20181203/PfEG0OB94jCj.png?imageslim" alt=""></p>
+<p>通过如下命令可以关闭任务执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 spark-streaming]# yarn application -kill application_1543841766630_0001</span><br><span class="line">18/12/03 21:22:40 INFO client.RMProxy: Connecting to ResourceManager at master201/192.168.152.201:8032</span><br><span class="line">Killing application application_1543841766630_0001</span><br><span class="line">18/12/03 21:22:40 INFO impl.YarnClientImpl: Killed application application_1543841766630_0001</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上方式可以初步了解到一个Spark Streaming程序的执行基本过程。</p>
+<p>代码：<a href="https://github.com/lishijia/scala-spark-demo-mvn/tree/master/src/main/scala/lishijia/spark/demo/streaming" target="_blank" rel="noopener">https://github.com/lishijia/scala-spark-demo-mvn/tree/master/src/main/scala/lishijia/spark/demo/streaming</a></p>
+<p><a href="http://www.lishijia.top/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群安装</a></p>
+<p><a href="http://www.lishijia.top/2018/10/20/spark/spark2.0-install-1.html">Scala &amp; Spark2.0.2集群安装</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2018/12/03/spark-streaming/spark-streaming-1.html" data-id="cjp8cutqf002abkqgcuih8av4" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2018/12/03/spark-streaming/spark-streaming-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/03/kafka/kafka-1.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Kafka集群安装配置</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
 <script>
     // 调用方法
     // 创建新blog成功时，访问leancloud新建一条浏览量数据
     $(function () {
-        var todo = new leanCloud()._initToList('Visitors');
-        var comment = new leanCloudComment()._initCommentToList('Comment');
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
     });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
 </script></section>
             
                 
