@@ -2,9 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.lishijia.top/2018/12/03/kafka/kafka-1.html</loc>
+    
+    <lastmod>2018-12-03T04:02:58.593Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lishijia.top/2018/11/03/python/webpy-jieba.html</loc>
+    
+    <lastmod>2018-12-03T02:09:25.654Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lishijia.top/2018/11/28/python/python-2.html</loc>
+    
+    <lastmod>2018-12-03T02:09:25.653Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.lishijia.top/2018/11/26/python/python-1.html</loc>
+    
+    <lastmod>2018-12-03T02:09:25.651Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.lishijia.top/2018/11/23/linux/linux-vpn.html</loc>
     
-    <lastmod>2018-11-23T15:13:34.160Z</lastmod>
+    <lastmod>2018-11-23T15:26:29.340Z</lastmod>
     
   </url>
   
@@ -68,13 +96,6 @@
     <loc>http://www.lishijia.top/2018/11/16/markdown/mkdown-1.html</loc>
     
     <lastmod>2018-11-18T14:02:02.970Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.lishijia.top/2018/11/03/deeplearning/webpy-jieba.html</loc>
-    
-    <lastmod>2018-11-18T14:01:41.151Z</lastmod>
     
   </url>
   

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Python + Selenium + ChromeDriver 爬取微信文章 | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言Python爬取微信文章内容，使用Selenium自动化测试工具模拟浏览器访问微信文章内容，从而爬取微信文章内容，资源文件图片，音频，视频上传至七牛服务器">
+<meta name="keywords" content="Python ,Selenium,ChromeDriver">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python + Selenium + ChromeDriver 爬取微信文章">
+<meta property="og:url" content="http://www.lishijia.top/2018/11/26/python/python-1.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言Python爬取微信文章内容，使用Selenium自动化测试工具模拟浏览器访问微信文章内容，从而爬取微信文章内容，资源文件图片，音频，视频上传至七牛服务器">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-03T02:09:25.651Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python + Selenium + ChromeDriver 爬取微信文章">
+<meta name="twitter:description" content="前言Python爬取微信文章内容，使用Selenium自动化测试工具模拟浏览器访问微信文章内容，从而爬取微信文章内容，资源文件图片，音频，视频上传至七牛服务器">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                32
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                35
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-python/python-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/11/26/python/python-1.html" itemprop="name">
+            Python + Selenium + ChromeDriver 爬取微信文章
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/11/26/python/python-1.html">
+            <time datetime="2018-11-26T09:24:56.000Z" itemprop="datePublished">2018-11-26 17:24:56</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Python/">Python</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/ChromeDriver/">ChromeDriver</a>, <a class="tag-link" href="/tags/Python/">Python </a>, <a class="tag-link" href="/tags/Selenium/">Selenium</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/11/26/python/python-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/11/26/python/python-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Python爬取微信文章内容，使用Selenium自动化测试工具模拟浏览器访问微信文章内容，从而爬取微信文章内容，资源文件图片，音频，视频上传至七牛服务器</p>
+<a id="more"></a>
+<h2 id="Python安装"><a href="#Python安装" class="headerlink" title="Python安装"></a>Python安装</h2><p>官网下载地址：<a href="https://www.python.org/downloads/release/python-370/" target="_blank" rel="noopener">https://www.python.org/downloads/release/python-370/</a></p>
+<p>个人网盘下载地址，我这里安装的是3.7.0</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>准备文件</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>python-3.7.0-amd64</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Selenium安装"><a href="#Selenium安装" class="headerlink" title="Selenium安装"></a>Selenium安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装好python之后，默认就可以执行pip命令</span><br><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
+<h2 id="ChromeDriver安装"><a href="#ChromeDriver安装" class="headerlink" title="ChromeDriver安装"></a>ChromeDriver安装</h2><p>官网下载地址：<a href="http://chromedriver.storage.googleapis.com/index.html" target="_blank" rel="noopener">http://chromedriver.storage.googleapis.com/index.html</a></p>
+<p>个人网盘下载地址，我这里安装的是71.0.3578.33，下载解压到Python安装目录，我这是放置在Scripts目录下，然后在配置环境变量即可</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>准备文件</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chromedriver_win32_71.0.3578.33</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Python-Requests安装"><a href="#Python-Requests安装" class="headerlink" title="Python Requests安装"></a>Python Requests安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install requests</span><br></pre></td></tr></table></figure>
+<h2 id="Python-Myql安装"><a href="#Python-Myql安装" class="headerlink" title="Python Myql安装"></a>Python Myql安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mysql-connector</span><br></pre></td></tr></table></figure>
+<h2 id="Python-bs4安装"><a href="#Python-bs4安装" class="headerlink" title="Python bs4安装"></a>Python bs4安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install bs4</span><br></pre></td></tr></table></figure>
+<h2 id="Python-urllib安装"><a href="#Python-urllib安装" class="headerlink" title="Python urllib安装"></a>Python urllib安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install urllib</span><br></pre></td></tr></table></figure>
+<h2 id="微信文章内容爬取"><a href="#微信文章内容爬取" class="headerlink" title="微信文章内容爬取"></a>微信文章内容爬取</h2><ul>
+<li><p>配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> mysql.connector</span><br><span class="line"><span class="keyword">from</span> qiniu <span class="keyword">import</span> Auth</span><br><span class="line"><span class="keyword">from</span> qiniu <span class="keyword">import</span> BucketManager</span><br><span class="line"></span><br><span class="line">wechat_article_url = <span class="string">"https://mp.weixin.qq.com/s/&#123;&#125;"</span></span><br><span class="line">wechat_video_url = <span class="string">"https://res.wx.qq.com/voice/getvoice?mediaid=&#123;&#125;"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">db = mysql.connector.connect(</span><br><span class="line">    host=<span class="string">"192.168.0.134"</span>,</span><br><span class="line">    user=<span class="string">"root"</span>,</span><br><span class="line">    passwd=<span class="string">"123456q"</span>,</span><br><span class="line">    database=<span class="string">"smart_trip"</span>,</span><br><span class="line">    charset=<span class="string">'utf8'</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 七牛秘钥</span></span><br><span class="line">qiniu_access_key = <span class="string">"xxxxxxxxxxxxx"</span>;</span><br><span class="line">qiniu_secret_key = <span class="string">"xxxxxxxxxxx"</span></span><br><span class="line"><span class="comment">#要上传的空间</span></span><br><span class="line">qiniu_bucket_name = <span class="string">'xxxxx'</span></span><br><span class="line"></span><br><span class="line">qiniu_auth = Auth(qiniu_access_key, qiniu_secret_key)</span><br><span class="line"><span class="comment">#生成上传 Token，可以指定过期时间等</span></span><br><span class="line">token = qiniu_auth.upload_token(qiniu_bucket_name, <span class="keyword">None</span>, <span class="number">36000</span>)</span><br><span class="line">qiniu_bucket = BucketManager(qiniu_auth)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 批次</span></span><br><span class="line">batch = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化chrome浏览器, 以下方式是无窗口模式</span></span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.chrome.options <span class="keyword">import</span> Options</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_chrom</span><span class="params">()</span>:</span></span><br><span class="line">    chrome_options = Options()</span><br><span class="line">    chrome_options.add_argument(<span class="string">'--headless'</span>)</span><br><span class="line">    chrome_options.add_argument(<span class="string">'--disable-gpu'</span>)</span><br><span class="line">    chrome = webdriver.Chrome(chrome_options=chrome_options)</span><br><span class="line">    <span class="keyword">return</span> chrome</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>程序入口</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># 爬取微信公众号内容</span></span><br><span class="line"><span class="keyword">from</span> wechat <span class="keyword">import</span> wechat_article <span class="keyword">as</span> spider</span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> config <span class="keyword">as</span> conf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chrome = conf.get_chrom()</span><br><span class="line">spider.spider_article(<span class="string">"G1FvfYtcd5FVCJbaFShEGA"</span>, chrome)</span><br><span class="line">chrome.close()</span><br><span class="line">print(<span class="string">"done"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>微信文章内容处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># 爬取列表内容</span></span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> config <span class="keyword">as</span> conf</span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> article_dao <span class="keyword">as</span> dao</span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> qiniu_utils <span class="keyword">as</span> qiniu</span><br><span class="line"><span class="keyword">import</span> bs4</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handle_p</span><span class="params">(item, article_id, chrome, db_connect_cur)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(item.select(<span class="string">"iframe"</span>)) &gt; <span class="number">0</span>:</span><br><span class="line">        item_frame = chrome.find_elements_by_tag_name(<span class="string">"iframe"</span>)[<span class="number">0</span>]</span><br><span class="line">        chrome.switch_to.frame(item_frame)</span><br><span class="line">        iframe_text = str(chrome.page_source)</span><br><span class="line">        print(iframe_text)</span><br><span class="line">        dao.save_article_p(article_id=article_id, type=<span class="string">'video'</span>,content=iframe_text, db_connect_cur=db_connect_cur)</span><br><span class="line">    <span class="comment"># 处理音频</span></span><br><span class="line">    <span class="keyword">elif</span> len(item.select(<span class="string">"mpvoice"</span>)) &gt;<span class="number">0</span>:</span><br><span class="line">        video_source = item.select(<span class="string">"mpvoice"</span>)[<span class="number">0</span>].get(<span class="string">"voice_encode_fileid"</span>)</span><br><span class="line">        print(video_source)</span><br><span class="line">        <span class="comment"># 爬取音频</span></span><br><span class="line">        video_key = qiniu.spider_source(conf.source_url.format(video_source))</span><br><span class="line">        <span class="comment"># # 保存内容</span></span><br><span class="line">        dao.save_article_p(article_id=article_id, type=<span class="string">'audio'</span>,content=video_key, db_connect_cur=db_connect_cur)</span><br><span class="line">    <span class="keyword">elif</span> len(item.select(<span class="string">"img"</span>)) &gt; <span class="number">0</span>:</span><br><span class="line">        source_img = item.select(<span class="string">"img"</span>)[<span class="number">0</span>].get(<span class="string">"data-src"</span>)</span><br><span class="line">        print(source_img)</span><br><span class="line">        <span class="comment"># 爬取图片</span></span><br><span class="line">        img_key = qiniu.spider_source(conf.source_url.format(source_img))</span><br><span class="line">        <span class="comment"># 保存内容</span></span><br><span class="line">        dao.save_article_p(article_id=article_id, type=<span class="string">'img'</span>,content=img_key, db_connect_cur=db_connect_cur)</span><br><span class="line">        <span class="keyword">return</span> img_key</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tag_str = <span class="string">''</span></span><br><span class="line">        <span class="keyword">for</span> tag <span class="keyword">in</span> item.children:</span><br><span class="line">            tag_str += str(tag)</span><br><span class="line">        print(tag_str)</span><br><span class="line">        dao.save_article_p(article_id=article_id, type=<span class="string">'text'</span>,content=tag_str, db_connect_cur=db_connect_cur)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spider_article</span><span class="params">(article_id, chrome)</span>:</span></span><br><span class="line">    db_connect_cur = conf.db.cursor(buffered=<span class="keyword">True</span>)</span><br><span class="line">    <span class="keyword">if</span> dao.check_article_exists(article_id, db_connect_cur):</span><br><span class="line">        print(<span class="string">"article_id already exists"</span>, article_id)</span><br><span class="line">        <span class="keyword">return</span> article_id</span><br><span class="line"></span><br><span class="line">    <span class="comment"># url format</span></span><br><span class="line">    article_url = conf.wechat_article_url.format(article_id)</span><br><span class="line">    chrome.get(article_url)</span><br><span class="line">    chrome.find_element_by_id(<span class="string">"publish_time"</span>).click()</span><br><span class="line">    content_html = BeautifulSoup(chrome.page_source, <span class="string">'html.parser'</span>)</span><br><span class="line">    <span class="comment"># print(content_html)</span></span><br><span class="line">    content_div = content_html.find(name=<span class="string">"div"</span>, attrs=&#123;<span class="string">"class"</span>:<span class="string">"rich_media_content "</span>&#125;)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        thumbnail = <span class="keyword">None</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> content_div.children:</span><br><span class="line">            <span class="keyword">if</span> isinstance(item, bs4.element.Tag):</span><br><span class="line">                <span class="keyword">if</span> item.name == <span class="string">"p"</span>:</span><br><span class="line">                    thumbnail_tmp = handle_p(item, article_id, chrome, db_connect_cur)</span><br><span class="line">                    <span class="keyword">if</span> thumbnail <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                        thumbnail = thumbnail_tmp</span><br><span class="line">                <span class="keyword">elif</span> item.name == <span class="string">"section"</span>:</span><br><span class="line">                    <span class="keyword">for</span> item_p <span class="keyword">in</span> item.select(<span class="string">"p"</span>):</span><br><span class="line">                        thumbnail_tmp = handle_p(item_p, article_id, chrome, db_connect_cur)</span><br><span class="line">                        <span class="keyword">if</span> thumbnail <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                            thumbnail = thumbnail_tmp</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    tag_str = <span class="string">''</span></span><br><span class="line">                    <span class="keyword">for</span> tag <span class="keyword">in</span> item.children:</span><br><span class="line">                        tag_str += str(tag)</span><br><span class="line">                    print(tag_str)</span><br><span class="line">                    dao.save_article_p(article_id=article_id, type=<span class="string">'text'</span>,content=tag_str, db_connect_cur=db_connect_cur)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(str(item))</span><br><span class="line">                dao.save_article_p(article_id=article_id, type=<span class="string">'text'</span>,content=str(item), db_connect_cur=db_connect_cur)</span><br><span class="line"></span><br><span class="line">        title = content_html.select(<span class="string">".rich_media_title"</span>)[<span class="number">0</span>].getText()</span><br><span class="line">        wechat = content_html.select(<span class="string">".rich_media_meta_nickname a"</span>)[<span class="number">0</span>].getText()</span><br><span class="line">        content_html.select(<span class="string">".rich_media_meta_list"</span>)[<span class="number">0</span>].find(name=<span class="string">"em"</span>, attrs=&#123;<span class="string">"id"</span>:<span class="string">"publish_time"</span>&#125;)</span><br><span class="line">        article = &#123;<span class="string">"id"</span>:article_id, <span class="string">"title"</span>:str(title).strip(), <span class="string">"url"</span>:<span class="string">""</span>, <span class="string">"createdAt"</span>: <span class="string">""</span>, <span class="string">"wechat"</span>:str(wechat).strip() &#125;</span><br><span class="line">        dao.save_wechat_article(article, thumbnail, db_connect_cur)</span><br><span class="line">    <span class="keyword">except</span> BaseException <span class="keyword">as</span> e:</span><br><span class="line">        print(<span class="string">"except :"</span> , e)</span><br><span class="line">        conf.db.rollback()</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        conf.db.commit()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> article_id</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内存保存Dao</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> common <span class="keyword">import</span> config <span class="keyword">as</span> conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存爬取内容item</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_article_p</span><span class="params">(article_id, type, content, db_connect_cur)</span>:</span></span><br><span class="line">    sql = <span class="string">"insert into st_cms_article_tmp_p_tmp (article_id, type, content) "</span> \</span><br><span class="line">          <span class="string">"values (%s, %s, %s)"</span></span><br><span class="line">    val = (article_id, type, content)</span><br><span class="line">    db_connect_cur.execute(sql, val)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_huoban_article</span><span class="params">(article = &#123;&#125;, img_key = <span class="string">''</span>, db_connect_cur = None)</span>:</span></span><br><span class="line">    now = time.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>,time.localtime(time.time()))</span><br><span class="line">    sql = <span class="string">"insert into st_cms_article_tmp (id, title, url, category_id, categories, thumbnail, description, createdAt, "</span> \</span><br><span class="line">          <span class="string">"updatedAt, viewCount, shareCount, creatorId, creatorName, creatorAvatar, batch, spiderTime, source, sourcePostTime, weChat) "</span> \</span><br><span class="line">          <span class="string">"values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s , %s, %s , %s , %s , %s , %s)"</span></span><br><span class="line">    val = (article[<span class="string">"id"</span>], article[<span class="string">"title"</span>], article[<span class="string">"url"</span>], conf.categories[article[<span class="string">"categories"</span>]], article[<span class="string">"categories"</span>],</span><br><span class="line">           img_key, article[<span class="string">"description"</span>], article[<span class="string">"createdAt"</span>], article[<span class="string">"updatedAt"</span>], article[<span class="string">"viewCount"</span>], article[<span class="string">"shareCount"</span>],</span><br><span class="line">           article[<span class="string">"creatorId"</span>], article[<span class="string">"creatorName"</span>], article[<span class="string">"creatorAvatar"</span>], conf.batch, now, <span class="string">'HUOBAN'</span>, article[<span class="string">"createdAt"</span>], <span class="string">''</span>)</span><br><span class="line">    print(<span class="string">"article[creatorName] "</span>,article)</span><br><span class="line">    db_connect_cur.execute(sql, val)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_wechat_article</span><span class="params">(article = &#123;&#125;, img_key = <span class="string">''</span>, db_connect_cur = None)</span>:</span></span><br><span class="line">    now = time.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>,time.localtime(time.time()))</span><br><span class="line">    sql = <span class="string">"insert into st_cms_article_tmp (id, title, url, category_id, categories, thumbnail, description, createdAt, "</span> \</span><br><span class="line">          <span class="string">"updatedAt, viewCount, shareCount, creatorId, creatorName, creatorAvatar, batch, spiderTime, source, sourcePostTime, weChat) "</span> \</span><br><span class="line">          <span class="string">"values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s , %s , %s , %s , %s , %s)"</span></span><br><span class="line">    val = (article[<span class="string">"id"</span>], article[<span class="string">"title"</span>], <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">''</span>, img_key, <span class="string">''</span>, <span class="string">''</span>, <span class="string">''</span>, <span class="string">'0'</span>, <span class="string">'0'</span>, <span class="string">''</span>, <span class="string">''</span>, <span class="string">''</span>, <span class="string">"0"</span>, now, <span class="string">'WECHAT'</span>, <span class="string">''</span>, article[<span class="string">"wechat"</span>])</span><br><span class="line">    print(<span class="string">"article[creatorName] "</span>,article)</span><br><span class="line">    db_connect_cur.execute(sql, val)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_article_exists</span><span class="params">(article_id, db_connect_cur)</span>:</span></span><br><span class="line">    sql = <span class="string">"select * from st_cms_article_tmp where id = '&#123;&#125;'"</span></span><br><span class="line">    db_connect_cur.execute(sql.format(article_id))</span><br><span class="line">    <span class="comment"># 如果已爬取，则跳过</span></span><br><span class="line">    <span class="keyword">if</span> db_connect_cur.rowcount &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_checkin</span><span class="params">(video, content, ref_id, db_connect_cur = None)</span>:</span></span><br><span class="line">    now = time.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>,time.localtime(time.time()))</span><br><span class="line">    sql = <span class="string">"insert into st_cms_checkin (video, content, ref_id, collect_time) "</span> \</span><br><span class="line">          <span class="string">"values (%s, %s, %s, %s)"</span></span><br><span class="line">    val = (video, content, ref_id, now)</span><br><span class="line">    db_connect_cur.execute(sql, val)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_checkin_exists</span><span class="params">(ref_id, db_connect_cur)</span>:</span></span><br><span class="line">    sql = <span class="string">"select * from st_cms_checkin where ref_id = '&#123;&#125;'"</span></span><br><span class="line">    db_connect_cur.execute(sql.format(ref_id))</span><br><span class="line">    <span class="comment"># 如果已爬取，则跳过</span></span><br><span class="line">    <span class="keyword">if</span> db_connect_cur.rowcount &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>遇到的问题：最开始使用的是urllib.request.Request方式爬取网页内容，但是遇到iframe，包括一些需要触发点击事件才能显示文本内容，使用urllib类库包根本没法解决，后面才使用新的Selenium模拟浏览器访问即可解决以上问题。主要包含chrome.find_element_by_id(“publish_time”).click()点击事件，包括iframe的chrome.switch_to.frame(item_frame)。</li>
+<li>针对这种简单内容的爬虫，主要是就document处理，分析文章的内容结构。针对性的爬取所需要的内容即可，但是如果站点结构发生，爬虫程序得做对应的修改。</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2018/11/26/python/python-1.html" data-id="cjp7shsom000smgqgofnmmv01" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2018/11/26/python/python-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/11/28/python/python-2.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    阿里云服务器安装Python3.7.0 + Selenium + ChromDriver
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/11/23/linux/linux-vpn.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">阿里云Centos7.4安装vpn(pptp)服务器</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Kafka/">Kafka</a></p>
+                            <p class="item-title"><a href="/2018/12/03/kafka/kafka-1.html" class="title">Kafka集群安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T04:02:15.000Z" itemprop="datePublished">2018-12-03 12:02:15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/11/28/python/python-2.html" class="title">阿里云服务器安装Python3.7.0 + Selenium + ChromDriver</a></p>
+                            <p class="item-date"><time datetime="2018-11-28T11:04:24.000Z" itemprop="datePublished">2018-11-28 19:04:24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/11/26/python/python-1.html" class="title">Python + Selenium + ChromeDriver 爬取微信文章</a></p>
+                            <p class="item-date"><time datetime="2018-11-26T09:24:56.000Z" itemprop="datePublished">2018-11-26 17:24:56</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/虚拟机/">虚拟机</a></p>
+                            <p class="item-title"><a href="/2018/11/23/linux/linux-vpn.html" class="title">阿里云Centos7.4安装vpn(pptp)服务器</a></p>
+                            <p class="item-date"><time datetime="2018-11-23T15:11:25.000Z" itemprop="datePublished">2018-11-23 23:11:25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Zookeeper/">Zookeeper</a></p>
+                            <p class="item-title"><a href="/2018/11/22/zookeeper/zookeeper-1.html" class="title">Zookeeper集群安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-11-22T12:38:51.000Z" itemprop="datePublished">2018-11-22 20:38:51</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Zookeeper/">Zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/ChromeDriver/" style="font-size: 10px;">ChromeDriver</a> <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 18px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 16px;">Hive</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 14px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NLP/" style="font-size: 16px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Python/" style="font-size: 12px;">Python </a> <a href="/tags/Scala/" style="font-size: 16px;">Scala</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/vpm/" style="font-size: 10px;">vpm</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/虚拟机/" style="font-size: 14px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

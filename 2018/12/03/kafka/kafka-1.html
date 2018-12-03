@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Kafka集群安装配置 | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言Kafka是一种高吞吐量的分布式发布订阅消息系统，以下记录Kafka集群的安装验证过程。">
+<meta name="keywords" content="Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka集群安装配置">
+<meta property="og:url" content="http://www.lishijia.top/2018/12/03/kafka/kafka-1.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言Kafka是一种高吞吐量的分布式发布订阅消息系统，以下记录Kafka集群的安装验证过程。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/wObgWlcvxkzD.jpg?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/Gf2I6v6rsYbN.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/f03xjOOcy035.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/0cgTtsd9RUH3.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/bs7ONN3lzmUj.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181203/HH46Y9BUhdgH.png?imageslim">
+<meta property="og:updated_time" content="2018-12-03T04:02:58.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka集群安装配置">
+<meta name="twitter:description" content="前言Kafka是一种高吞吐量的分布式发布订阅消息系统，以下记录Kafka集群的安装验证过程。">
+<meta name="twitter:image" content="http://image.lishijia.top/blog/20181203/wObgWlcvxkzD.jpg?imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                32
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                35
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-kafka/kafka-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/12/03/kafka/kafka-1.html" itemprop="name">
+            Kafka集群安装配置
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/12/03/kafka/kafka-1.html">
+            <time datetime="2018-12-03T04:02:15.000Z" itemprop="datePublished">2018-12-03 12:02:15</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Kafka/">Kafka</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Kafka/">Kafka</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/12/03/kafka/kafka-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/12/03/kafka/kafka-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://image.lishijia.top/blog/20181203/wObgWlcvxkzD.jpg?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Kafka是一种高吞吐量的<a href="https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%BC%8F/19276232" target="_blank" rel="noopener">分布式</a>发布订阅消息系统，以下记录Kafka集群的安装验证过程。</p>
+<a id="more"></a>
+<h2 id="环境准备-amp-安装文件"><a href="#环境准备-amp-安装文件" class="headerlink" title="环境准备&amp;安装文件"></a>环境准备&amp;安装文件</h2><ul>
+<li><p><strong>安装文件下载</strong></p>
+<p>以下为大家准备了安装文件，也可以自己到网上下载</p>
+<p>下载地址：<a href="http://kafka.apache.org/downloads" target="_blank" rel="noopener">http://kafka.apache.org/downloads</a></p>
+<p>| 准备文件           | 下载地址                                                     |<br>| ————————— | —————————————————————————————— |<br>| kafka_2.11-0.8.2.2 | 链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ4 |</p>
+</li>
+<li><p><strong><a hre="/2018/11/22/zookeeper/zookeeper-1.html">Zookeeper集群安装配置</a></strong></p>
+</li>
+<li><p>服务器环境安装（Master201，Slave202，Slave203一共3台服务器）</p>
+<p><a href="http://www.lishijia.top/2018/10/06/big-data/hadoop-install.html">Hadoop2.7.2集群</a></p>
+<p><a href="http://www.lishijia.top/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a></p>
+</li>
+</ul>
+<h2 id="Kafka安装配置"><a href="#Kafka安装配置" class="headerlink" title="Kafka安装配置"></a>Kafka安装配置</h2><ul>
+<li><p><strong>上传安装包解压</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 上传安装包至服务器</span><br><span class="line">[root@master201 Soft]# tar -xvf kafka_2.11-0.8.2.2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改server.properties配置文件</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 进入kafka配置目录</span><br><span class="line">[root@master201 Soft]# cd /home/lishijia/Soft/kafka_2.11-0.8.2.2/config</span><br><span class="line">[root@master201 config]# vim server.properties</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> broker.id与zookeeper myid 类似，必须唯一。当前kafka应用程序得唯一标识</span><br><span class="line">broker.id=201</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 此处在末尾记住加上kafka，要不然针对kafka在zookeeper上创建的一些目录全部都是在根目录下</span><br><span class="line">zookeeper.connect=master201:2181,slave202:2181,slave203:2181/kafka</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>scp安装到其他两台机器&amp;修改broker.id</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 Soft]# scp -r kafka_2.11-0.8.2.2/ slave202:/home/lishijia/Soft</span><br><span class="line">[root@master201 Soft]# scp -r kafka_2.11-0.8.2.2/ slave203:/home/lishijia/Soft</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 其他两台机器修改对应的broker.id</span><br><span class="line">[root@master201 config]# vim server.properties</span><br><span class="line"><span class="meta">#</span> 分别修改为对应机器ip的尾数</span><br><span class="line">broker.id=202</span><br><span class="line">broker.id=203</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>kafka集群启动</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 启动kafka之前确保独立的Zookeeper集群已经启动</span><br><span class="line"><span class="meta">#</span> 3台机器都需要执行以下命令</span><br><span class="line">[root@master201 bin]# ./kafka-server-start.sh ../config/server.properties</span><br><span class="line">[root@slave202 bin]# ./kafka-server-start.sh ../config/server.properties</span><br><span class="line">[root@slave203 bin]# ./kafka-server-start.sh ../config/server.properties</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过Zookeeper检查是否启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 通过zkCli连接上Zookeeper查看kafka目录状态，通过以下命令可以查看到对应的201,202,203节点已经存在于zookeeper当中</span><br><span class="line"><span class="meta">#</span> 如果把当中的一台broker停掉，那么以下ids目录下的节点则会对应的消失</span><br><span class="line"><span class="meta">#</span> 此处zookeepr使用的是临时节点方式监控对应的主机是否连接上，即如果broker对应的zookeeper连接断开，则当前节点会自动删除通过这种方式监控所存活的broker</span><br><span class="line">[zk: localhost:2181(CONNECTED) 0] ls /</span><br><span class="line">[zookeeper, kafka]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 1] ls /kafka</span><br><span class="line">[admin, consumers, controller, controller_epoch, brokers, config]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 2] ls /kafka/brokers</span><br><span class="line">[ids, topics]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 3] ls /kafka/brokers/ids</span><br><span class="line">[201, 202, 203]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 4]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="创建Topic"><a href="#创建Topic" class="headerlink" title="创建Topic"></a>创建Topic</h2><ul>
+<li><p><strong>master201启动</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 我们创建一个名称为lishijiaTop的Topic，5个分区，并且复制因子为3，执行如下命令：</span><br><span class="line">[root@master201 bin]# ./kafka-topics.sh --create --zookeeper master201:2181,slave202:2181,slave203:2181/kafka --replication-factor 3 --partitions 5 --topic lishijiaTop         </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 查看创建的Topic，执行如下命令：</span><br><span class="line">[root@master201 bin]# ./kafka-topics.sh --list --zookeeper master201:2181,slave202:2181,slave203:2181/kafka</span><br><span class="line">[root@master201 bin]# ./kafka-topics.sh --describe --zookeeper master201:2181,slave202:2181,slave203:2181/kafka --topic lishijiaTop</span><br></pre></td></tr></table></figure>
+<p>可以通过如下图看到对应的分区信息，包括存储因子所在的broker</p>
+<p><img src="http://image.lishijia.top/blog/20181203/Gf2I6v6rsYbN.png?imageslim" alt="mark"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> zookeeper所存储的信息如下</span><br><span class="line">[zk: localhost:2181(CONNECTED) 5] ls /kafka/brokers </span><br><span class="line">[ids, topics]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 6] ls /kafka/brokers/topics</span><br><span class="line">[lishijiaTop]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 7] ls /kafka/brokers/topics/lishijiaTop</span><br><span class="line">[partitions]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 8] ls /kafka/brokers/topics/lishijiaTop/partitions</span><br><span class="line">[0, 1, 2, 3, 4]</span><br><span class="line">[zk: localhost:2181(CONNECTED) 9]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="创建生产端"><a href="#创建生产端" class="headerlink" title="创建生产端"></a>创建生产端</h2><ul>
+<li><p>通过Kafka自带的kafka-console-producer.sh脚本，来验证演示发消息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 在一个终端，启动Producer，并向我们上面创建的名称为lishijiaTop的Topic中生产消息，执行如下脚本</span><br><span class="line">[root@master201 bin]# ./kafka-console-producer.sh --broker-list master201:9092,master202:9092,master203:9092 --topic lishijiaTop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发送消息</p>
+<p>可以在Producer终端上输入字符串消息行，然后回车。相当于就把消息发送到kafka当中，并且会根据配置的策略会存储到磁盘当中。</p>
+<p>如下刚才把集群的地址写错了，即报如下错误，调整后一共发了9条消息到kafka集群</p>
+<p><img src="http://image.lishijia.top/blog/20181203/f03xjOOcy035.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="创建消费端"><a href="#创建消费端" class="headerlink" title="创建消费端"></a>创建消费端</h2><ul>
+<li><p>通过Kafka自带的kafka-console-consumer.sh脚本，来验证演示消费消息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 在另一个终端，启动Consumer，并订阅我们上面创建的名称为lishijiaTop的Topic中生产的消息，执行如下脚本</span><br><span class="line">[root@master201 bin]# ./kafka-console-consumer.sh --zookeeper master201:2181,slave202:2181,slave203:2181/kafka --from-beginning --topic lishijiaTop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消费消息如下</p>
+<p>刚才上面broker集群写错了，111,123消息也发送出去了。可以通过如下信息可以看到</p>
+<p><img src="http://image.lishijia.top/blog/20181203/0cgTtsd9RUH3.png?imageslim" alt=""></p>
+</li>
+<li><p>zookeeper查看consumer对应topic的partition offset信息</p>
+<p>通过如下可以看到：partition0有9条消息，partition1下面有2条消息。一共11条</p>
+<p><img src="http://image.lishijia.top/blog/20181203/bs7ONN3lzmUj.png?imageslim" alt=""></p>
+</li>
+<li><p>通过Kafka自带的kafka-consumer-offset-checker.sh脚本，查看对应消费端的offset信息。</p>
+<p>由于在创建消费端的时候没有设置名称，所以zookeeper给了默认的名称，然后这里再通过命令查看consumer消费情况</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@master201 bin]# ./kafka-consumer-offset-checker.sh --zookeeper master201:2181,slave202:2181,slave203:2181/kafka --topic lishijiaTop --group console-consumer-76159 --broker-info</span><br></pre></td></tr></table></figure>
+<p><img src="http://image.lishijia.top/blog/20181203/HH46Y9BUhdgH.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上针对Kafka的配置就只修改了broker.id，zookeeper.connect配置信息</p>
+<p>这里记录下其他配置信息解释</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">broker.id=0  #当前机器在集群中的唯一标识，和zookeeper的myid性质一样</span><br><span class="line">port=19092 #当前kafka对外提供服务的端口默认是9092</span><br><span class="line">host.name=192.168.7.100 #这个参数默认是关闭的，在0.8.1有个bug，DNS解析问题，失败率的问题。</span><br><span class="line">num.network.threads=3 #这个是borker进行网络处理的线程数</span><br><span class="line">num.io.threads=8 #这个是borker进行I/O处理的线程数</span><br><span class="line">log.dirs=/opt/kafka/kafkalogs/ #消息存放的目录，这个目录可以配置为“，”逗号分割的表达式，上面的num.io.threads要大于这个目录的个数这个目录，如果配置多个目录，新创建的topic他把消息持久化的地方是，当前以逗号分割的目录中，那个分区数最少就放那一个</span><br><span class="line">socket.send.buffer.bytes=102400 #发送缓冲区buffer大小，数据不是一下子就发送的，先回存储到缓冲区了到达一定的大小后在发送，能提高性能</span><br><span class="line">socket.receive.buffer.bytes=102400 #kafka接收缓冲区大小，当数据到达一定大小后在序列化到磁盘</span><br><span class="line">socket.request.max.bytes=104857600 #这个参数是向kafka请求消息或者向kafka发送消息的请请求的最大数，这个值不能超过java的堆栈大小</span><br><span class="line">num.partitions=1 #默认的分区数，一个topic默认1个分区数</span><br><span class="line">log.retention.hours=168 #默认消息的最大持久化时间，168小时，7天</span><br><span class="line">message.max.byte=5242880  #消息保存的最大值5M</span><br><span class="line">default.replication.factor=2  #kafka保存消息的副本数，如果一个副本失效了，另一个还可以继续提供服务</span><br><span class="line">replica.fetch.max.bytes=5242880  #取消息的最大直接数</span><br><span class="line">log.segment.bytes=1073741824 #这个参数是：因为kafka的消息是以追加的形式落地到文件，当超过这个值的时候，kafka会新起一个文件</span><br><span class="line">log.retention.check.interval.ms=300000 #每隔300000毫秒去检查上面配置的log失效时间（log.retention.hours=168 ），到目录查看是否有过期的消息如果有，删除</span><br><span class="line">log.cleaner.enable=false #是否启用log压缩，一般不用启用，启用的话可以提高性能</span><br><span class="line">zookeeper.connect=192.168.7.100:12181,192.168.7.101:12181,192.168.7.107:1218 #设置zookeeper的连接端口</span><br></pre></td></tr></table></figure>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2018/12/03/kafka/kafka-1.html" data-id="cjp7shsnx0001mgqg9z4c2utw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2018/12/03/kafka/kafka-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/11/28/python/python-2.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">阿里云服务器安装Python3.7.0 + Selenium + ChromDriver</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Kafka/">Kafka</a></p>
+                            <p class="item-title"><a href="/2018/12/03/kafka/kafka-1.html" class="title">Kafka集群安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T04:02:15.000Z" itemprop="datePublished">2018-12-03 12:02:15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/11/28/python/python-2.html" class="title">阿里云服务器安装Python3.7.0 + Selenium + ChromDriver</a></p>
+                            <p class="item-date"><time datetime="2018-11-28T11:04:24.000Z" itemprop="datePublished">2018-11-28 19:04:24</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/11/26/python/python-1.html" class="title">Python + Selenium + ChromeDriver 爬取微信文章</a></p>
+                            <p class="item-date"><time datetime="2018-11-26T09:24:56.000Z" itemprop="datePublished">2018-11-26 17:24:56</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/虚拟机/">虚拟机</a></p>
+                            <p class="item-title"><a href="/2018/11/23/linux/linux-vpn.html" class="title">阿里云Centos7.4安装vpn(pptp)服务器</a></p>
+                            <p class="item-date"><time datetime="2018-11-23T15:11:25.000Z" itemprop="datePublished">2018-11-23 23:11:25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Zookeeper/">Zookeeper</a></p>
+                            <p class="item-title"><a href="/2018/11/22/zookeeper/zookeeper-1.html" class="title">Zookeeper集群安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-11-22T12:38:51.000Z" itemprop="datePublished">2018-11-22 20:38:51</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Zookeeper/">Zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/ChromeDriver/" style="font-size: 10px;">ChromeDriver</a> <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 18px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hive/" style="font-size: 16px;">Hive</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/Kafka/" style="font-size: 10px;">Kafka</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 14px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NLP/" style="font-size: 16px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Python/" style="font-size: 12px;">Python </a> <a href="/tags/Scala/" style="font-size: 16px;">Scala</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/vpm/" style="font-size: 10px;">vpm</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/虚拟机/" style="font-size: 14px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
