@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Kafka + Spark Streaming +Hive 数据采集入库整合实践（二） | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言基于Hadoop平台的很多应用场景中，我们业务数据一般是需要进行实实时或离线分析，当时给某个大集团下面做数据分析，业务包含了实时数据统计（销售，入园，在园人数等），离线分析包含用户特性分析等场景。为了统一离线和实时计算，我们都希望把实时计算和离线计算的数据源统一起来一起输入，然后将它们分别流向实时分析系统与离线分析系统本别进行分析处理。这里我们使用的是Kafka作为数据接收（由于是交易数据）">
+<meta name="keywords" content="Hive,Kafka,Spark,Spark Streaming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka + Spark Streaming +Hive 数据采集入库整合实践（二）">
+<meta property="og:url" content="http://www.lishijia.top/2018/12/13/spark-streaming/spark-streaming-2.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言基于Hadoop平台的很多应用场景中，我们业务数据一般是需要进行实实时或离线分析，当时给某个大集团下面做数据分析，业务包含了实时数据统计（销售，入园，在园人数等），离线分析包含用户特性分析等场景。为了统一离线和实时计算，我们都希望把实时计算和离线计算的数据源统一起来一起输入，然后将它们分别流向实时分析系统与离线分析系统本别进行分析处理。这里我们使用的是Kafka作为数据接收（由于是交易数据）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181213/iPcczaRHwAAK.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181213/4DLwowrG6fKN.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181213/J8VIAHwrAmYd.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181213/BQ9wyXcCt8Tc.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181213/NcqxXO15b4Od.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181213/xg6MCUFVeIHo.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20181213/izyCT37h3xX0.png?imageslim">
+<meta property="og:updated_time" content="2018-12-13T14:12:56.445Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka + Spark Streaming +Hive 数据采集入库整合实践（二）">
+<meta name="twitter:description" content="前言基于Hadoop平台的很多应用场景中，我们业务数据一般是需要进行实实时或离线分析，当时给某个大集团下面做数据分析，业务包含了实时数据统计（销售，入园，在园人数等），离线分析包含用户特性分析等场景。为了统一离线和实时计算，我们都希望把实时计算和离线计算的数据源统一起来一起输入，然后将它们分别流向实时分析系统与离线分析系统本别进行分析处理。这里我们使用的是Kafka作为数据接收（由于是交易数据）">
+<meta name="twitter:image" content="http://image.lishijia.top/blog/20181213/iPcczaRHwAAK.png?imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                35
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                37
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-spark-streaming/spark-streaming-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2018/12/13/spark-streaming/spark-streaming-2.html" itemprop="name">
+            Kafka + Spark Streaming +Hive 数据采集入库整合实践（二）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2018/12/13/spark-streaming/spark-streaming-2.html">
+            <time datetime="2018-12-13T13:42:56.000Z" itemprop="datePublished">2018-12-13 21:42:56</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/Spark-Streaming/">Spark Streaming</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Hive/">Hive</a>, <a class="tag-link" href="/tags/Kafka/">Kafka</a>, <a class="tag-link" href="/tags/Spark/">Spark</a>, <a class="tag-link" href="/tags/Spark-Streaming/">Spark Streaming</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2018/12/13/spark-streaming/spark-streaming-2.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2018/12/13/spark-streaming/spark-streaming-2.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://image.lishijia.top/blog/20181213/iPcczaRHwAAK.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>基于Hadoop平台的很多应用场景中，我们业务数据一般是需要进行实实时或离线分析，当时给某个大集团下面做数据分析，业务包含了实时数据统计（销售，入园，在园人数等），离线分析包含用户特性分析等场景。为了统一离线和实时计算，我们都希望把实时计算和离线计算的数据源统一起来一起输入，然后将它们分别流向实时分析系统与离线分析系统本别进行分析处理。这里我们使用的是Kafka作为数据接收（由于是交易数据），由后台直接把数据发送到Kafka作为收据收集中间层，然后通过不同的消费端来处理这些数据或实时分析或入库存储（HDFS）做离线分析。这里我们先介绍入库Hive，为后续做离线分析做数据准备。</p>
+<a id="more"></a>
+<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>Kafka + Spark Streaming + Hive整合。通过后台打入到Kafka的消息，然后通过Spark Streaming消费作为中间层，把数据流向Hive中，为后续的用户离线分析计算做准备</p>
+<ul>
+<li><a href="http://www.lishijia.top/2018/10/06/big-data/centos-nat.html">Centos虚拟机安装&amp;NAT网络配置</a></li>
+<li><a href="/2018/10/06/big-data/hadoop-install.html">Hadoop集群安装</a></li>
+<li><a href="/2018/10/12/big-data/hive-1.html">Hive安装</a></li>
+<li><a href="2018/11/22/zookeeper/zookeeper-1.html">Zookeeper集群安装配置</a></li>
+<li><a href="/2018/12/03/kafka/kafka-1.html">Kafka集群安装</a></li>
+<li><a href="http://www.lishijia.top/2018/10/20/spark/spark2.0-install-1.html">Scala &amp; Spark2.0.2集群安装</a></li>
+</ul>
+<h2 id="Hive创建分区表"><a href="#Hive创建分区表" class="headerlink" title="Hive创建分区表"></a>Hive创建分区表</h2><p>某集团下的景区遍布全国，这里通过景区编码与年份作为分区，这里做的数据分析一般都是按照景区年份来做分析，so按照这两个维度来进行创建分区表</p>
+<ul>
+<li><p>销售数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> s_order(</span><br><span class="line">    scenic_name <span class="keyword">string</span>,</span><br><span class="line">    channel_name <span class="keyword">string</span>,</span><br><span class="line">    channel_code <span class="keyword">string</span>,</span><br><span class="line">    order_no <span class="keyword">string</span>,</span><br><span class="line">    place_time <span class="keyword">string</span>,</span><br><span class="line">    settle_price <span class="keyword">string</span>,</span><br><span class="line">    settle_amount <span class="keyword">string</span>,</span><br><span class="line">    certificate_no <span class="keyword">string</span>,</span><br><span class="line">    mobile_no <span class="keyword">string</span>,</span><br><span class="line">    buy_number <span class="keyword">string</span></span><br><span class="line">)partitioned <span class="keyword">by</span> (scenic_code <span class="keyword">string</span>,year_of_place <span class="keyword">string</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>入园消费数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> s_consume(</span><br><span class="line">    scenic_name <span class="keyword">string</span>,</span><br><span class="line">    channel_name <span class="keyword">string</span>,</span><br><span class="line">    order_no <span class="keyword">string</span>,</span><br><span class="line">    consume_no <span class="keyword">string</span>,</span><br><span class="line">    consume_time <span class="keyword">string</span>,</span><br><span class="line">    consume_number <span class="keyword">string</span>,</span><br><span class="line">    settle_price <span class="keyword">string</span>,</span><br><span class="line">    settle_amount <span class="keyword">string</span></span><br><span class="line">)partitioned <span class="keyword">by</span> (scenic_code <span class="keyword">string</span>,year_of_place <span class="keyword">string</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Kafka配置Topic创建-amp-模拟发送消息"><a href="#Kafka配置Topic创建-amp-模拟发送消息" class="headerlink" title="Kafka配置Topic创建&amp;模拟发送消息"></a>Kafka配置Topic创建&amp;模拟发送消息</h2><ul>
+<li><p>首先，写了一个Kafka Producer模拟程序，用来模拟向Kafka实时写入用户行为的事件数据，数据是JSON格式，示例如下</p>
+<p>字段解释：</p>
+<p>scenic_code，景区编号</p>
+<p>scenic_name，景区名称</p>
+<p>channel_name，销售渠道</p>
+<p>channel_code，渠道编码</p>
+<p>order_no，订单号</p>
+<p>place_time，下单时间</p>
+<p>settle_price，结算单价</p>
+<p>settle_amount，计算总价</p>
+<p>certificate_no, 下单用户身份证号码</p>
+<p>mobile_no，下单用户手机号</p>
+<p>buy_number， 购买数量</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"scenic_code"</span>:<span class="string">"s0001"</span>, <span class="attr">"scenic_name"</span>:<span class="string">"景区s0001"</span>, <span class="attr">"channel_name"</span>:<span class="string">"销售渠道c001"</span>, <span class="attr">"channel_code"</span>:<span class="string">"c001"</span>,<span class="attr">"order_no"</span>:<span class="string">"s000100000001"</span>, <span class="attr">"place_time"</span>:<span class="string">"2018-12-05 12:23:12"</span>, <span class="attr">"settle_price"</span>:<span class="string">"110.00"</span>, <span class="attr">"settle_amount"</span>:<span class="string">"110.00"</span>, <span class="attr">"certificate_no"</span>:<span class="string">"430502xxxx06176212"</span>, <span class="attr">"mobile_no"</span>:<span class="string">"136xxxx6224"</span>, <span class="attr">"buy_number"</span>:<span class="string">"1"</span>, &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Kafka对应Order的Topic</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./kafka-topics.sh --create --zookeeper master201:2181,slave202:2181,slave203:2181/kafka --replication-factor 3 --partitions 5 --topic orderTopicV1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备发送消息程序，模拟后台往Kafka中发送消息</p>
+<p>程序入口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.streaming.scenic.kafka;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模拟发送消息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        SimpleDateFormat format = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-mm-dd  HH:mm:ss"</span>);</span><br><span class="line"></span><br><span class="line">        KafkaSenderProcessor processor = <span class="keyword">new</span> KafkaSenderProcessor();</span><br><span class="line">        KafkaConfiguration configuration = <span class="keyword">new</span> KafkaConfiguration();</span><br><span class="line">        configuration.setHost(<span class="string">"master201:9092,slave202:9092,slave203:9092"</span>);</span><br><span class="line">        processor.setKafkaConfiguration(configuration);</span><br><span class="line">        processor.init();</span><br><span class="line">        Random s = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10000</span>;i++)&#123;</span><br><span class="line">            Orders order = <span class="keyword">new</span> Orders();</span><br><span class="line">            <span class="keyword">int</span> code = (s.nextInt(<span class="number">9</span>)+<span class="number">1</span>);</span><br><span class="line">            order.setScenic_code(<span class="string">"s000"</span> + code);</span><br><span class="line">            order.setScenic_name(<span class="string">"景区s000"</span> + code);</span><br><span class="line">            order.setChannel_name(<span class="string">"销售渠道c00"</span> + code);</span><br><span class="line">            order.setChannel_code(<span class="string">"c00"</span> + code);</span><br><span class="line">            order.setOrder_no(System.currentTimeMillis()+<span class="string">""</span>);</span><br><span class="line">            order.setPlace_time(format.format(<span class="keyword">new</span> Date()));</span><br><span class="line">            order.setSettle_price(<span class="string">"110.00"</span>);</span><br><span class="line">            order.setSettle_amount(<span class="string">"110.00"</span>);</span><br><span class="line">            order.setCertificate_no(<span class="string">"430502xxxx06176212"</span>);</span><br><span class="line">            order.setMobile_no(<span class="string">"136xxxx6224"</span>);</span><br><span class="line">            <span class="comment">//发送消息</span></span><br><span class="line">            processor.send(JSONObject.toJSONString(order), <span class="string">"orderTopicV1"</span>);</span><br><span class="line">            System.out.println(<span class="string">"send mess i = "</span> + i);</span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"done"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Kafka发送消息Producer处理器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.streaming.scenic.kafka;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.kafka.clients.producer.*;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaSenderProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(KafkaSenderProcessor.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> KafkaConfiguration kafkaConfiguration;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Producer&lt;String, String&gt; kafkaProducer;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">send</span><span class="params">(String value, String topic)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ProducerRecord&lt;String, String&gt; msg = <span class="keyword">new</span> ProducerRecord&lt;String, String&gt;(topic, <span class="keyword">null</span>, value);</span><br><span class="line">            Future&lt;RecordMetadata&gt; f = kafkaProducer.send(msg);</span><br><span class="line">            RecordMetadata resp = f.get();</span><br><span class="line">            logger.info(<span class="string">" send message topic: "</span> + topic + <span class="string">", offset : "</span> + resp.offset());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            logger.error(e.getMessage(), e);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Properties props = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">        props.put(<span class="string">"key.serializer"</span>, kafkaConfiguration.getKeySerializer());</span><br><span class="line">        props.put(<span class="string">"value.serializer"</span>, kafkaConfiguration.getValueSerializer());</span><br><span class="line">        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaConfiguration.getFullIp());</span><br><span class="line">        logger.info(<span class="string">" kafka sender processor init ... "</span>);</span><br><span class="line">        kafkaProducer = <span class="keyword">new</span> KafkaProducer&lt;String, String&gt;(props);</span><br><span class="line">        logger.info(<span class="string">" kafka sender processor init complete, time: "</span> + (System.currentTimeMillis() - begin));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setKafkaConfiguration</span><span class="params">(KafkaConfiguration kafkaConfiguration)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.kafkaConfiguration = kafkaConfiguration;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Kafka配置实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.streaming.scenic.kafka;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String host;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String keySerializer = <span class="string">"org.apache.kafka.common.serialization.StringSerializer"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String valueSerializer = <span class="string">"org.apache.kafka.common.serialization.StringSerializer"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String keyDeserializer = <span class="string">"org.apache.kafka.common.serialization.StringDeserializer"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String valueDeserializer = <span class="string">"org.apache.kafka.common.serialization.StringDeserializer"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getHost</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> host;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHost</span><span class="params">(String host)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.host = host;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getKeySerializer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> keySerializer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setKeySerializer</span><span class="params">(String keySerializer)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.keySerializer = keySerializer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getValueSerializer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> valueSerializer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValueSerializer</span><span class="params">(String valueSerializer)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.valueSerializer = valueSerializer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getFullIp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> host;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getKeyDeserializer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> keyDeserializer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setKeyDeserializer</span><span class="params">(String keyDeserializer)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.keyDeserializer = keyDeserializer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getValueDeserializer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> valueDeserializer;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValueDeserializer</span><span class="params">(String valueDeserializer)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.valueDeserializer = valueDeserializer;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>消息实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.streaming.scenic.kafka;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Order</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String scenic_code;</span><br><span class="line">    <span class="keyword">private</span> String scenic_name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String channel_name;</span><br><span class="line">    <span class="keyword">private</span> String channel_code;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String order_no;</span><br><span class="line">    <span class="keyword">private</span> String place_time;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String settle_price;</span><br><span class="line">    <span class="keyword">private</span> String settle_amount;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String certificate_no;</span><br><span class="line">    <span class="keyword">private</span> String mobile_no;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String buy_number;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getScenic_code</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scenic_code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setScenic_code</span><span class="params">(String scenic_code)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.scenic_code = scenic_code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getScenic_name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> scenic_name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setScenic_name</span><span class="params">(String scenic_name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.scenic_name = scenic_name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getChannel_name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> channel_name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setChannel_name</span><span class="params">(String channel_name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.channel_name = channel_name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getChannel_code</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> channel_code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setChannel_code</span><span class="params">(String channel_code)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.channel_code = channel_code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getOrder_no</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> order_no;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrder_no</span><span class="params">(String order_no)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.order_no = order_no;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPlace_time</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> place_time;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPlace_time</span><span class="params">(String place_time)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.place_time = place_time;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getSettle_price</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> settle_price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSettle_price</span><span class="params">(String settle_price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.settle_price = settle_price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getSettle_amount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> settle_amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSettle_amount</span><span class="params">(String settle_amount)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.settle_amount = settle_amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCertificate_no</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> certificate_no;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCertificate_no</span><span class="params">(String certificate_no)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.certificate_no = certificate_no;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMobile_no</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mobile_no;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMobile_no</span><span class="params">(String mobile_no)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mobile_no = mobile_no;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBuy_number</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> buy_number;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBuy_number</span><span class="params">(String buy_number)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.buy_number = buy_number;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Spark-Streaming消费消息追加写入到Hive中"><a href="#Spark-Streaming消费消息追加写入到Hive中" class="headerlink" title="Spark Streaming消费消息追加写入到Hive中"></a>Spark Streaming消费消息追加写入到Hive中</h2><ul>
+<li><p>离线数据通过Streaming消费的方式入库到hive中</p>
+<font color="red">这个业务处理方式processRdd(rdd)，目前没办法做到仅且一次（有可能会存在重复执行的可能）</font>
+
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lishijia.streaming.scenic.offline</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.<span class="type">JSON</span></span><br><span class="line"><span class="keyword">import</span> kafka.serializer.<span class="type">StringDecoder</span></span><br><span class="line"><span class="keyword">import</span> lishijia.streaming.scenic.kafka.<span class="type">Orders</span></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.&#123;<span class="type">Level</span>, <span class="type">Logger</span>&#125;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkConf</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.&#123;<span class="type">DataFrame</span>, <span class="type">SaveMode</span>, <span class="type">SparkSession</span>&#125;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.kafka.<span class="type">KafkaManagerV1</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.&#123;<span class="type">Seconds</span>, <span class="type">StreamingContext</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * Streaming对接Kafka消息，然后入库到Hive中</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">KafkaToStreamingToHive</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Order</span>(<span class="params">scenic_code:<span class="type">String</span>,scenic_name:<span class="type">String</span>,channel_name:<span class="type">String</span>,channel_code:<span class="type">String</span>,order_no:<span class="type">String</span></span></span></span><br><span class="line"><span class="class"><span class="params">                   ,place_time:<span class="type">String</span>,settle_price:<span class="type">String</span>,settle_amount:<span class="type">String</span>,certificate_no:<span class="type">String</span>,mobile_no:<span class="type">String</span></span></span></span><br><span class="line"><span class="class"><span class="params">                   ,buy_number:<span class="type">String</span>,place_year:<span class="type">String</span></span>)</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">  <span class="title">def</span> <span class="title">main</span>(<span class="params">args: <span class="type">Array</span>[<span class="type">String</span>]</span>)</span>: <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="type">Logger</span>.getLogger(<span class="string">"org.apache.spark"</span>).setLevel(<span class="type">Level</span>.<span class="type">ERROR</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> <span class="type">Array</span>(brokers, topics, consumer) =</span><br><span class="line">      <span class="type">Array</span>(<span class="string">"master201:9092,slave202:9092,slave203:9092"</span>,</span><br><span class="line">      <span class="string">"orderTopicV1"</span>,</span><br><span class="line">      <span class="string">"offline_consume"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"KafkaToStreamingToHive"</span>).setMaster(<span class="string">"local[2]"</span>)</span><br><span class="line">    <span class="keyword">val</span> ssc = <span class="keyword">new</span> <span class="type">StreamingContext</span>(conf, <span class="type">Seconds</span>(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> topicSet = topics.split(<span class="string">","</span>).toSet</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> kafkaParams = <span class="type">Map</span>[<span class="type">String</span>, <span class="type">String</span>](<span class="string">"metadata.broker.list"</span> -&gt; brokers,</span><br><span class="line">    <span class="string">"group.id"</span> -&gt; consumer)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> km = <span class="keyword">new</span> <span class="type">KafkaManagerV1</span>(kafkaParams)</span><br><span class="line">    <span class="keyword">val</span> message = km.createDirectStream[</span><br><span class="line">      <span class="type">String</span>,</span><br><span class="line">      <span class="type">String</span>,</span><br><span class="line">      <span class="type">StringDecoder</span>,</span><br><span class="line">      <span class="type">StringDecoder</span>](ssc, kafkaParams, topicSet)</span><br><span class="line"></span><br><span class="line">    message.foreachRDD(rdd =&gt; &#123;</span><br><span class="line">        <span class="comment">// 先处理消息</span></span><br><span class="line">         processRdd(rdd)</span><br><span class="line">        <span class="comment">// 再更新offsets</span></span><br><span class="line">         km.updateZKOffsets(rdd)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    ssc.start()</span><br><span class="line">    ssc.awaitTermination()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">processRdd</span></span>(rdd: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">String</span>)]): <span class="type">Unit</span> = &#123;</span><br><span class="line">      <span class="keyword">val</span> orders = rdd.map(_._2)</span><br><span class="line">      <span class="keyword">val</span> df = rdd2DF(orders)</span><br><span class="line">      <span class="comment">//通过mode来指定输出文件的是append。创建新文件来追加文件</span></span><br><span class="line">      df.write.mode(<span class="type">SaveMode</span>.<span class="type">Append</span>).insertInto(<span class="string">"lishijia.s_order"</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * @param rdd</span></span><br><span class="line"><span class="comment">    * @return</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">rdd2DF</span></span>(rdd:<span class="type">RDD</span>[<span class="type">String</span>]): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> spark = <span class="type">SparkSession</span></span><br><span class="line">      .builder()</span><br><span class="line">      .appName(<span class="string">"KafkaDataToHive"</span>)</span><br><span class="line">      .config(<span class="string">"hive.exec.dynamic.parition"</span>, <span class="string">"true"</span>)</span><br><span class="line">      .config(<span class="string">"hive.exec.dynamic.parition.mode"</span>, <span class="string">"nonstrict"</span>)</span><br><span class="line">      .enableHiveSupport().getOrCreate()</span><br><span class="line">    <span class="keyword">import</span> spark.implicits._</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">      * &#123;"scenic_code":"s0001", "scenic_name":"景区s0001", "channel_name":"销售渠道c001", "</span></span><br><span class="line"><span class="comment">      * channel_code":"c001","order_no":"s000100000001", "place_time":"2018-12-05 12:23:12", "</span></span><br><span class="line"><span class="comment">      * settle_price":"110.00", "settle_amount":"110.00", "certificate_no":"430502xxxx06176212",</span></span><br><span class="line"><span class="comment">      * "mobile_no":"136xxxx6224", "buy_number":"1", &#125;</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    rdd.map&#123;x=&gt;</span><br><span class="line">      <span class="keyword">val</span> order = <span class="type">JSON</span>.parseObject(x, classOf[<span class="type">Orders</span>])</span><br><span class="line">      <span class="keyword">import</span> java.text.<span class="type">SimpleDateFormat</span></span><br><span class="line">      <span class="keyword">val</span> aDate = <span class="keyword">new</span> <span class="type">SimpleDateFormat</span>(<span class="string">"yyyy-MM-dd"</span>)</span><br><span class="line">      <span class="keyword">val</span> place_year = aDate.parse(order.getPlace_time).getYear.toString</span><br><span class="line">      <span class="type">Order</span>(order.getScenic_name, order.getChannel_name, order.getChannel_code,</span><br><span class="line">        order.getOrder_no, order.getPlace_time, order.getSettle_price, order.getSettle_amount, order.getCertificate_no,</span><br><span class="line">        order.getMobile_no, order.getBuy_number, order.getScenic_code,  place_year)</span><br><span class="line">    &#125;.toDF()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Kafka重写createDirectStream对接消费方法</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.spark.streaming.kafka</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> kafka.common.<span class="type">TopicAndPartition</span></span><br><span class="line"><span class="keyword">import</span> kafka.message.<span class="type">MessageAndMetadata</span></span><br><span class="line"><span class="keyword">import</span> kafka.serializer.<span class="type">Decoder</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkException</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.<span class="type">StreamingContext</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.dstream.<span class="type">InputDStream</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.kafka.<span class="type">KafkaCluster</span>.&#123;<span class="type">LeaderOffset</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.reflect.<span class="type">ClassTag</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * @param kafkaParams</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KafkaManagerV1</span>(<span class="params">val kafkaParams: <span class="type">Map</span>[<span class="type">String</span>, <span class="type">String</span>]</span>) <span class="keyword">extends</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> kc = <span class="keyword">new</span> <span class="type">KafkaCluster</span>(kafkaParams)</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 创建数据流</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param ssc</span></span><br><span class="line"><span class="comment">    * @param kafkaParams</span></span><br><span class="line"><span class="comment">    * @param topics</span></span><br><span class="line"><span class="comment">    * @tparam K</span></span><br><span class="line"><span class="comment">    * @tparam V</span></span><br><span class="line"><span class="comment">    * @tparam KD</span></span><br><span class="line"><span class="comment">    * @tparam VD</span></span><br><span class="line"><span class="comment">    * @return</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">createDirectStream</span></span>[<span class="type">K</span>: <span class="type">ClassTag</span>, <span class="type">V</span>: <span class="type">ClassTag</span>, <span class="type">KD</span> &lt;: <span class="type">Decoder</span>[<span class="type">K</span>] : <span class="type">ClassTag</span>, <span class="type">VD</span> &lt;: <span class="type">Decoder</span>[<span class="type">V</span>] : <span class="type">ClassTag</span>](</span><br><span class="line">                                                                                                              ssc: <span class="type">StreamingContext</span>, kafkaParams: <span class="type">Map</span>[<span class="type">String</span>, <span class="type">String</span>], topics: <span class="type">Set</span>[<span class="type">String</span>]): <span class="type">InputDStream</span>[(<span class="type">K</span>, <span class="type">V</span>)] = &#123;</span><br><span class="line">    <span class="keyword">val</span> groupId = kafkaParams.get(<span class="string">"group.id"</span>).get</span><br><span class="line">    <span class="comment">// 在zookeeper上读取offsets前先根据实际情况更新offsets</span></span><br><span class="line">    setOrUpdateOffsets(topics, groupId)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//从zookeeper上读取offset开始消费message</span></span><br><span class="line">    <span class="keyword">val</span> messages = &#123;</span><br><span class="line">      <span class="keyword">val</span> partitionsE = kc.getPartitions(topics)</span><br><span class="line">      <span class="keyword">if</span> (partitionsE.isLeft)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">SparkException</span>(<span class="string">s"get kafka partition failed: <span class="subst">$&#123;partitionsE.left.get&#125;</span>"</span>)</span><br><span class="line">      <span class="keyword">val</span> partitions = partitionsE.right.get</span><br><span class="line">      <span class="keyword">val</span> consumerOffsetsE = kc.getConsumerOffsets(groupId, partitions)</span><br><span class="line">      <span class="keyword">if</span> (consumerOffsetsE.isLeft)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">SparkException</span>(<span class="string">s"get kafka consumer offsets failed: <span class="subst">$&#123;consumerOffsetsE.left.get&#125;</span>"</span>)</span><br><span class="line">      <span class="keyword">val</span> consumerOffsets = consumerOffsetsE.right.get</span><br><span class="line">      <span class="type">KafkaUtils</span>.createDirectStream[<span class="type">K</span>, <span class="type">V</span>, <span class="type">KD</span>, <span class="type">VD</span>, (<span class="type">K</span>, <span class="type">V</span>)](</span><br><span class="line">        ssc, kafkaParams, consumerOffsets, (mmd: <span class="type">MessageAndMetadata</span>[<span class="type">K</span>, <span class="type">V</span>]) =&gt; (mmd.key, mmd.message))</span><br><span class="line">    &#125;</span><br><span class="line">    messages</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 创建数据流前，根据实际消费情况更新消费offsets</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param topics</span></span><br><span class="line"><span class="comment">    * @param groupId</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">def</span> <span class="title">setOrUpdateOffsets</span></span>(topics: <span class="type">Set</span>[<span class="type">String</span>], groupId: <span class="type">String</span>): <span class="type">Unit</span> = &#123;</span><br><span class="line">    topics.foreach(topic =&gt; &#123;</span><br><span class="line">      <span class="keyword">var</span> hasConsumed = <span class="literal">true</span></span><br><span class="line">      <span class="keyword">val</span> partitionsE = kc.getPartitions(<span class="type">Set</span>(topic))</span><br><span class="line">      <span class="keyword">if</span> (partitionsE.isLeft)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">SparkException</span>(<span class="string">s"get kafka partition failed: <span class="subst">$&#123;partitionsE.left.get&#125;</span>"</span>)</span><br><span class="line">      <span class="keyword">val</span> partitions = partitionsE.right.get</span><br><span class="line">      <span class="keyword">val</span> consumerOffsetsE = kc.getConsumerOffsets(groupId, partitions)</span><br><span class="line">      <span class="keyword">if</span> (consumerOffsetsE.isLeft) hasConsumed = <span class="literal">false</span></span><br><span class="line">      <span class="keyword">if</span> (hasConsumed) &#123;</span><br><span class="line">        <span class="comment">// 消费过</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">          * 如果streaming程序执行的时候出现kafka.common.OffsetOutOfRangeException，</span></span><br><span class="line"><span class="comment">          * 说明zk上保存的offsets已经过时了，即kafka的定时清理策略已经将包含该offsets的文件删除。</span></span><br><span class="line"><span class="comment">          * 针对这种情况，只要判断一下zk上的consumerOffsets和earliestLeaderOffsets的大小，</span></span><br><span class="line"><span class="comment">          * 如果consumerOffsets比earliestLeaderOffsets还小的话，说明consumerOffsets已过时,</span></span><br><span class="line"><span class="comment">          * 这时把consumerOffsets更新为earliestLeaderOffsets</span></span><br><span class="line"><span class="comment">          */</span></span><br><span class="line">        <span class="keyword">val</span> earliestLeaderOffsetsE = kc.getEarliestLeaderOffsets(partitions)</span><br><span class="line">        <span class="keyword">if</span> (earliestLeaderOffsetsE.isLeft)</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">SparkException</span>(<span class="string">s"get earliest leader offsets failed: <span class="subst">$&#123;earliestLeaderOffsetsE.left.get&#125;</span>"</span>)</span><br><span class="line">        <span class="keyword">val</span> earliestLeaderOffsets = earliestLeaderOffsetsE.right.get</span><br><span class="line">        <span class="keyword">val</span> consumerOffsets = consumerOffsetsE.right.get</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可能只是存在部分分区consumerOffsets过时，所以只更新过时分区的consumerOffsets为earliestLeaderOffsets</span></span><br><span class="line">        <span class="keyword">var</span> offsets: <span class="type">Map</span>[<span class="type">TopicAndPartition</span>, <span class="type">Long</span>] = <span class="type">Map</span>()</span><br><span class="line">        consumerOffsets.foreach(&#123; <span class="keyword">case</span> (tp, n) =&gt;</span><br><span class="line">          <span class="keyword">val</span> earliestLeaderOffset = earliestLeaderOffsets(tp).offset</span><br><span class="line">          <span class="keyword">if</span> (n &lt; earliestLeaderOffset) &#123;</span><br><span class="line">            println(<span class="string">"consumer group:"</span> + groupId + <span class="string">",topic:"</span> + tp.topic + <span class="string">",partition:"</span> + tp.partition +</span><br><span class="line">              <span class="string">" offsets已经过时，更新为"</span> + earliestLeaderOffset)</span><br><span class="line">            offsets += (tp -&gt; earliestLeaderOffset)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">if</span> (!offsets.isEmpty) &#123;</span><br><span class="line">          kc.setConsumerOffsets(groupId, offsets)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 没有消费过</span></span><br><span class="line">        <span class="keyword">val</span> reset = kafkaParams.get(<span class="string">"auto.offset.reset"</span>).map(_.toLowerCase)</span><br><span class="line">        <span class="keyword">var</span> leaderOffsets: <span class="type">Map</span>[<span class="type">TopicAndPartition</span>, <span class="type">LeaderOffset</span>] = <span class="literal">null</span></span><br><span class="line">        <span class="keyword">if</span> (reset == <span class="type">Some</span>(<span class="string">"smallest"</span>)) &#123;</span><br><span class="line">          <span class="keyword">val</span> leaderOffsetsE = kc.getEarliestLeaderOffsets(partitions)</span><br><span class="line">          <span class="keyword">if</span> (leaderOffsetsE.isLeft)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">SparkException</span>(<span class="string">s"get earliest leader offsets failed: <span class="subst">$&#123;leaderOffsetsE.left.get&#125;</span>"</span>)</span><br><span class="line">          leaderOffsets = leaderOffsetsE.right.get</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">val</span> leaderOffsetsE = kc.getLatestLeaderOffsets(partitions)</span><br><span class="line">          <span class="keyword">if</span> (leaderOffsetsE.isLeft)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">SparkException</span>(<span class="string">s"get latest leader offsets failed: <span class="subst">$&#123;leaderOffsetsE.left.get&#125;</span>"</span>)</span><br><span class="line">          leaderOffsets = leaderOffsetsE.right.get</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">val</span> offsets = leaderOffsets.map &#123;</span><br><span class="line">          <span class="keyword">case</span> (tp, offset) =&gt; (tp, offset.offset)</span><br><span class="line">        &#125;</span><br><span class="line">        kc.setConsumerOffsets(groupId, offsets)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 更新zookeeper上的消费offsets</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * @param rdd</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">updateZKOffsets</span></span>(rdd: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">String</span>)]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> groupId = kafkaParams.get(<span class="string">"group.id"</span>).get</span><br><span class="line">    <span class="keyword">val</span> offsetsList = rdd.asInstanceOf[<span class="type">HasOffsetRanges</span>].offsetRanges</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (offsets &lt;- offsetsList) &#123;</span><br><span class="line">      <span class="keyword">val</span> topicAndPartition = <span class="type">TopicAndPartition</span>(offsets.topic, offsets.partition)</span><br><span class="line">      <span class="keyword">val</span> o = kc.setConsumerOffsets(groupId, <span class="type">Map</span>((topicAndPartition, offsets.untilOffset)))</span><br><span class="line">      <span class="keyword">if</span> (o.isLeft) &#123;</span><br><span class="line">        println(<span class="string">s"Error updating the offset to Kafka cluster: <span class="subst">$&#123;o.left.get&#125;</span>"</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本地运行</p>
+<p>注释掉hive部分代码，即可。本地消费打印</p>
+</li>
+<li><p>提交yarn集群运行</p>
+<p>本地打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn assembly:assembly</span><br></pre></td></tr></table></figure>
+<p>执行脚本如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7       </span><br><span class="line">./bin/spark-submit \                   </span><br><span class="line">    --class lishijia.streaming.scenic.offline.KafkaToStreamingToHive \      </span><br><span class="line">    --master yarn-cluster \                                </span><br><span class="line">    --files $HIVE_HOME/conf/hive-site.xml \        </span><br><span class="line">    /home/lishijia/Soft/spark-2.0.2-bin-hadoop2.7/demo/scala-spark-demo-mvn-1.0-SNAPSHOT-jar-with-dependencies.jar</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证信息</p>
+<p>由Driver分发到不同的机器执行</p>
+<p><img src="http://image.lishijia.top/blog/20181213/4DLwowrG6fKN.png?imageslim" alt=""></p>
+<p>slave202机器日志</p>
+<p><img src="http://image.lishijia.top/blog/20181213/J8VIAHwrAmYd.png?imageslim" alt=""></p>
+<p>slave203机器日志，由此可以看到大部分的处理分发到了slave202上去执行了</p>
+<p><img src="http://image.lishijia.top/blog/20181213/BQ9wyXcCt8Tc.png?imageslim" alt=""></p>
+<p>hive查询结果</p>
+<p><img src="http://image.lishijia.top/blog/20181213/NcqxXO15b4Od.png?imageslim" alt=""></p>
+<font color="red">由于是通过append的方式追加到hive中，所以生成了很多小文件。此处还需要通过定时任务去把这些小文件合并</font>
+
+<p><img src="http://image.lishijia.top/blog/20181213/xg6MCUFVeIHo.png?imageslim" alt=""></p>
+</li>
+</ul>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ul>
+<li><p>创建表的时候使用了terminated \n标识每一行数据，但是通过append追加的方式</p>
+</li>
+<li><p>创建表的顺序保证</p>
+</li>
+<li><p>提交任务hive配置错误，由localhost改为对应的ip或者host名称</p>
+<p>把hive-site.xml配置修改为ip</p>
+<p><img src="http://image.lishijia.top/blog/20181213/izyCT37h3xX0.png?imageslim" alt=""></p>
+</li>
+<li><p>Hive动态设置分区报错</p>
+<p>解决方案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">18/12/13 21:53:38 INFO metastore.HiveMetaStore: 0: get_table : db=lishijia tbl=s_order</span><br><span class="line">18/12/13 21:53:38 INFO HiveMetaStore.audit: ugi=root	ip=unknown-ip-addr	cmd=get_table : db=lishijia tbl=s_order	</span><br><span class="line">18/12/13 21:53:38 INFO common.FileUtils: Creating directory if it doesn&apos;t exist: hdfs://master201:9000/user/hive/warehouse/lishijia.db/s_order/.hive-staging_hive_2018-12-13_21-53-38_162_2961647512288825303-1</span><br><span class="line">18/12/13 21:53:38 ERROR scheduler.JobScheduler: Error running job streaming job 1544709218000 ms.0</span><br><span class="line">org.apache.spark.SparkException: Dynamic partition strict mode requires at least one static partition column. To turn this off set hive.exec.dynamic.partition.mode=nonstrict at org.apache.spark.sql.hive.execution.InsertIntoHiveTable.sideEffectResult$lzycompute(InsertIntoHiveTable.scala:191)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上步骤，从业务生成消息到发送到Kafka中，并且通过Spark Streaming消费处理入库到hive的整个过程，这个是当时我们技术预演的一个方案，由于对业务代码还是存在侵入性，需要业务在一些关键点上把消息发送到Kafka中。也相当于了解到对应技术方案的优缺点。而之后我们直接通过Flume抓取业务系统Mysql的binlog日志直接到Kafka来解决对业务侵入的问题。</p>
+<p>代码：<a href="https://github.com/lishijia/scala-spark-demo-mvn/tree/master/src/main/scala/lishijia/spark/demo/streaming" target="_blank" rel="noopener">https://github.com/lishijia/scala-spark-demo-mvn/tree/master/src/main/scala/lishijia/spark/demo/streaming</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/duan_zhihua/article/details/52006054?locationNum=11" target="_blank" rel="noopener">https://blog.csdn.net/duan_zhihua/article/details/52006054?locationNum=11</a><br><a href="https://blog.csdn.net/ligt0610/article/details/47311771" target="_blank" rel="noopener">https://blog.csdn.net/ligt0610/article/details/47311771</a><br><a href="https://www.jianshu.com/p/2369a020e604" target="_blank" rel="noopener">https://www.jianshu.com/p/2369a020e604</a><br><a href="http://www.zhangrenhua.com/2016/08/02/hadoop-spark-streaming%E6%95%B0%E6%8D%AE%E6%97%A0%E4%B8%A2%E5%A4%B1%E8%AF%BB%E5%8F%96kafka%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">http://www.zhangrenhua.com/2016/08/02/hadoop-spark-streaming%E6%95%B0%E6%8D%AE%E6%97%A0%E4%B8%A2%E5%A4%B1%E8%AF%BB%E5%8F%96kafka%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2018/12/13/spark-streaming/spark-streaming-2.html" data-id="cjpmoouul001ok8qgf6n3i08a" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2018/12/13/spark-streaming/spark-streaming-2.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/12/04/hbase/hbase-1.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Hbase集群安装配置&amp;简单使用</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-Streaming/">Spark Streaming</a></p>
+                            <p class="item-title"><a href="/2018/12/13/spark-streaming/spark-streaming-2.html" class="title">Kafka + Spark Streaming +Hive 数据采集入库整合实践（二）</a></p>
+                            <p class="item-date"><time datetime="2018-12-13T13:42:56.000Z" itemprop="datePublished">2018-12-13 21:42:56</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Hbase/">Hbase</a></p>
+                            <p class="item-title"><a href="/2018/12/04/hbase/hbase-1.html" class="title">Hbase集群安装配置&amp;简单使用</a></p>
+                            <p class="item-date"><time datetime="2018-12-04T15:09:31.000Z" itemprop="datePublished">2018-12-04 23:09:31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Spark-Streaming/">Spark Streaming</a></p>
+                            <p class="item-title"><a href="/2018/12/03/spark-streaming/spark-streaming-1.html" class="title">Spark Streaming 接Socket WrodCount（一）</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T13:33:45.000Z" itemprop="datePublished">2018-12-03 21:33:45</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Kafka/">Kafka</a></p>
+                            <p class="item-title"><a href="/2018/12/03/kafka/kafka-1.html" class="title">Kafka集群安装配置</a></p>
+                            <p class="item-date"><time datetime="2018-12-03T04:02:15.000Z" itemprop="datePublished">2018-12-03 12:02:15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Python/">Python</a></p>
+                            <p class="item-title"><a href="/2018/11/28/python/python-2.html" class="title">阿里云服务器安装Python3.7.0 + Selenium + ChromDriver</a></p>
+                            <p class="item-date"><time datetime="2018-11-28T11:04:24.000Z" itemprop="datePublished">2018-11-28 19:04:24</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hbase/">Hbase</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-Streaming/">Spark Streaming</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Zookeeper/">Zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/ChromeDriver/" style="font-size: 10px;">ChromeDriver</a> <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 18px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/Hive/" style="font-size: 18px;">Hive</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/Kafka/" style="font-size: 12px;">Kafka</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 14px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NLP/" style="font-size: 16px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Python/" style="font-size: 12px;">Python </a> <a href="/tags/Scala/" style="font-size: 16px;">Scala</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/Spark-Streaming/" style="font-size: 12px;">Spark Streaming</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/vpm/" style="font-size: 10px;">vpm</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/虚拟机/" style="font-size: 14px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
