@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>JVM STW(Stop The World)到底怎么回事（三） | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="目录：  新生代对象从哪里来，什么时候来？ 老年代的对象从哪里来，什么时候来？ 什么时候触发Minor GC？ 什么时候触发Full GC？ STW到底是什么，什么时候触发？ JVM运转整体流程图 JVM面试题，如何做到一个系统几乎0次Full GC">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM STW(Stop The World)到底怎么回事（三）">
+<meta property="og:url" content="http://www.lishijia.top/2019/07/23/jvm/jvm-3.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="目录：  新生代对象从哪里来，什么时候来？ 老年代的对象从哪里来，什么时候来？ 什么时候触发Minor GC？ 什么时候触发Full GC？ STW到底是什么，什么时候触发？ JVM运转整体流程图 JVM面试题，如何做到一个系统几乎0次Full GC">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190722/HGDLDthvl03a.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190722/xk6W4vNpSyLo.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190722/efrFBs0VKTGz.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190723/G0a1UuLzvl8k.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190722/HGDLDthvl03a.png?imageslim">
+<meta property="og:updated_time" content="2019-08-03T01:30:24.880Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM STW(Stop The World)到底怎么回事（三）">
+<meta name="twitter:description" content="目录：  新生代对象从哪里来，什么时候来？ 老年代的对象从哪里来，什么时候来？ 什么时候触发Minor GC？ 什么时候触发Full GC？ STW到底是什么，什么时候触发？ JVM运转整体流程图 JVM面试题，如何做到一个系统几乎0次Full GC">
+<meta name="twitter:image" content="http://image.lishijia.top/blog/20190722/HGDLDthvl03a.png?imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://image.lishijia.top/blog/20190715/kV09gdkV8RvN.jpg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://image.lishijia.top/blog/20190715/kV09gdkV8RvN.jpg" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                53
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                55
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-jvm/jvm-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2019/07/23/jvm/jvm-3.html" itemprop="name">
+            JVM STW(Stop The World)到底怎么回事（三）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/07/23/jvm/jvm-3.html">
+            <time datetime="2019-07-23T13:56:14.000Z" itemprop="datePublished">2019-07-23 21:56:14</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/JVM/">JVM</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JVM/">JVM</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/07/23/jvm/jvm-3.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/07/23/jvm/jvm-3.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://image.lishijia.top/blog/20190722/HGDLDthvl03a.png?imageslim" alt=""></p>
+<p><strong>目录：</strong></p>
+<ol>
+<li>新生代对象从哪里来，什么时候来？</li>
+<li>老年代的对象从哪里来，什么时候来？</li>
+<li>什么时候触发Minor GC？</li>
+<li>什么时候触发Full GC？</li>
+<li>STW到底是什么，什么时候触发？</li>
+<li>JVM运转整体流程图</li>
+<li>JVM面试题，如何做到一个系统几乎0次Full GC</li>
+</ol>
+<a id="more"></a>
+<p><strong>1.  新生代对象从哪里来，什么时候来？</strong></p>
+<p><img src="http://image.lishijia.top/blog/20190722/xk6W4vNpSyLo.png?imageslim" alt=""></p>
+<p>距离咱们开发的后台服务J2EE以及对应的SpringBoot项目等，对应的Controller里面构造的任何对象都是去了哪里呢？</p>
+<p>都是由用户通过浏览器，或者移动终端等发送请求至咱们部署的服务端对应的请求地址，一般的Web容器这个时候就会启动这么一个线程去服务好当前用户所发送的请求，需要接收它的参数，以及处理对应的业务到最终返回用户所需要的结果。</p>
+<p>那么根据上图可以看到，新的对象都是通过这么服务用户的线程创建过来的，首先肯定是往新生代走，而且是对应的Eden(伊甸园区)。</p>
+<p>从哪里来，什么时候来：业务触发的时候，由对应的线程创建而来</p>
+<p><strong>2. 老年代的对象从哪里来，什么时候来？</strong></p>
+<p>当系统一直在对外服务的时候，新生代的空间已经在不足以容纳新的对象时候，经过一系列漫长的过程他就会往老年代晋升。</p>
+<p>老年代的对象来源：</p>
+<ul>
+<li>从新生代晋升过来<ul>
+<li>新生代的对象躲过15次MinorGC（默认）</li>
+<li>新生代相同年龄的对象之和超过Survivor综合的50%，则会进入老年代</li>
+</ul>
+</li>
+<li>设置了-XX:PertenureSizeThreshold(大对象直接进入)</li>
+</ul>
+<p><strong>3.什么时候触发Minor GC？</strong></p>
+<p><img src="http://image.lishijia.top/blog/20190722/efrFBs0VKTGz.png?imageslim" alt=""></p>
+<p>触发Minor GC肯定是在系统需要在新生代申请内存空间的时候不足以开辟新的内存空间来存放系统所需要创建的对象大小。</p>
+<p>根据上面的这个图示可以看出，假如新生代的内存空间剩余只有10mb了，而现在系统需要申请20mb的内存空间，那么就会走入上面的<font color="red">触发垃圾回收。</font>这个时候中间其实会经过一系列的判断，到底这个垃圾回收该怎么走？那么接下来就要说Full GC了，因为在触发垃圾回收的时候有可能会先进入Full GC，而不是先执行Minor GC。</p>
+<p><strong>4.什么时候触发Full GC？</strong></p>
+<p>刚刚上面说着Minor GC，为什么会与Full GC有关呢？那到底什么时候回执行Full GC呢？可以看到当需要申请的内存空间不足时，这个时候是需要触发执行垃圾回收的。那么在执行Minor GC执行会出现以下这些场景。</p>
+<p>即假如这个时候我们不看老年代，就单纯以年轻代来说。现在年轻代的空间已经不足了，是不是。行那么咱们就执行Minor GC呗，但是万一呢？万一要是执行完Minor GC之后，其中大部分都还是存活的对象怎么办<font color="red">（这个时候一般可能是由于响应时间变大了，导致系统负载越来越差，也就是说这个线程一直没有走完，其内存中的对象引用一直也没有释放，导致这个时候如果执行Minor GC，那么大部分对象都还是存活的）</font>？</p>
+<p>那我们接着说如果万一执行Minor GC之后存活对象还是无法满足系统所需要新申请的内存空间，这个时候是不是就需要把年轻代里面的对象往老年代晋升了是不是？那在晋升之前，是不是也应该判断老年代的所剩余空间大小也要足以放得下这些新晋升的对象呢？如果放得下，那还好。直接晋升上来就可以了，那如果放不下，那是不是这个时候要就要执行Full GC了，把老年代的内存空间清理清理是不是？如果这个时候老年代Full GC之后还是不够，那么这个时候就是咱们经常看到的OOM了。通过这么个描述下来之后，实际流程跟咱们描述会有一点差异。回过头来再看看触发垃圾回收。</p>
+<ol>
+<li>触发垃圾回收</li>
+<li><font color="red">首先会判断老年代剩余空间是否大于年轻代所使用的内存大小，大于，则直接进行Minor GC，因为就算你Minor GC后所有的对象全部都存活，那么我老年代也放的下</font></li>
+<li>如果老年代小于新生代所使用的空间呢？这个时候就要看有没有设置这么一个担保机制了，如果设置-XX:HandlePromotionFailure，那么就要看之前每一次Minor GC后晋升到老年代的平均大小是否大于或小于老年代的剩余空间大小<ol>
+<li>平均晋升对象大小小于老年代剩余空间大小，这个时候就先执行Minor GC</li>
+<li>平均晋升对象大小大于老年代剩余空间大小，这个时候就先执行Full GC</li>
+</ol>
+</li>
+<li>如果没有设置担保机制？那么这个时候就要先进行一次Full GC了，以防Minor GC后导致老年代还是放不下晋升对象大小。</li>
+<li><font color="red">另外还有一个会执行Full GC时机，在上图中没有画出来。后台会有一个线程定时扫描，即如果老年代的剩余空间超过一个比值，那么这个时候也会执行Full GC。-XX:CMSInitiatingOccupancyFaction，可以通过这个参数设置。</font>
+
+</li>
+</ol>
+<p>根据上面的这个流程也就能看的出来了，到底是在什么时候回执行Full GC。</p>
+<p><strong>5.STW到底是什么，什么时候触发？</strong></p>
+<p>上面说了Minor GC、Full GC，那么接着就是STW了，这个STW是“Stop the world”的简称。即整个Java虚拟机应用线程暂停工作。</p>
+<p>先来看看咱们做Minor GC和Full GC的时候，是不是需要去标记或者计算对象是否还在被引用，那么想想看，如果在标记或者计算的过程中如果还有新对象产生。换做是你的话，你能够计算或者又什么方式能够处理这个问题吗？显然JVM设计这个垃圾回收的也没办法，所以这个时候就需要STW了，即Stop The World。暂停工作吧，先把垃圾处理完，大家在继续对外服务工作，要不然大家都玩不下去了。</p>
+<p>但是Minor GC与Full GC的STW存在一定的差异，Minor GC的STW肯定要比Full GC的STW短暂的多的多，几乎可以忽略不计，那后续我们再来分析到底差异在哪里，为什么会差别这么大。</p>
+<p><img src="http://image.lishijia.top/blog/20190723/G0a1UuLzvl8k.png?imageslim" alt=""></p>
+<p><strong>6.JVM运转整体流程图</strong></p>
+<font color="red">下图当中应该缺少动态年龄问题而导致进入到老年代对象的流程，只画了节点，没有画对象从S0、S1进入老年代。</font>
+
+<p><img src="http://image.lishijia.top/blog/20190722/HGDLDthvl03a.png?imageslim" alt=""></p>
+<p><strong>7.JVM面试题，如何做到一个系统几乎0次Full GC</strong></p>
+<p>Java后台应用的面试题，需要对这个系统进行JVM调优，让它做到0次Full GC，那到底该怎么弄呢？</p>
+<p>根据咱们上面深入的堆这个JVM运转流程分析，也知道在什么时候Minor GC，什么时候Full GC是不是，如果真要做到0次的Full GC是不是就应该尽可能的让对象不要往老年代走，当然除了全局对象以外，比如咱们现在大多数后台开发都是基于Spring是不是，那么当中的Controller、Service、Config、还有Dao等这些单例模式创建的实体肯定是在老年代的。我们说的就是要处理那些基于服务用户只要存活一个线程周期的那些对象。</p>
+<p>基于评估这个系统每天的服务请求数、每个请求时长、每个线程所需要创建哪些对象通过一些工具监控出来，合理的分配Eden区，S0、S1区，以及对应的老年代，还有需要考虑注意的就是那些由于动态年龄问题导致而进入到老年代的对象基本上是可以做到0次Full GC的。</p>
+<p>Mark：1.7（包含）以后默认开启了担保机制，1.6（包含）之前则需要手动配置担保机制。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/07/23/jvm/jvm-3.html" data-id="ck293frca001hv4qgcsewrgmd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/07/23/jvm/jvm-3.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/07/27/netty/netty-1.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Netty源码解析-基本组件架构&amp;启动过程（一）
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2019/07/19/java/java-bio-nio-aio.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Java基础-网络编程BIO&amp;NIO（四）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JVM/">JVM</a></p>
+                            <p class="item-title"><a href="/2019/10/27/jvm/jvm-4.html" class="title">JVM GC日志查看分析（四）</a></p>
+                            <p class="item-date"><time datetime="2019-10-27T14:21:14.000Z" itemprop="datePublished">2019-10-27 22:21:14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Dubbo/">Dubbo</a></p>
+                            <p class="item-title"><a href="/2019/08/19/dubbo/dubbo-1.html" class="title">Dubbo源码Consumer调用链路流程（一）</a></p>
+                            <p class="item-date"><time datetime="2019-08-19T09:33:14.000Z" itemprop="datePublished">2019-08-19 17:33:14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
+                            <p class="item-title"><a href="/2019/08/03/netty/netty-7.html" class="title">Netty 编码 Encoder（七）</a></p>
+                            <p class="item-date"><time datetime="2019-08-03T02:01:12.000Z" itemprop="datePublished">2019-08-03 10:01:12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
+                            <p class="item-title"><a href="/2019/08/02/netty/netty-6.html" class="title">Netty 解码器LengthFieldBasedFrameDecoder Demo（六）</a></p>
+                            <p class="item-date"><time datetime="2019-08-02T09:03:47.000Z" itemprop="datePublished">2019-08-02 17:03:47</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
+                            <p class="item-title"><a href="/2019/08/01/netty/netty-5.html" class="title">Netty 解码 Decoder（五）</a></p>
+                            <p class="item-date"><time datetime="2019-08-01T11:42:12.000Z" itemprop="datePublished">2019-08-01 19:42:12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dubbo/">Dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hbase/">Hbase</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-Streaming/">Spark Streaming</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Zookeeper/">Zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zipkin/">zipkin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构-算法/">数据结构&算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BIO/" style="font-size: 10px;">BIO</a> <a href="/tags/ChromeDriver/" style="font-size: 10px;">ChromeDriver</a> <a href="/tags/Collection/" style="font-size: 10px;">Collection</a> <a href="/tags/CountDownLatch/" style="font-size: 10px;">CountDownLatch</a> <a href="/tags/Dubbo/" style="font-size: 10px;">Dubbo</a> <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/FutureTask/" style="font-size: 10px;">FutureTask</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.67px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/IO/" style="font-size: 10px;">IO</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/Kafka/" style="font-size: 11.67px;">Kafka</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 13.33px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NIO/" style="font-size: 20px;">NIO</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Netty/" style="font-size: 18.33px;">Netty</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Python/" style="font-size: 11.67px;">Python </a> <a href="/tags/Rpc/" style="font-size: 10px;">Rpc</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/Spark-Streaming/" style="font-size: 11.67px;">Spark Streaming</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Thrift/" style="font-size: 10px;">Thrift</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/dubbo/" style="font-size: 10px;">dubbo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/vpm/" style="font-size: 10px;">vpm</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/zipkin/" style="font-size: 10px;">zipkin</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数据结构-算法/" style="font-size: 10px;">数据结构&算法</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/算法/" style="font-size: 11.67px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

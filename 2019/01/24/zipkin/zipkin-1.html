@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Zipkin Dubbo安装配置使用 | 李世佳的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言生产环境上的几个由dubbo发布的微服务，支付，订单系统模块，当测试反馈或者用户反馈相应慢的时候，排查到底是在哪个节点服务出问题时，这可就麻烦了，这里牵涉到整个链路跟踪。当时也用过傻办法，每个方法出入口都有对应的消耗时间然后痛苦的去查看日志排查。这里记录下使用dubbo整合zipkin来跟踪整个服务链路消耗时间。">
+<meta name="keywords" content="zipkin,dubbo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zipkin Dubbo安装配置使用">
+<meta property="og:url" content="http://www.lishijia.top/2019/01/24/zipkin/zipkin-1.html">
+<meta property="og:site_name" content="李世佳的博客">
+<meta property="og:description" content="前言生产环境上的几个由dubbo发布的微服务，支付，订单系统模块，当测试反馈或者用户反馈相应慢的时候，排查到底是在哪个节点服务出问题时，这可就麻烦了，这里牵涉到整个链路跟踪。当时也用过傻办法，每个方法出入口都有对应的消耗时间然后痛苦的去查看日志排查。这里记录下使用dubbo整合zipkin来跟踪整个服务链路消耗时间。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190124/hHaxWjLTtYCI.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190124/Nh1gmCu2n4Qq.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190124/Ud5y7NmbkmKm.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190124/Yu12akBrTdXl.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190124/B4cmqTdjg2lz.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190124/FoC9wh2VPS00.png?imageslim">
+<meta property="og:image" content="http://image.lishijia.top/blog/20190124/2e7bHxJ9Lwy0.png?imageslim">
+<meta property="og:updated_time" content="2019-03-10T09:26:46.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zipkin Dubbo安装配置使用">
+<meta name="twitter:description" content="前言生产环境上的几个由dubbo发布的微服务，支付，订单系统模块，当测试反馈或者用户反馈相应慢的时候，排查到底是在哪个节点服务出问题时，这可就麻烦了，这里牵涉到整个链路跟踪。当时也用过傻办法，每个方法出入口都有对应的消耗时间然后痛苦的去查看日志排查。这里记录下使用dubbo整合zipkin来跟踪整个服务链路消耗时间。">
+<meta name="twitter:image" content="http://image.lishijia.top/blog/20190124/hHaxWjLTtYCI.png?imageslim">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-brands.min.css">
+    <link rel="stylesheet" href="/libs/font-awesome5/css/fa-solid.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">李世佳的博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="http://image.lishijia.top/blog/20190715/kV09gdkV8RvN.jpg" />
+                            <i class="fas fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fas fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile" class="">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="http://image.lishijia.top/blog/20190715/kV09gdkV8RvN.jpg" />
+            <h2 id="name">李世佳</h2>
+            <h3 id="title"></h3>
+            <span id="location"><i class="fas fa-map-marker-alt" style="padding-right: 5px"></i>广东, 深圳</span>
+            <a id="follow" target="_blank" href="https://github.com/lishijia">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                53
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                55
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/lishijia" target="_blank" title="github" class=tooltip>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><script src="//cdn1.lncld.net/static/js/2.5.0/av-min.js"></script>
+<script>
+    var leanCloud = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var _addCount = function(title) {
+            // 保存
+            var newData = new Todo();
+            newData.save({
+                title: title,
+                content: '0'
+            }).then(function (data) {
+                console.log(data);
+            })
+        }
+
+        // 获取详情页的访问次数数据
+        var _getDetailTime = function(title) {
+            var query = new AV.Query(className);
+            query.equalTo("title", title);
+            return query.find();
+        }
+
+        // 更新一条 文章浏览量数据
+        var _update = function(obj){
+            // 第一个参数是 className，第二个参数是 objectId
+            var todo = AV.Object.createWithoutData(className, obj.id);
+            var count = parseInt(obj.get('content'))+1;
+            // 修改属性
+            todo.set('content', count.toString());
+            // 保存到云端
+            todo.save();
+        }
+        // 填充访问次数
+        var _writeVisitors = function(data){
+            $('article .visitor').text("阅读("+data+")");
+        }
+
+        var constructor = function(config){}
+
+        // 获取浏览量数据
+        constructor.prototype._initToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("detail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getDetailTime(title).then(function(data){
+                console.log(data)
+                if(data.length==0){
+                    _addCount(title);
+                    _writeVisitors(1)
+                }else{
+                    _update(data[0]);
+                    _writeVisitors(parseInt(data[0].get('content'))+1)
+                }
+            })
+            return this;
+        }
+
+        constructor.prototype._initToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        constructor.prototype._initToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getDetailTime(title).then(function(data){
+                    console.log(data)
+                    var v = 0;
+                    if(data.length==0){
+                        v = 1
+                    }else{
+                        v = parseInt(data[0].get('content'))+1;
+                    }
+                    articleV.find(".visitor").text("阅读("+v+")")
+                });
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+
+    var leanCloudComment = (function(){
+        var APP_ID = 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz';
+        var APP_KEY = 'C1hDxUROINgNYUIDFF2bzGl1';
+        var className,Todo;
+        var { Query, User } = AV;
+        // 初始化
+        AV.init({
+            appId: APP_ID,
+            appKey: APP_KEY
+        });
+
+        var constructor = function(config){}
+
+        var _getCommentDetailTime = function(url) {
+            //var ridQueryE = new AV.Query(className);
+            //ridQueryE.exists('rid');
+
+            //var ridQueryn = new AV.Query(className);
+            //ridQueryn.equalTo('rid', '');
+
+            //var ridQueryor = AV.Query.and(ridQuery, ridQueryn);
+            //{"$or":[{"rid":{"$exists":false}},{"rid":""}],"url":"/2018/09/30/algorithm/B树(B-tree).html"}
+            //{"$and":[{"url":"/2018/09/30/algorithm/B树(B-tree).html"},{"rid":""}]}
+
+            var urlQuery = new AV.Query(className);
+            urlQuery.equalTo('url', url);
+
+            var ridQuery = new AV.Query(className);
+            ridQuery.doesNotExist('rid');
+            var query = AV.Query.and(ridQuery, urlQuery);
+            return query.count();
+
+        }
+
+        constructor.prototype._initCommentToDetail = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToDetail")
+            var title = $('article .leancloud_visitors').attr('title');
+            _getCommentDetailTime(title).then(function(count){
+                $('article .comment_num').text("评论("+count+")");
+            })
+            return this;
+        }
+
+        constructor.prototype._initCommentToList = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("_initCommentToList")
+            $('.timeline-row .content').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        constructor.prototype._initCommentToIndex = function(clsName){
+            className = clsName;
+            Todo = AV.Object.extend(className);
+            console.log("list")
+            $('article').each(function(){
+                var articleV = $(this);
+                var title = articleV.find(".leancloud_visitors").attr("title");
+                 _getCommentDetailTime(title).then(function(count){
+                    articleV.find(".comment_num").text("评论("+count+")");
+                })
+            });
+            return this;
+        }
+
+        //返回构造函数
+        return constructor;
+    })()
+</script>
+<article id="post-zipkin/zipkin-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title leancloud_visitors" title="/2019/01/24/zipkin/zipkin-1.html" itemprop="name">
+            Zipkin Dubbo安装配置使用
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/01/24/zipkin/zipkin-1.html">
+            <time datetime="2019-01-24T14:38:51.000Z" itemprop="datePublished">2019-01-24 22:38:51</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/zipkin/">zipkin</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/dubbo/">dubbo</a>, <a class="tag-link" href="/tags/zipkin/">zipkin</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/01/24/zipkin/zipkin-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/01/24/zipkin/zipkin-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><img src="http://image.lishijia.top/blog/20190124/hHaxWjLTtYCI.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>生产环境上的几个由dubbo发布的微服务，支付，订单系统模块，当测试反馈或者用户反馈相应慢的时候，排查到底是在哪个节点服务出问题时，这可就麻烦了，这里牵涉到整个链路跟踪。当时也用过傻办法，每个方法出入口都有对应的消耗时间然后痛苦的去查看日志排查。这里记录下使用dubbo整合zipkin来跟踪整个服务链路消耗时间。</p>
+<a id="more"></a>
+<h2 id="准备安装文件"><a href="#准备安装文件" class="headerlink" title="准备安装文件"></a>准备安装文件</h2><p>以下为大家准备了安装文件，也可以自己到网上下载</p>
+<p>下载地址：curl -sSL <a href="https://zipkin.io/quickstart.sh" target="_blank" rel="noopener">https://zipkin.io/quickstart.sh</a> | bash -s</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>准备文件</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zipkin.jar</td>
+<td>链接: <a href="https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1dlUjcLjemTcm7jnc0HDiwQ</a> 提取码: typ4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Zipkin安装启动"><a href="#Zipkin安装启动" class="headerlink" title="Zipkin安装启动"></a>Zipkin安装启动</h2><p>由于是一个jar文件，直接下载就可以通过java -jar方式允许（前提先安装java环境）</p>
+<ul>
+<li><p><strong>启动</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@master zipkin]# java -jar zipkin.jar</span><br><span class="line"># 看到如下信息就代码启动成功了</span><br></pre></td></tr></table></figure>
+<p><img src="http://image.lishijia.top/blog/20190124/Nh1gmCu2n4Qq.png?imageslim" alt=""></p>
+</li>
+<li><p>访问控制台</p>
+<p><a href="http://hadoop100:9411/zipkin/" target="_blank" rel="noopener">http://hadoop100:9411/zipkin/</a></p>
+<p><img src="http://image.lishijia.top/blog/20190124/Ud5y7NmbkmKm.png?imageslim" alt=""></p>
+</li>
+</ul>
+<p>以上为zipkin的安装启动，还是比较简单的。不过按照这种方式安装的 Zipkin Server 使用的存储类型是 inMemory 的。当服务器停机之后，所有收集到的 trace 信息会丢失，不适用于生产系统。如果在生产系统中使用，需要配置另外的存储类型。Zipkin 支持 MySql、Cassandra、和 ElasticSearch。推荐使用 Cassandra 和 ElasticSearch。后续上生产后，在记录下对应的配置，这里也仅仅是先把整个流程跑通。接下来就是需要对需要收集的项目进行简单改造，增加配置信息。</p>
+<h2 id="Dubbo项目ZipKin配置"><a href="#Dubbo项目ZipKin配置" class="headerlink" title="Dubbo项目ZipKin配置"></a>Dubbo项目ZipKin配置</h2><ul>
+<li><p>增加pom配置依赖(全局依赖)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">brave.version</span>&gt;</span>4.19.2<span class="tag">&lt;/<span class="name">brave.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">zipkin-reporter.version</span>&gt;</span>2.1.3<span class="tag">&lt;/<span class="name">zipkin-reporter.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">zipkin.version</span>&gt;</span>2.8.1<span class="tag">&lt;/<span class="name">zipkin.version</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.reporter2<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zipkin-reporter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.reporter2<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zipkin-sender-okhttp3<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.brave<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>brave<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.19.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.brave<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>brave-context-log4j2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.19.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.brave<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>brave-instrumentation-http<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.19.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.brave<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>brave-instrumentation-http-tests<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.19.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.brave<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>brave-instrumentation-servlet<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.19.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.brave<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>brave-tests<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.19.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.zipkin2<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zipkin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;zipkin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.java<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zipkin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;zipkin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.zipkin.java<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zipkin-junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;zipkin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加zipkin公共模块config，以及对应的filter代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smarttrip.pay.common.zipkin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> brave.Tracing;</span><br><span class="line"><span class="keyword">import</span> brave.servlet.TracingFilter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.web.servlet.FilterRegistrationBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> zipkin2.Span;</span><br><span class="line"><span class="keyword">import</span> zipkin2.reporter.AsyncReporter;</span><br><span class="line"><span class="keyword">import</span> zipkin2.reporter.Reporter;</span><br><span class="line"><span class="keyword">import</span> zipkin2.reporter.Sender;</span><br><span class="line"><span class="keyword">import</span> zipkin2.reporter.okhttp3.OkHttpSender;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.Filter;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: 配置文件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: lishijia</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2019-01-23 10:31</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TracingConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置zipkin服务地址</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;zipkin.tracing.endpoint:endpoint&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String zipkinEndPoint;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;zipkin.tracing.local-service-name:local-service-name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String localServiceName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置sender</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Sender <span class="title">sender</span><span class="params">()</span></span>&#123;</span><br><span class="line">        OkHttpSender sender = OkHttpSender</span><br><span class="line">                .newBuilder()</span><br><span class="line">                .endpoint(zipkinEndPoint)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="keyword">return</span> sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置reporter</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sender</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Reporter&lt;Span&gt; <span class="title">reporter</span><span class="params">(Sender sender)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> AsyncReporter</span><br><span class="line">                .builder(sender)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置dubbo-consumer tracing</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> reporter</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Tracing <span class="title">tracing</span><span class="params">(Reporter reporter)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Tracing.newBuilder()</span><br><span class="line">                .localServiceName(localServiceName)</span><br><span class="line">                .spanReporter(reporter)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置http tracing</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> reporter</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Tracing <span class="title">tracing2</span><span class="params">(Reporter reporter)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Tracing.newBuilder()</span><br><span class="line">                .localServiceName(localServiceName + <span class="string">"_http"</span>)</span><br><span class="line">                .spanReporter(reporter)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置servlet filter</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> tracing2</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Filter <span class="title">filter</span><span class="params">(Tracing tracing2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> TracingFilter.create(tracing2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注册filter</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> filter</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> FilterRegistrationBean <span class="title">filterRegistration</span><span class="params">(Filter filter)</span> </span>&#123;</span><br><span class="line">        FilterRegistrationBean registration = <span class="keyword">new</span> FilterRegistrationBean();</span><br><span class="line">        registration.setFilter(filter);</span><br><span class="line">        registration.addUrlPatterns(<span class="string">"/*"</span>);</span><br><span class="line">        registration.setName(<span class="string">"zipkin-filter"</span>);</span><br><span class="line">        registration.setOrder(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> registration;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smarttrip.pay.common.zipkin;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> brave.Span;</span><br><span class="line"><span class="keyword">import</span> brave.Tracer;</span><br><span class="line"><span class="keyword">import</span> brave.propagation.Propagation;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.remoting.exchange.ResponseCallback;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.rpc.*;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.rpc.protocol.dubbo.FutureAdapter;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.rpc.support.RpcUtils;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</span><br><span class="line"><span class="keyword">import</span> zipkin2.Endpoint;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Future;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: lishijia</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2019-01-23 10:31</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ZipkinHelper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Propagation.Setter&lt;Map&lt;String, String&gt;, String&gt; SETTER =</span><br><span class="line">            <span class="keyword">new</span> Propagation.Setter&lt;Map&lt;String, String&gt;, String&gt;() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(Map&lt;String, String&gt; carrier, String key, String value)</span> </span>&#123;</span><br><span class="line">                    carrier.put(key, value);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> JSON.toJSONString(<span class="keyword">this</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Propagation.Getter&lt;Map&lt;String, String&gt;, String&gt; GETTER =</span><br><span class="line">            <span class="keyword">new</span> Propagation.Getter&lt;Map&lt;String, String&gt;, String&gt;() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> String <span class="title">get</span><span class="params">(Map&lt;String, String&gt; carrier, String key)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> carrier.get(key);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> JSON.toJSONString(<span class="keyword">this</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">buildSpan</span><span class="params">(Span span, Span.Kind kind, InetSocketAddress remoteAddress, String service, String method)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!span.isNoop()) &#123;</span><br><span class="line">            span.kind(kind).start();</span><br><span class="line">            span.kind(kind);</span><br><span class="line">            span.name(service + <span class="string">"/"</span> + method);</span><br><span class="line">            Endpoint.Builder remoteEndpoint = Endpoint.newBuilder().port(remoteAddress.getPort());</span><br><span class="line">            <span class="keyword">if</span> (!remoteEndpoint.parseIp(remoteAddress.getAddress())) &#123;</span><br><span class="line">                remoteEndpoint.parseIp(remoteAddress.getHostName());</span><br><span class="line">            &#125;</span><br><span class="line">            span.remoteEndpoint(remoteEndpoint.build());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> Result <span class="title">spanTracing</span><span class="params">(Span span, Tracer tracer, Invoker&lt;?&gt; invoker, Invocation invocation, RpcContext rpcContext)</span></span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> isOneway = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">boolean</span> deferFinish = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">try</span> (Tracer.SpanInScope scope = tracer.withSpanInScope(span)) &#123;</span><br><span class="line">            Result result = invoker.invoke(invocation);</span><br><span class="line">            <span class="keyword">if</span> (result.hasException()) &#123;</span><br><span class="line">                onError(result.getException(), span);</span><br><span class="line">            &#125;</span><br><span class="line">            isOneway = RpcUtils.isOneway(invoker.getUrl(), invocation);</span><br><span class="line">            Future&lt;Object&gt; future = rpcContext.getFuture(); <span class="comment">// the case on async client invocation</span></span><br><span class="line">            <span class="keyword">if</span> (future <span class="keyword">instanceof</span> FutureAdapter) &#123;</span><br><span class="line">                deferFinish = <span class="keyword">true</span>;</span><br><span class="line">                ((FutureAdapter) future).getFuture().setCallback(<span class="keyword">new</span> ZipkinHelper.FinishSpanCallback(span));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            onError(e, span);</span><br><span class="line">            <span class="keyword">throw</span> e;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (isOneway) &#123;</span><br><span class="line">                span.flush();</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!deferFinish) &#123;</span><br><span class="line">                span.finish();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable error, Span span)</span> </span>&#123;</span><br><span class="line">        span.error(error);</span><br><span class="line">        <span class="keyword">if</span> (error <span class="keyword">instanceof</span> RpcException) &#123;</span><br><span class="line">            span.tag(<span class="string">"dubbo.error_code"</span>, Integer.toString(((RpcException) error).getCode()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FinishSpanCallback</span> <span class="keyword">implements</span> <span class="title">ResponseCallback</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> Span span;</span><br><span class="line"></span><br><span class="line">        FinishSpanCallback(Span span) &#123;</span><br><span class="line">            <span class="keyword">this</span>.span = span;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">done</span><span class="params">(Object response)</span> </span>&#123;</span><br><span class="line">            span.finish();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">caught</span><span class="params">(Throwable exception)</span> </span>&#123;</span><br><span class="line">            onError(exception, span);</span><br><span class="line">            span.finish();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smarttrip.pay.common.zipkin;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: DubboZipkinProviderFilter是dubbo服务端过滤器,用于拦截zipkin上下文消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: lishijia</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2019-01-2310:33</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">import</span> brave.Span;</span><br><span class="line"><span class="keyword">import</span> brave.Tracer;</span><br><span class="line"><span class="keyword">import</span> brave.Tracing;</span><br><span class="line"><span class="keyword">import</span> brave.propagation.TraceContext;</span><br><span class="line"><span class="keyword">import</span> brave.propagation.TraceContextOrSamplingFlags;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.common.Constants;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.common.extension.Activate;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.rpc.*;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.rpc.support.RpcUtils;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Activate</span>(group = Constants.PROVIDER)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboZipkinProviderFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger log = LoggerFactory.getLogger(DubboZipkinProviderFilter.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SpringExtensionFactory springExtensionFactory = <span class="keyword">new</span> SpringExtensionFactory();</span><br><span class="line">    <span class="keyword">private</span> Tracer tracer;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// tracing上下文消息提取</span></span><br><span class="line">    <span class="keyword">private</span> TraceContext.Extractor&lt;Map&lt;String, String&gt;&gt; extractor;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">invoke</span><span class="params">(Invoker&lt;?&gt; invoker, Invocation invocation)</span> <span class="keyword">throws</span> RpcException </span>&#123;</span><br><span class="line">        log.info(<span class="string">"dubbo zipkin provider filter......"</span>);</span><br><span class="line"></span><br><span class="line">        Tracing tracing = springExtensionFactory.getExtension(Tracing.class, <span class="string">"tracing"</span>);</span><br><span class="line">        tracer = tracing.tracer();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == tracer)&#123;</span><br><span class="line">            <span class="keyword">return</span> invoker.invoke(invocation);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == extractor)&#123;</span><br><span class="line">            extractor = tracing.propagation().extractor(ZipkinHelper.GETTER);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        TraceContextOrSamplingFlags extracted = extractor.extract(invocation.getAttachments());</span><br><span class="line">        Span span = extracted.context() != <span class="keyword">null</span></span><br><span class="line">                ? tracer.joinSpan(extracted.context())</span><br><span class="line">                : tracer.nextSpan(extracted);</span><br><span class="line"></span><br><span class="line">        RpcContext rpcContext = RpcContext.getContext();</span><br><span class="line">        ZipkinHelper.buildSpan(span, Span.Kind.SERVER, rpcContext.getRemoteAddress(), invoker.getInterface().getSimpleName(),</span><br><span class="line">                RpcUtils.getMethodName(invocation));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ZipkinHelper.spanTracing(span, tracer, invoker, invocation, rpcContext);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smarttrip.pay.common.zipkin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> brave.Span;</span><br><span class="line"><span class="keyword">import</span> brave.Tracer;</span><br><span class="line"><span class="keyword">import</span> brave.Tracing;</span><br><span class="line"><span class="keyword">import</span> brave.propagation.TraceContext;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.common.Constants;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.common.extension.Activate;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.rpc.*;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.dubbo.rpc.support.RpcUtils;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: DubboZipkinConsumerFilter是dubbo消费端过滤器,用于拦截zipkin上下文消息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: lishijia</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2019-01-23 10:32</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@Activate</span>(group = Constants.CONSUMER)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DubboZipkinConsumerFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger log = LoggerFactory.getLogger(DubboZipkinConsumerFilter.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> SpringExtensionFactory springExtensionFactory = <span class="keyword">new</span> SpringExtensionFactory();</span><br><span class="line">    <span class="keyword">private</span> Tracer tracer;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// tracing上下文消息注入</span></span><br><span class="line">    <span class="keyword">private</span> TraceContext.Injector&lt;Map&lt;String, String&gt;&gt; injector;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">invoke</span><span class="params">(Invoker&lt;?&gt; invoker, Invocation invocation)</span> <span class="keyword">throws</span> RpcException </span>&#123;</span><br><span class="line">        log.info(<span class="string">"dubbo zipkin consumer filter......"</span>);</span><br><span class="line"></span><br><span class="line">        Tracing tracing = springExtensionFactory.getExtension(Tracing.class, <span class="string">"tracing"</span>);</span><br><span class="line">        tracer = tracing.tracer();</span><br><span class="line">        <span class="keyword">if</span> (tracer == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> invoker.invoke(invocation);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == injector)&#123;</span><br><span class="line">            injector = tracing.propagation().injector(ZipkinHelper.SETTER);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        RpcContext rpcContext = RpcContext.getContext();</span><br><span class="line">        Span span = tracer.nextSpan();</span><br><span class="line">        injector.inject(span.context(), invocation.getAttachments());</span><br><span class="line"></span><br><span class="line">        ZipkinHelper.buildSpan(span, Span.Kind.CONSUMER, rpcContext.getRemoteAddress(), invoker.getInterface().getSimpleName(),</span><br><span class="line">                RpcUtils.getMethodName(invocation));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> ZipkinHelper.spanTracing(span, tracer, invoker, invocation, rpcContext);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件</p>
+<p>以下配置文件在每个服务端，消费端都需要添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 启用自动配置 </span><br><span class="line"># 在resources目录新建META-INF目录: </span><br><span class="line"># 新建文件:spring.factories 内容如下：</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">  com.smarttrip.pay.common.zipkin.TracingConfig</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 在provider，consumer启动工程下增加如下配置过滤器：</span><br><span class="line"># 在`META-INF`添加`dubbo`文件夹, </span><br><span class="line"># 新建文件:`com.alibaba.dubbo.rpc.Filter` 内容如下：</span><br><span class="line">zipkinConsumerDubboFilter=com.smarttrip.pay.common.zipkin.DubboZipkinConsumerFilter</span><br><span class="line">zipkinProviderDubboFilter=com.smarttrip.pay.common.zipkin.DubboZipkinProviderFilter</span><br></pre></td></tr></table></figure>
+<p><img src="http://image.lishijia.top/blog/20190124/Yu12akBrTdXl.png?imageslim" alt=""></p>
+</li>
+<li><p>配置每个节点的名称以及zipkin上报地址</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">zipkin:</span></span><br><span class="line"><span class="attr">  tracing:</span></span><br><span class="line"><span class="attr">    local-service-name:</span> <span class="string">zipkin-provider</span></span><br><span class="line"><span class="attr">    endpoint:</span> <span class="attr">http://192.168.226.100:9411/api/v2/spans</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>针对项目的改造增加的代码、配置基本上就完成了</p>
+<h2 id="通过调用服务验证ZipKin"><a href="#通过调用服务验证ZipKin" class="headerlink" title="通过调用服务验证ZipKin"></a>通过调用服务验证ZipKin</h2><p>通过如下图可以看到每个链路总消耗时间，</p>
+<p><img src="http://image.lishijia.top/blog/20190124/B4cmqTdjg2lz.png?imageslim" alt="">查看单个链路在每个服务上锁消耗的时间，然后可以再去排查对应的问题所在</p>
+<p><img src="http://image.lishijia.top/blog/20190124/FoC9wh2VPS00.png?imageslim" alt=""></p>
+<p><img src="http://image.lishijia.top/blog/20190124/2e7bHxJ9Lwy0.png?imageslim" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​    通过Zipkin跟踪整条链路消耗时间情况来快速定位问题，尤其是整个项目是在微服务化的情况下运行。那么这种工具就是必备的了。自己也可以针对Zipkin下载源码来打包，可以二次开发，增加对应的预警功能等。后续上生产后，会把存储改造为物理存储，即Cassandra、和 ElasticSearch这种nosql数据库。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/01/24/zipkin/zipkin-1.html" data-id="ck293frdn0042v4qg0pbfwxcv" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/01/24/zipkin/zipkin-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2019/03/19/tcp/Wireshark剖析浏览器请求过程.html" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Wireshark剖析浏览器请求过程
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2018/12/13/spark-streaming/spark-streaming-2.html" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Kafka + Spark Streaming +Hive 数据采集入库整合实践（二）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+            <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify:false,
+            verify:false,
+            app_id: 'zPgBQsfBIYPrvatY7D1RBNOn-gzGzoHsz',
+            app_key: 'C1hDxUROINgNYUIDFF2bzGl1',
+            placeholder: "",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 10
+    });
+</script>
+        </section>
+    
+
+
+<script>
+    // 调用方法
+    // 创建新blog成功时，访问leancloud新建一条浏览量数据
+    $(function () {
+        var visitor = new leanCloud()._initToDetail('Visitors');
+
+        var comment = new leanCloudComment()._initCommentToDetail('Comment');
+    });
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https'){
+   bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script></section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="no-thumbnail">
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/JVM/">JVM</a></p>
+                            <p class="item-title"><a href="/2019/10/27/jvm/jvm-4.html" class="title">JVM GC日志查看分析（四）</a></p>
+                            <p class="item-date"><time datetime="2019-10-27T14:21:14.000Z" itemprop="datePublished">2019-10-27 22:21:14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Dubbo/">Dubbo</a></p>
+                            <p class="item-title"><a href="/2019/08/19/dubbo/dubbo-1.html" class="title">Dubbo源码Consumer调用链路流程（一）</a></p>
+                            <p class="item-date"><time datetime="2019-08-19T09:33:14.000Z" itemprop="datePublished">2019-08-19 17:33:14</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
+                            <p class="item-title"><a href="/2019/08/03/netty/netty-7.html" class="title">Netty 编码 Encoder（七）</a></p>
+                            <p class="item-date"><time datetime="2019-08-03T02:01:12.000Z" itemprop="datePublished">2019-08-03 10:01:12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
+                            <p class="item-title"><a href="/2019/08/02/netty/netty-6.html" class="title">Netty 解码器LengthFieldBasedFrameDecoder Demo（六）</a></p>
+                            <p class="item-date"><time datetime="2019-08-02T09:03:47.000Z" itemprop="datePublished">2019-08-02 17:03:47</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
+                            <p class="item-title"><a href="/2019/08/01/netty/netty-5.html" class="title">Netty 解码 Decoder（五）</a></p>
+                            <p class="item-date"><time datetime="2019-08-01T11:42:12.000Z" itemprop="datePublished">2019-08-01 19:42:12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dubbo/">Dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hbase/">Hbase</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-Streaming/">Spark Streaming</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Zookeeper/">Zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zipkin/">zipkin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构-算法/">数据结构&算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/BIO/" style="font-size: 10px;">BIO</a> <a href="/tags/ChromeDriver/" style="font-size: 10px;">ChromeDriver</a> <a href="/tags/Collection/" style="font-size: 10px;">Collection</a> <a href="/tags/CountDownLatch/" style="font-size: 10px;">CountDownLatch</a> <a href="/tags/Dubbo/" style="font-size: 10px;">Dubbo</a> <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/FutureTask/" style="font-size: 10px;">FutureTask</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.67px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/IO/" style="font-size: 10px;">IO</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/Kafka/" style="font-size: 11.67px;">Kafka</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 13.33px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NIO/" style="font-size: 20px;">NIO</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Netty/" style="font-size: 18.33px;">Netty</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Python/" style="font-size: 11.67px;">Python </a> <a href="/tags/Rpc/" style="font-size: 10px;">Rpc</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/Spark-Streaming/" style="font-size: 11.67px;">Spark Streaming</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Thrift/" style="font-size: 10px;">Thrift</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/dubbo/" style="font-size: 10px;">dubbo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/vpm/" style="font-size: 10px;">vpm</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/zipkin/" style="font-size: 10px;">zipkin</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数据结构-算法/" style="font-size: 10px;">数据结构&算法</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/算法/" style="font-size: 11.67px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+        </div>
+    </div>
+
+    
+        
+<div class="widget-wrap">
+    <h3 class="widget-title"></h3>
+    <div class="widget tagcloud">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274917177'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1274917177%26online%3D1' type='text/javascript'%3E%3C/script%3E"));</script>
+     </div>
+</div>
+
+    
+    <div id="toTop" class="fas fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 李世佳<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

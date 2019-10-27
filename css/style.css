@@ -660,8 +660,8 @@ code {
 #profile .inner .base-info #avatar {
   display: block;
   margin: 10px auto 20px;
-  width: 128px;
-  height: 128px;
+  width: 250px;
+  height: 250px;
 }
 #profile .inner .base-info #name,
 #profile .inner .base-info #title,
