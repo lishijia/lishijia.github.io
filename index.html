@@ -146,11 +146,11 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                53
+                60
                 <span>文章</span>
             </div>
             <div class="article-info-block">
-                55
+                61
                 <span>标签</span>
             </div>
         </div>
@@ -175,6 +175,1067 @@
 
             
             <section id="main">
+    <article id="post-viedo/2-nfs" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2019/12/14/viedo/2-nfs.html" href="/2019/12/14/viedo/2-nfs.html">Linux CentOS NFS 服务安装配置使用</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/12/14/viedo/2-nfs.html">
+            <time datetime="2019-12-14T08:35:05.000Z" itemprop="datePublished">2019-12-14 16:35:05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/NFS/">NFS</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/NFS/">NFS</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/12/14/viedo/2-nfs.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/12/14/viedo/2-nfs.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h2 id="NFS介绍"><a href="#NFS介绍" class="headerlink" title="NFS介绍"></a>NFS介绍</h2><p>NFS 是 Network FileSystem 的缩写，顾名思义就是网络文件存储系统，它最早是由 Sun 公司发展出来的，也是 FreeBSD 支持的文件系统中的一个，它允许网络中的计算机之间通过 TCP/IP 网络共享资源。通过 NFS，我们本地 NFS 的客户端应用可以透明地读写位于服务端 NFS 服务器上的文件，就像访问本地文件一样方便。简单的理解，NFS 就是可以透过网络，让不同的主机、不同的操作系统可以共享存储的服务。</p>
+<p>主要是针对近期的视频文件上传提供服务。</p></p>
+            <p class="article-more-link">
+                <a href="/2019/12/14/viedo/2-nfs.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/12/14/viedo/2-nfs.html" data-id="ck5b1mjew00437wqgcu7ozldh" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/12/14/viedo/2-nfs.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-mq/activityMq-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2019/12/13/mq/activityMq-1.html" href="/2019/12/13/mq/activityMq-1.html">ActivityMq安装部署配置使用</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/12/13/mq/activityMq-1.html">
+            <time datetime="2019-12-13T13:26:12.000Z" itemprop="datePublished">2019-12-13 21:26:12</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/MQ/">MQ</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/ActivityMq/">ActivityMq</a>, <a class="tag-link" href="/tags/MQ/">MQ</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/12/13/mq/activityMq-1.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/12/13/mq/activityMq-1.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="延迟消息"><a href="#延迟消息" class="headerlink" title="延迟消息"></a>延迟消息</h2><ul>
+<li><p><strong>延迟消息需要在apache-activemq-5.15.10/conf目录下的activitymq.xml找到对应的broker标签增加schedulerSupport属性开启，否则发送延迟消息不会生效</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="$&#123;activemq.data&#125;" schedulerSupport="true" &gt;</span><br><span class="line">&lt;/broker&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/12/13/mq/activityMq-1.html" data-id="ck5b1mje0002b7wqgxqw4o1b6" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/12/13/mq/activityMq-1.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-viedo/1-ffmpeg" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2019/12/05/viedo/1-ffmpeg.html" href="/2019/12/05/viedo/1-ffmpeg.html">视频剪辑-ffmpeg下载部署安装</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/12/05/viedo/1-ffmpeg.html">
+            <time datetime="2019-12-05T14:35:05.000Z" itemprop="datePublished">2019-12-05 22:35:05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/视频/">视频</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/categories/视频/视频剪辑/">视频剪辑</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/categories/视频/视频剪辑/ffmpeg/">ffmpeg</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/视频/">视频</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/12/05/viedo/1-ffmpeg.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/12/05/viedo/1-ffmpeg.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p><img src="http://image.lishijia.top/blog/20191206/Vp6zFxcyVSxo.png?imageslim" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近项目组有针对视频剪辑的功能需求，主要是通过后台上传的视频文件之后，然后需要根据时间剪辑对应的片段用于在相应的页面显示，之前一直没有针对视频文件处理相应的经验，印象中这个视频处理应该是在客户端进行处理的，类似现在很火的抖音、快手等增加各种剪辑、合并等。在网上一看发现服务端也有对应的解决方案。</p>
+<p>类似阿里云的视频剪辑： <a href="https://helpcdn.aliyun.com/document_detail/101562.html" target="_blank" rel="noopener">https://helpcdn.aliyun.com/document_detail/101562.html</a> </p>
+<p>七牛： <a href="https://developer.qiniu.com/dora/api/1246/audio-and-video-stitching-avconcat" target="_blank" rel="noopener">https://developer.qiniu.com/dora/api/1246/audio-and-video-stitching-avconcat</a> </p>
+<p>以上这些是需要收费的；后来发现ffmpeg这个剪辑工具也能满足相应的需求；</p>
+<p>即在服务器上按照ffmpeg这个功能键，然后通过Java代码去执行相应的命令，检测是否剪辑完即可；</p></p>
+            <p class="article-more-link">
+                <a href="/2019/12/05/viedo/1-ffmpeg.html#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/12/05/viedo/1-ffmpeg.html" data-id="ck5b1mjeu003y7wqgermba44p" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/12/05/viedo/1-ffmpeg.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-fix-fire/1-fix-fire" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2019/11/27/fix-fire/1-fix-fire.html" href="/2019/11/27/fix-fire/1-fix-fire.html">救火队长系列（疑难问题定位解决方法思路）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/11/27/fix-fire/1-fix-fire.html">
+            <time datetime="2019-11-27T15:35:05.000Z" itemprop="datePublished">2019-11-27 23:35:05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/救火/">救火</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/救火/">救火</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/11/27/fix-fire/1-fix-fire.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/11/27/fix-fire/1-fix-fire.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>此文章系列主要用于记录平常工作中遇到的一些疑难问题以及相关的定位思路方法</p>
+<ul>
+<li>内存不足导致SpringBoot应用程序被系统Kill</li>
+<li>生产的一个定时任务某一天莫名其妙被Kill了（内存溢出）</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/11/27/fix-fire/1-fix-fire.html" data-id="ck5b1mjdf00147wqg4tfeld4m" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/11/27/fix-fire/1-fix-fire.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-fix-fire/3-task data OutOfMemery" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2019/11/27/fix-fire/3-task data OutOfMemery.html" href="/2019/11/27/fix-fire/3-task data OutOfMemery.html">内存不足导致SpringBoot应用程序被系统Kill</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/11/27/fix-fire/3-task data OutOfMemery.html">
+            <time datetime="2019-11-27T15:35:05.000Z" itemprop="datePublished">2019-11-27 23:35:05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/救火/">救火</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/救火/">救火</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/11/27/fix-fire/3-task data OutOfMemery.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/11/27/fix-fire/3-task data OutOfMemery.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>此篇主要记录平常工作中遇到的一些疑难问题</p>
+<ol>
+<li><p>最近一台机器部署了3个SpringBoot应用之后，发现当中有应用会莫名其妙的被kill，而且没有任何日志JVM错误；本以为是内存溢出导致系统挂了，但是一直没有找到任何相关可用日志；</p>
+<p>最后通过以下命令查看了系统日志，发现是由于被系统Kill的，由于在申请内存的时候系统以及无法满足了，导致被kill； 阿里云的服务器，默认swap分区大小是0，然后应用在申请系统内存时，如果内存不足就会被系统直接kill  三种解决方案：</p>
+<ol>
+<li>升级机器内存大小</li>
+<li>添加swap分区大小</li>
+<li>设置应用程序启动最大内存大小</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/messages</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Nov  <span class="number">7</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">03</span> AliYunOS kernel: Killed process <span class="number">11340</span>, UID <span class="number">0</span>, (java) total-vm:<span class="number">5778380</span>kB, anon-rss:<span class="number">1026616</span>kB, file-rss:<span class="number">132</span>kB</span><br><span class="line">Nov  <span class="number">7</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">03</span> AliYunOS kernel: Out of memory: Kill process <span class="number">11340</span> (java) score <span class="number">95</span> or sacrifice child</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/11/27/fix-fire/3-task data OutOfMemery.html" data-id="ck5b1mjdg00167wqg1vlq6mxi" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/11/27/fix-fire/3-task data OutOfMemery.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-fix-fire/2-springboot-killed" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2019/11/27/fix-fire/2-springboot-killed.html" href="/2019/11/27/fix-fire/2-springboot-killed.html">内存不足导致SpringBoot应用程序被系统Kill</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/11/27/fix-fire/2-springboot-killed.html">
+            <time datetime="2019-11-27T15:35:05.000Z" itemprop="datePublished">2019-11-27 23:35:05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/救火/">救火</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/救火/">救火</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/11/27/fix-fire/2-springboot-killed.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/11/27/fix-fire/2-springboot-killed.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>此篇主要记录平常工作中遇到的一些疑难问题</p>
+<ol>
+<li><p>最近一台机器部署了3个SpringBoot应用之后，发现当中有应用会莫名其妙的被kill，而且没有任何日志JVM错误；本以为是内存溢出导致系统挂了，但是一直没有找到任何相关可用日志；</p>
+<p>最后通过以下命令查看了系统日志，发现是由于被系统Kill的，由于在申请内存的时候系统以及无法满足了，导致被kill； 阿里云的服务器，默认swap分区大小是0，然后应用在申请系统内存时，如果内存不足就会被系统直接kill  三种解决方案：</p>
+<ol>
+<li>升级机器内存大小</li>
+<li>添加swap分区大小</li>
+<li>设置应用程序启动最大内存大小</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/messages</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Nov  <span class="number">7</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">03</span> AliYunOS kernel: Killed process <span class="number">11340</span>, UID <span class="number">0</span>, (java) total-vm:<span class="number">5778380</span>kB, anon-rss:<span class="number">1026616</span>kB, file-rss:<span class="number">132</span>kB</span><br><span class="line">Nov  <span class="number">7</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">03</span> AliYunOS kernel: Out of memory: Kill process <span class="number">11340</span> (java) score <span class="number">95</span> or sacrifice child</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/11/27/fix-fire/2-springboot-killed.html" data-id="ck5b1mjdh00187wqgjv3332c2" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/11/27/fix-fire/2-springboot-killed.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-other/trial" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title leancloud_visitors" title="/2019/11/04/other/trial.html" href="/2019/11/04/other/trial.html">埋点数据</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fas fa-calendar-alt"></i>
+        <a href="/2019/11/04/other/trial.html">
+            <time datetime="2019-11-04T04:35:05.000Z" itemprop="datePublished">2019-11-04 12:35:05</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fas fa-folder"></i>
+        <a class="article-category-link" href="/categories/数据埋点/">数据埋点</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/数据埋点/">数据埋点</a>
+    </div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-eye"></i>
+    <a href="/2019/11/04/other/trial.html">
+        <span class="visitor"></span>
+    </a>
+</div>
+
+                        <div class="article-visitor">
+    <i class="fas fa-comment"></i>
+    <a href="/2019/11/04/other/trial.html#comments">
+        <span class="comment_num"></span>
+    </a>
+</div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package=com.suixing.subway</span><br><span class="line">channel=渠道名称（跳转渠道来源，默认为个厂商）</span><br><span class="line">name=应用名称</span><br><span class="line">app_version=1.0.21（版本号）</span><br><span class="line">client_id=</span><br><span class="line">info_ma=</span><br><span class="line">manufacturer=vivo(厂商)</span><br><span class="line">model=vivo%20x6s%20a（型号）</span><br><span class="line">os_type=android</span><br><span class="line">os_id=app(app,h5,quick)</span><br><span class="line">lang=zh</span><br><span class="line">region=cn</span><br><span class="line">px=1080*1920</span><br><span class="line">net=wifi</span><br><span class="line">source=other</span><br><span class="line">extra=&#123;&#125;</span><br><span class="line">app_id=a9190d80050b51e9980fab5f153fae1e（应用appId）</span><br><span class="line">uid=04fd678312793d33bf92557853dd8e44（imei or other）</span><br><span class="line">req_id=420916e911937338d165b0c1815eadea(打开批次，即用户打开次数)</span><br><span class="line">page_name=pages/index</span><br><span class="line">page_path=/pages/index</span><br><span class="line">sta_time=1572834191942</span><br><span class="line">end_time=1572834370462</span><br><span class="line">duration=17119</span><br><span class="line">is_entry=0（1：进入，0：离开）</span><br><span class="line">sdk_version=1.0.0（sdk版本默认1.0.0）</span><br><span class="line">debug=0 （debug模式默认0 1：debug 0：生产）</span><br></pre></td></tr></table></figure>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.lishijia.top/2019/11/04/other/trial.html" data-id="ck5b1mje9002s7wqguuwx7wqo" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://www.lishijia.top/2019/11/04/other/trial.html#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-jvm/jvm-4" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -231,48 +1292,15 @@
         
         <div class="article-entry" itemprop="articleBody">
         
-            
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:NewSize=5242880 -XX:MaxNewSize=5242880 -XX:InitialHeapSize=10485760 -XX:MaxHeapSize=10485760 -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:gc.log</span><br></pre></td></tr></table></figure>
+            <p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:NewSize=5242880 -XX:MaxNewSize=5242880 -XX:InitialHeapSize=10485760 -XX:MaxHeapSize=10485760 -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:gc.log</span><br></pre></td></tr></table></figure>
 <p>上面”-XX:InitialHeapSize” 和 “-XX:MaxHeapSize”就是初始堆大小和最大堆大小，”-XX:NewSize”和”-XX:MaxNewSize”是初始新生代大小和最大新生代大小，”-XX:PretenureSizeThreshold=10485760”指定了大对象阈值是10MB。</p>
 <p>相当于给堆内存分配10MB内存空间，其中新生代5MB内存空间，其中Eden区占4MB，每个Survivor区占0.5MB（8:1:1默认），大对象必须超过10MB才会直接进入老年代，年轻代使用ParNew垃圾回收器，老年代使用CMS垃圾回收器。</p>
 <p>-XX:+PrintGCDetail：打印详细的gc日志</p>
 <p>-XX:+PrintGCTimeStamps：这个参数设置可以打印出来每次GC发生时间</p>
-<p>-Xloggc:gc.log：这个参数可以设置将gc日志写入一个磁盘文件</p>
-<p>程序代码如下以及运行之后打印出来的GC日志：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YoungGCTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        <span class="comment">// 1M</span></span><br><span class="line">        <span class="keyword">byte</span>[] barry1 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line">		<span class="comment">// 1M</span></span><br><span class="line">        barry1 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line">		<span class="comment">// 1M</span></span><br><span class="line">        barry1 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line">        barry1 = <span class="keyword">null</span>;</span><br><span class="line">		<span class="comment">// 此处需要进行垃圾回收</span></span><br><span class="line">        <span class="keyword">byte</span>[] barry2 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Java HotSpot(TM) 64-Bit Server VM (25.144-b01) for windows-amd64 JRE (1.8.0_144-b01), built on Jul 21 2017 21:57:33 by &quot;java_re&quot; with MS VC++ 10.0 (VS2010)</span><br><span class="line">Memory: 4k page, physical 8324764k(3970340k free), swap 16647628k(11305344k free)</span><br><span class="line">CommandLine flags: -XX:InitialHeapSize=10485760 -XX:MaxHeapSize=10485760 -XX:MaxNewSize=5242880 -XX:MaxTenuringThreshold=6 -XX:NewSize=5242880 -XX:OldPLABSize=16 -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseConcMarkSweepGC -XX:-UseLargePagesIndividualAllocation -XX:+UseParNewGC </span><br><span class="line">0.324: [GC (Allocation Failure) 0.337: [ParNew: 3395K-&gt;510K(4608K), 0.0014480 secs] 3395K-&gt;1790K(9728K), 0.0151349 secs] [Times: user=0.00 sys=0.00, real=0.02 secs] </span><br><span class="line">0.339: [GC (Allocation Failure) 0.339: [ParNew: 2678K-&gt;108K(4608K), 0.0012876 secs] 3957K-&gt;1896K(9728K), 0.0013118 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] </span><br><span class="line">Heap</span><br><span class="line"> par new generation   total 4608K, used 2226K [0x00000000ff600000, 0x00000000ffb00000, 0x00000000ffb00000)</span><br><span class="line">  eden space 4096K,  51% used [0x00000000ff600000, 0x00000000ff811660, 0x00000000ffa00000)</span><br><span class="line">  from space 512K,  21% used [0x00000000ffa00000, 0x00000000ffa1b300, 0x00000000ffa80000)</span><br><span class="line">  to   space 512K,   0% used [0x00000000ffa80000, 0x00000000ffa80000, 0x00000000ffb00000)</span><br><span class="line"> concurrent mark-sweep generation total 5120K, used 1787K [0x00000000ffb00000, 0x0000000100000000, 0x0000000100000000)</span><br><span class="line"> Metaspace       used 3435K, capacity 4496K, committed 4864K, reserved 1056768K</span><br><span class="line">  class space    used 375K, capacity 388K, committed 512K, reserved 1048576K</span><br></pre></td></tr></table></figure>
-<p>一次GC日志概要说明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.118: [GC (Allocation Failure) 0.118: [ParNew: 3412K-&gt;510K(4608K), 0.0019145 secs] 3412K-&gt;1819K(9728K), 0.0020001 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>GC (Allocation Failure) 表示发生了一次GC</p>
-<p>上面需要分配一个2MB的内存空间，结果Eden区内存不足，所以就出现了“Allocation Failure”，也就是对象分配失败，所以就触发了一次Young GC</p>
-</li>
-<li><p>GC发生时间</p>
-<p>0.118GC发生时间，也就是代表程序运行0.118秒之后，系统就发生了GC，大概也就是100都毫秒之后吧</p>
-</li>
-<li><p>GC类型[ParNew: 3395K-&gt;510K(4608K), 0.0014480 secs]</p>
-<p>ParNew：Young GC，也就是执行了ParNew垃圾回收器</p>
-<p>3395K-&gt;510K(4608K)：4608（4.5MB）代表年轻代内存空间大小；3395K-&gt;510K意思是Eden区所占用的空间为3395KB，然后GC之后还剩余510KB；0.0014480 secs：本次GC所花费时间</p>
-</li>
-<li><p>3412K-&gt;1819K(9728K), 0.0020001 secs</p>
-<p>9728K：年轻代空间大小9.5MB；GC前整个堆内存使用3412KB，GC之后使用1819KB</p>
-</li>
-<li><p>[Times: user=0.00 sys=0.00, real=0.00 secs]</p>
-<p>GC所消耗时间，这里是以秒为单位，所以基本上就是为0了</p>
-</li>
-</ul>
-<p>以上基本上就是对一次GC日志的简要说明；不过从上面的日志看，按照代码分析，理论上就只会执行一次GC，即前面申请了3MB的对象，然后把应用设置为空，即这3MB的对象没有引用关联了，代表是可回收的，然后申请2MB的对象，申请不下之后执行YoungGC，也就是上面文字概要说明的GC 情况；</p>
-<p>至于最后的一次YoungGC是由于程序执行结束后，它又触发了一次GC</p>
-<p>Heap整个堆的GC日志信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">par new generation   total 4608K, used 2226K [0x00000000ff600000, 0x00000000ffb00000, 0x00000000ffb00000)</span><br><span class="line">  eden space 4096K,  51% used [0x00000000ff600000, 0x00000000ff811660, 0x00000000ffa00000)</span><br><span class="line">  from space 512K,  21% used [0x00000000ffa00000, 0x00000000ffa1b300, 0x00000000ffa80000)</span><br><span class="line">  to   space 512K,   0% used [0x00000000ffa80000, 0x00000000ffa80000, 0x00000000ffb00000)</span><br></pre></td></tr></table></figure>
-<p>ParNew 垃圾回收器执行情况，一共4608（4.5MB）</p>
-<p>Eden：4096KB（4MB），使用51%，相当于最后2MB的空间</p>
-<p>S0：512K（0.5MB）使用21%，其他晋升的对象内存空间</p>
-<p>S1：512K（0.5MB）使用0%</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">concurrent mark-sweep generation total 5120K, used 1787K [0x00000000ffb00000, 0x0000000100000000, 0x0000000100000000)</span><br><span class="line">Metaspace       used 3435K, capacity 4496K, committed 4864K, reserved 1056768K</span><br><span class="line">  class space    used 375K, capacity 388K, committed 512K, reserved 1048576K</span><br></pre></td></tr></table></figure>
-<p>CMS垃圾回收器执行情况，一共5120K（5MB），使用了1787K</p>
-<p>Metaspace：元数据空间与Class空间、类信息、常量等；</p>
-
+<p>-Xloggc:gc.log：这个参数可以设置将gc日志写入一个磁盘文件</p></p>
+            <p class="article-more-link">
+                <a href="/2019/10/27/jvm/jvm-4.html#more">查看更多</a>
+            </p>
         
         </div>
         <footer class="article-footer">
@@ -282,7 +1310,7 @@
 
 </div>
 
-    <a data-url="http://www.lishijia.top/2019/10/27/jvm/jvm-4.html" data-id="ck293frc60018v4qgmvr5atu5" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.lishijia.top/2019/10/27/jvm/jvm-4.html" data-id="ck5b1mjdy00267wqgd4ri49tq" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -437,7 +1465,7 @@
 
 </div>
 
-    <a data-url="http://www.lishijia.top/2019/08/19/dubbo/dubbo-1.html" data-id="ck293frbx000rv4qgy9owasxt" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.lishijia.top/2019/08/19/dubbo/dubbo-1.html" data-id="ck5b1mjdc000x7wqgfoe6g1e9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -592,7 +1620,7 @@
 
 </div>
 
-    <a data-url="http://www.lishijia.top/2019/08/03/netty/netty-7.html" data-id="ck293frcs002hv4qgw9cykqyy" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
+    <a data-url="http://www.lishijia.top/2019/08/03/netty/netty-7.html" data-id="ck5b1mjec002y7wqg98h8t4tm" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -661,1096 +1689,6 @@
             
     
         <a href="http://www.lishijia.top/2019/08/03/netty/netty-7.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-netty/netty-6" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2019/08/02/netty/netty-6.html" href="/2019/08/02/netty/netty-6.html">Netty 解码器LengthFieldBasedFrameDecoder Demo（六）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/08/02/netty/netty-6.html">
-            <time datetime="2019-08-02T09:03:47.000Z" itemprop="datePublished">2019-08-02 17:03:47</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Netty/">Netty</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NIO/">NIO</a>, <a class="tag-link" href="/tags/Netty/">Netty</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2019/08/02/netty/netty-6.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2019/08/02/netty/netty-6.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://image.lishijia.top/blog/20190802/2bt9vhv5DWFW.png?imageslim" alt=""></p>
-<p><strong>目录：</strong></p>
-<ol>
-<li>LengthFieldBasedFrameDecoder解码器概述</li>
-<li>LengthFieldBasedFrameDecoder解码器Demo</li>
-<li>服务端解码描述</li>
-<li>客户端编码描述</li>
-<li>总结</li>
-</ol></p>
-            <p class="article-more-link">
-                <a href="/2019/08/02/netty/netty-6.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2019/08/02/netty/netty-6.html" data-id="ck293frcp002av4qgdbnkak2r" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2019/08/02/netty/netty-6.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-netty/netty-5" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2019/08/01/netty/netty-5.html" href="/2019/08/01/netty/netty-5.html">Netty 解码 Decoder（五）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/08/01/netty/netty-5.html">
-            <time datetime="2019-08-01T11:42:12.000Z" itemprop="datePublished">2019-08-01 19:42:12</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Netty/">Netty</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NIO/">NIO</a>, <a class="tag-link" href="/tags/Netty/">Netty</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2019/08/01/netty/netty-5.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2019/08/01/netty/netty-5.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://image.lishijia.top/blog/20190802/Ua2upSik82TI.png?imageslim" alt=""></p>
-<p><strong>目录：</strong></p>
-<ol>
-<li>Netty解码概述</li>
-<li>ByteToMessageDecoder</li>
-<li>固定长度解码器FixedLengthFrameDecoder</li>
-<li>行解码器LineBasedFrameDecoder</li>
-<li>分隔符解码器DelimiterBasedFrameDecoder</li>
-<li>长度解码器LengthFieldBasedFrameDecoder</li>
-<li>总结</li>
-</ol></p>
-            <p class="article-more-link">
-                <a href="/2019/08/01/netty/netty-5.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2019/08/01/netty/netty-5.html" data-id="ck293frcm0025v4qgztcg3quw" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2019/08/01/netty/netty-5.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-netty/netty-4" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2019/07/31/netty/netty-4.html" href="/2019/07/31/netty/netty-4.html">Netty组件ByteBuf（四）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/07/31/netty/netty-4.html">
-            <time datetime="2019-07-31T10:59:41.000Z" itemprop="datePublished">2019-07-31 18:59:41</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Netty/">Netty</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NIO/">NIO</a>, <a class="tag-link" href="/tags/Netty/">Netty</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2019/07/31/netty/netty-4.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2019/07/31/netty/netty-4.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://image.lishijia.top/blog/20190731/9uR5bmkIYF9s.png?imageslim" alt=""></p>
-<p><strong>目录：</strong></p>
-<ol>
-<li>ByteBuf结构及重要API</li>
-<li>ByteBuf分类</li>
-<li>内存分配器ByteBufAlloctor</li>
-<li>总结</li>
-</ol></p>
-            <p class="article-more-link">
-                <a href="/2019/07/31/netty/netty-4.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2019/07/31/netty/netty-4.html" data-id="ck293frck0021v4qgf7bc8htg" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2019/07/31/netty/netty-4.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-netty/netty-3" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2019/07/30/netty/netty-3.html" href="/2019/07/30/netty/netty-3.html">Netty组件Channel &amp; Pipeline（三）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/07/30/netty/netty-3.html">
-            <time datetime="2019-07-30T12:36:24.000Z" itemprop="datePublished">2019-07-30 20:36:24</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Netty/">Netty</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NIO/">NIO</a>, <a class="tag-link" href="/tags/Netty/">Netty</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2019/07/30/netty/netty-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2019/07/30/netty/netty-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://image.lishijia.top/blog/20190730/SgDYnoJyKXWc.png?imageslim" alt=""></p>
-<p><strong>目录：</strong></p>
-<ol>
-<li>Channel创建（服务端Channel&amp;客户端Channel）</li>
-<li>Unsafe创建</li>
-<li>Pipeline创建</li>
-<li>读数据传播事件由上而下逻辑（Inbound事件传播）</li>
-<li>写数据传播事件由下而上逻辑（Outbound事件传播）</li>
-<li>异常事件传播</li>
-<li>客户端Channel监听读事件处理逻辑</li>
-<li>总结</li>
-</ol></p>
-            <p class="article-more-link">
-                <a href="/2019/07/30/netty/netty-3.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2019/07/30/netty/netty-3.html" data-id="ck293frdb003hv4qgzhhckln9" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2019/07/30/netty/netty-3.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-netty/netty-2" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2019/07/29/netty/netty-2.html" href="/2019/07/29/netty/netty-2.html">Netty组件NioEventLoop（二）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/07/29/netty/netty-2.html">
-            <time datetime="2019-07-29T15:12:03.000Z" itemprop="datePublished">2019-07-29 23:12:03</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Netty/">Netty</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NIO/">NIO</a>, <a class="tag-link" href="/tags/Netty/">Netty</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2019/07/29/netty/netty-2.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2019/07/29/netty/netty-2.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://image.lishijia.top/blog/20190730/q976tofSObIf.png?imageslim" alt=""></p>
-<p><strong>目录：</strong></p>
-<ol>
-<li>NioEventLoop创建</li>
-<li>NioEventLoop启动</li>
-<li>NioEventLoop执行逻辑</li>
-<li>总结</li>
-</ol></p>
-            <p class="article-more-link">
-                <a href="/2019/07/29/netty/netty-2.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2019/07/29/netty/netty-2.html" data-id="ck293frd1002xv4qgv3f1qlb0" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2019/07/29/netty/netty-2.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-netty/netty-1" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2019/07/27/netty/netty-1.html" href="/2019/07/27/netty/netty-1.html">Netty源码解析-基本组件架构&amp;启动过程（一）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/07/27/netty/netty-1.html">
-            <time datetime="2019-07-27T08:42:14.000Z" itemprop="datePublished">2019-07-27 16:42:14</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/Netty/">Netty</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/NIO/">NIO</a>, <a class="tag-link" href="/tags/Netty/">Netty</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2019/07/27/netty/netty-1.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2019/07/27/netty/netty-1.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://image.lishijia.top/blog/20190726/cwiPNiIeXvOM.png?imageslim" alt=""></p>
-<p>之前读过Netty3的源码，没有相关记录，这次再来看Netty4的时候发现其结构变化挺大，另外也记录下方便以后自己查看</p>
-<p><strong>目录：</strong></p>
-<ol>
-<li>Netty基本组件</li>
-<li>Netty运作流程</li>
-<li>Netty服务端Demo</li>
-<li>跟踪Netty服务端启动关键代码解析</li>
-</ol></p>
-            <p class="article-more-link">
-                <a href="/2019/07/27/netty/netty-1.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2019/07/27/netty/netty-1.html" data-id="ck293frch001uv4qgqsohz82q" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2019/07/27/netty/netty-1.html#comments" class="article-comment-link">评论</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-jvm/jvm-3" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title leancloud_visitors" title="/2019/07/23/jvm/jvm-3.html" href="/2019/07/23/jvm/jvm-3.html">JVM STW(Stop The World)到底怎么回事（三）</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fas fa-calendar-alt"></i>
-        <a href="/2019/07/23/jvm/jvm-3.html">
-            <time datetime="2019-07-23T13:56:14.000Z" itemprop="datePublished">2019-07-23 21:56:14</time>
-        </a>
-    </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fas fa-folder"></i>
-        <a class="article-category-link" href="/categories/JVM/">JVM</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/JVM/">JVM</a>
-    </div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-eye"></i>
-    <a href="/2019/07/23/jvm/jvm-3.html">
-        <span class="visitor"></span>
-    </a>
-</div>
-
-                        <div class="article-visitor">
-    <i class="fas fa-comment"></i>
-    <a href="/2019/07/23/jvm/jvm-3.html#comments">
-        <span class="comment_num"></span>
-    </a>
-</div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p><img src="http://image.lishijia.top/blog/20190722/HGDLDthvl03a.png?imageslim" alt=""></p>
-<p><strong>目录：</strong></p>
-<ol>
-<li>新生代对象从哪里来，什么时候来？</li>
-<li>老年代的对象从哪里来，什么时候来？</li>
-<li>什么时候触发Minor GC？</li>
-<li>什么时候触发Full GC？</li>
-<li>STW到底是什么，什么时候触发？</li>
-<li>JVM运转整体流程图</li>
-<li>JVM面试题，如何做到一个系统几乎0次Full GC</li>
-</ol></p>
-            <p class="article-more-link">
-                <a href="/2019/07/23/jvm/jvm-3.html#more">查看更多</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://www.lishijia.top/2019/07/23/jvm/jvm-3.html" data-id="ck293frca001hv4qgcsewrgmd" class="article-share-link"><i class="fas fa-share"></i>分享到</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fab fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fab fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fab fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fab fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://www.lishijia.top/2019/07/23/jvm/jvm-3.html#comments" class="article-comment-link">评论</a>
     
 
         </footer>
@@ -1990,45 +1928,45 @@
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/JVM/">JVM</a></p>
-                            <p class="item-title"><a href="/2019/10/27/jvm/jvm-4.html" class="title">JVM GC日志查看分析（四）</a></p>
-                            <p class="item-date"><time datetime="2019-10-27T14:21:14.000Z" itemprop="datePublished">2019-10-27 22:21:14</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/NFS/">NFS</a></p>
+                            <p class="item-title"><a href="/2019/12/14/viedo/2-nfs.html" class="title">Linux CentOS NFS 服务安装配置使用</a></p>
+                            <p class="item-date"><time datetime="2019-12-14T08:35:05.000Z" itemprop="datePublished">2019-12-14 16:35:05</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Dubbo/">Dubbo</a></p>
-                            <p class="item-title"><a href="/2019/08/19/dubbo/dubbo-1.html" class="title">Dubbo源码Consumer调用链路流程（一）</a></p>
-                            <p class="item-date"><time datetime="2019-08-19T09:33:14.000Z" itemprop="datePublished">2019-08-19 17:33:14</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/MQ/">MQ</a></p>
+                            <p class="item-title"><a href="/2019/12/13/mq/activityMq-1.html" class="title">ActivityMq安装部署配置使用</a></p>
+                            <p class="item-date"><time datetime="2019-12-13T13:26:12.000Z" itemprop="datePublished">2019-12-13 21:26:12</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
-                            <p class="item-title"><a href="/2019/08/03/netty/netty-7.html" class="title">Netty 编码 Encoder（七）</a></p>
-                            <p class="item-date"><time datetime="2019-08-03T02:01:12.000Z" itemprop="datePublished">2019-08-03 10:01:12</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/视频/">视频</a><i class="fas fa-angle-right"></i><a class="article-category-link" href="/categories/视频/视频剪辑/">视频剪辑</a></p>
+                            <p class="item-title"><a href="/2019/12/05/viedo/1-ffmpeg.html" class="title">视频剪辑-ffmpeg下载部署安装</a></p>
+                            <p class="item-date"><time datetime="2019-12-05T14:35:05.000Z" itemprop="datePublished">2019-12-05 22:35:05</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
-                            <p class="item-title"><a href="/2019/08/02/netty/netty-6.html" class="title">Netty 解码器LengthFieldBasedFrameDecoder Demo（六）</a></p>
-                            <p class="item-date"><time datetime="2019-08-02T09:03:47.000Z" itemprop="datePublished">2019-08-02 17:03:47</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/救火/">救火</a></p>
+                            <p class="item-title"><a href="/2019/11/27/fix-fire/1-fix-fire.html" class="title">救火队长系列（疑难问题定位解决方法思路）</a></p>
+                            <p class="item-date"><time datetime="2019-11-27T15:35:05.000Z" itemprop="datePublished">2019-11-27 23:35:05</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Netty/">Netty</a></p>
-                            <p class="item-title"><a href="/2019/08/01/netty/netty-5.html" class="title">Netty 解码 Decoder（五）</a></p>
-                            <p class="item-date"><time datetime="2019-08-01T11:42:12.000Z" itemprop="datePublished">2019-08-01 19:42:12</time></p>
+                            <p class="item-category"><a class="article-category-link" href="/categories/救火/">救火</a></p>
+                            <p class="item-title"><a href="/2019/11/27/fix-fire/3-task data OutOfMemery.html" class="title">内存不足导致SpringBoot应用程序被系统Kill</a></p>
+                            <p class="item-date"><time datetime="2019-11-27T15:35:05.000Z" itemprop="datePublished">2019-11-27 23:35:05</time></p>
                         </div>
                     </li>
                 
@@ -2041,7 +1979,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -2050,7 +1988,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dubbo/">Dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hbase/">Hbase</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Kafka/">Kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-Streaming/">Spark Streaming</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Zookeeper/">Zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zipkin/">zipkin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构-算法/">数据结构&算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">2</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Dubbo/">Dubbo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Flume/">Flume</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hadoop/">Hadoop</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hbase/">Hbase</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hive/">Hive</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MQ/">MQ</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MapReduce/">MapReduce</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NFS/">NFS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Netty/">Netty</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark/">Spark</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spark-Streaming/">Spark Streaming</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/TCP/">TCP</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Zookeeper/">Zookeeper</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/zipkin/">zipkin</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/救火/">救火</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据埋点/">数据埋点</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构-算法/">数据结构&算法</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/虚拟机/">虚拟机</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/视频/">视频</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/视频/视频剪辑/">视频剪辑</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/视频/视频剪辑/ffmpeg/">ffmpeg</a><span class="category-list-count">1</span></li></ul></li></ul></li></ul>
         </div>
     </div>
 
@@ -2059,7 +1997,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/BIO/" style="font-size: 10px;">BIO</a> <a href="/tags/ChromeDriver/" style="font-size: 10px;">ChromeDriver</a> <a href="/tags/Collection/" style="font-size: 10px;">Collection</a> <a href="/tags/CountDownLatch/" style="font-size: 10px;">CountDownLatch</a> <a href="/tags/Dubbo/" style="font-size: 10px;">Dubbo</a> <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/FutureTask/" style="font-size: 10px;">FutureTask</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.67px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/IO/" style="font-size: 10px;">IO</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/Kafka/" style="font-size: 11.67px;">Kafka</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MapReduce/" style="font-size: 13.33px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NIO/" style="font-size: 20px;">NIO</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Netty/" style="font-size: 18.33px;">Netty</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Python/" style="font-size: 11.67px;">Python </a> <a href="/tags/Rpc/" style="font-size: 10px;">Rpc</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/Spark-Streaming/" style="font-size: 11.67px;">Spark Streaming</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Thrift/" style="font-size: 10px;">Thrift</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/dubbo/" style="font-size: 10px;">dubbo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/vpm/" style="font-size: 10px;">vpm</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/zipkin/" style="font-size: 10px;">zipkin</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数据结构-算法/" style="font-size: 10px;">数据结构&算法</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/算法/" style="font-size: 11.67px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a>
+            <a href="/tags/ActivityMq/" style="font-size: 10px;">ActivityMq</a> <a href="/tags/BIO/" style="font-size: 10px;">BIO</a> <a href="/tags/ChromeDriver/" style="font-size: 10px;">ChromeDriver</a> <a href="/tags/Collection/" style="font-size: 10px;">Collection</a> <a href="/tags/CountDownLatch/" style="font-size: 10px;">CountDownLatch</a> <a href="/tags/Dubbo/" style="font-size: 10px;">Dubbo</a> <a href="/tags/Flume/" style="font-size: 10px;">Flume</a> <a href="/tags/FutureTask/" style="font-size: 10px;">FutureTask</a> <a href="/tags/HDFS/" style="font-size: 10px;">HDFS</a> <a href="/tags/Hadoop/" style="font-size: 16.67px;">Hadoop</a> <a href="/tags/Hadoop-Streaming/" style="font-size: 10px;">Hadoop Streaming</a> <a href="/tags/Hbase/" style="font-size: 10px;">Hbase</a> <a href="/tags/Hive/" style="font-size: 16.67px;">Hive</a> <a href="/tags/IO/" style="font-size: 10px;">IO</a> <a href="/tags/JVM/" style="font-size: 15px;">JVM</a> <a href="/tags/Jieba/" style="font-size: 10px;">Jieba</a> <a href="/tags/Kafka/" style="font-size: 11.67px;">Kafka</a> <a href="/tags/LCS/" style="font-size: 10px;">LCS</a> <a href="/tags/MQ/" style="font-size: 11.67px;">MQ</a> <a href="/tags/MapReduce/" style="font-size: 13.33px;">MapReduce</a> <a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a> <a href="/tags/NFS/" style="font-size: 10px;">NFS</a> <a href="/tags/NIO/" style="font-size: 20px;">NIO</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/Netty/" style="font-size: 18.33px;">Netty</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Python/" style="font-size: 11.67px;">Python </a> <a href="/tags/Rpc/" style="font-size: 10px;">Rpc</a> <a href="/tags/Scala/" style="font-size: 15px;">Scala</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Spark/" style="font-size: 20px;">Spark</a> <a href="/tags/Spark-Streaming/" style="font-size: 11.67px;">Spark Streaming</a> <a href="/tags/SparkSql/" style="font-size: 10px;">SparkSql</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/TF-IDF/" style="font-size: 10px;">TF-IDF</a> <a href="/tags/Thrift/" style="font-size: 10px;">Thrift</a> <a href="/tags/Wireshark/" style="font-size: 10px;">Wireshark</a> <a href="/tags/Yarn/" style="font-size: 10px;">Yarn</a> <a href="/tags/Zookeeper/" style="font-size: 10px;">Zookeeper</a> <a href="/tags/dubbo/" style="font-size: 10px;">dubbo</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/jieba/" style="font-size: 10px;">jieba</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/vpm/" style="font-size: 10px;">vpm</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/webpy/" style="font-size: 10px;">webpy</a> <a href="/tags/zipkin/" style="font-size: 10px;">zipkin</a> <a href="/tags/余弦相似度/" style="font-size: 10px;">余弦相似度</a> <a href="/tags/分词/" style="font-size: 10px;">分词</a> <a href="/tags/救火/" style="font-size: 13.33px;">救火</a> <a href="/tags/数据埋点/" style="font-size: 10px;">数据埋点</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/数据结构-算法/" style="font-size: 10px;">数据结构&算法</a> <a href="/tags/机器学习/" style="font-size: 10px;">机器学习</a> <a href="/tags/算法/" style="font-size: 11.67px;">算法</a> <a href="/tags/线性回归/" style="font-size: 10px;">线性回归</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/虚拟机/" style="font-size: 13.33px;">虚拟机</a> <a href="/tags/视频/" style="font-size: 10px;">视频</a>
         </div>
     </div>
 
@@ -2081,7 +2019,7 @@
         <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2019 李世佳<br>
+            &copy; 2020 李世佳<br>
             Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
         </div>
     </div>

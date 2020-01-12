@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.lishijia.top/2019/12/14/viedo/2-nfs.html</loc>
+    <lastmod>2020-01-12T13:16:26.487Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/12/05/viedo/1-ffmpeg.html</loc>
+    <lastmod>2020-01-12T13:16:26.485Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/11/04/other/trial.html</loc>
+    <lastmod>2020-01-12T13:16:26.482Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2018/12/03/mq/kafka-1.html</loc>
+    <lastmod>2020-01-12T13:16:26.479Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/12/13/mq/activityMq-1.html</loc>
+    <lastmod>2020-01-12T13:16:26.477Z</lastmod>
+  </url>  <url>
     <loc>http://www.lishijia.top/2019/10/27/jvm/jvm-4.html</loc>
-    <lastmod>2019-10-27T14:30:53.801Z</lastmod>
+    <lastmod>2020-01-12T13:16:26.475Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/11/27/fix-fire/3-task%20data%20OutOfMemery.html</loc>
+    <lastmod>2020-01-12T13:16:26.472Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/11/27/fix-fire/2-springboot-killed.html</loc>
+    <lastmod>2020-01-12T13:16:26.457Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/11/27/fix-fire/1-fix-fire.html</loc>
+    <lastmod>2020-01-12T13:16:26.455Z</lastmod>
   </url>  <url>
     <loc>http://www.lishijia.top/2019/08/03/netty/netty-7.html</loc>
     <lastmod>2019-10-26T00:16:19.997Z</lastmod>
@@ -31,6 +55,15 @@
     <loc>http://www.lishijia.top/2019/03/19/tcp/Wireshark%E5%89%96%E6%9E%90%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B.html</loc>
     <lastmod>2019-08-03T01:30:24.911Z</lastmod>
   </url>  <url>
+    <loc>http://www.lishijia.top/2019/07/12/jvm/jvm-1.html</loc>
+    <lastmod>2019-08-03T01:30:24.880Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/07/13/jvm/jvm-2.html</loc>
+    <lastmod>2019-08-03T01:30:24.880Z</lastmod>
+  </url>  <url>
+    <loc>http://www.lishijia.top/2019/07/23/jvm/jvm-3.html</loc>
+    <lastmod>2019-08-03T01:30:24.880Z</lastmod>
+  </url>  <url>
     <loc>http://www.lishijia.top/2019/07/10/java/java-thread.html</loc>
     <lastmod>2019-08-03T01:30:24.880Z</lastmod>
   </url>  <url>
@@ -38,15 +71,6 @@
     <lastmod>2019-08-03T01:30:24.880Z</lastmod>
   </url>  <url>
     <loc>http://www.lishijia.top/2019/07/12/java/java-collection.html</loc>
-    <lastmod>2019-08-03T01:30:24.880Z</lastmod>
-  </url>  <url>
-    <loc>http://www.lishijia.top/2019/07/13/jvm/jvm-2.html</loc>
-    <lastmod>2019-08-03T01:30:24.880Z</lastmod>
-  </url>  <url>
-    <loc>http://www.lishijia.top/2019/07/12/jvm/jvm-1.html</loc>
-    <lastmod>2019-08-03T01:30:24.880Z</lastmod>
-  </url>  <url>
-    <loc>http://www.lishijia.top/2019/07/23/jvm/jvm-3.html</loc>
     <lastmod>2019-08-03T01:30:24.880Z</lastmod>
   </url>  <url>
     <loc>http://www.lishijia.top/2019/07/19/java/java-bio-nio-aio.html</loc>
@@ -69,9 +93,6 @@
   </url>  <url>
     <loc>http://www.lishijia.top/2018/11/11/git/git-1.html</loc>
     <lastmod>2018-12-13T13:13:40.480Z</lastmod>
-  </url>  <url>
-    <loc>http://www.lishijia.top/2018/12/03/kafka/kafka-1.html</loc>
-    <lastmod>2018-12-08T15:29:57.322Z</lastmod>
   </url>  <url>
     <loc>http://www.lishijia.top/2018/12/04/hbase/hbase-1.html</loc>
     <lastmod>2018-12-04T15:10:45.826Z</lastmod>
